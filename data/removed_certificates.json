@@ -1,0 +1,10 @@
+[
+	{
+		"certificateAlias": "alias1",
+		"reason": "Moze nam se"
+	},
+	{
+		"certificateAlias": "alias2",
+		"reason": "Mozdse nam se"
+	}
+]
