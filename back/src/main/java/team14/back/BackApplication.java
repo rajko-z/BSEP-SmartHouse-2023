@@ -11,6 +11,7 @@ import team14.back.model.Role;
 import team14.back.model.User;
 import team14.back.repository.CSRRequestRepository;
 import team14.back.repository.RemovedCertificateRepository;
+import team14.back.repository.RoleRepository;
 import team14.back.repository.UserRepository;
 
 @SpringBootApplication
@@ -26,15 +27,25 @@ public class BackApplication implements CommandLineRunner {
 	@Autowired
 	private CSRRequestRepository csrRequestRepository;
 
+	@Autowired
+	private RoleRepository roleRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(BackApplication.class, args);
 	}
 
 	@Override
 	public void run(String... args) throws Exception {
+		createRoles();
 		createUsers();
 		createCSRRequests();
 		createRemoveCertificates();
+	}
+
+	private void createRoles() {
+		roleRepository.save(new Role(1L, "ROLE_ADMIN"));
+		roleRepository.save(new Role(2L, "ROLE_OWNER"));
+		roleRepository.save(new Role(3L, "ROLE_TENANT"));
 	}
 
 	private void createRemoveCertificates() {
@@ -47,9 +58,10 @@ public class BackApplication implements CommandLineRunner {
 		csrRequestRepository.save(new CSRRequest(22222222L, "test2gmail.com", "test2", "test2", "test2fajl"));
 	}
 
+	// sifra za sve korisnike je 12345678
 	private void createUsers() {
-		userRepository.save(new User("test1@gmail.com", "Test1", "Test1", "", false, new Role(1L, "ROLE_ADMIN")));
-		userRepository.save(new User("test2@gmail.com", "Test2", "Test2", "", false, new Role(2L, "ROLE_OWNER")));
-		userRepository.save(new User("test3@gmail.com", "Test3", "Test3", "", false, new Role(3L, "ROLE_NESTO")));
+		userRepository.save(new User("test1@gmail.com", "Test1", "Test1", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(1L, "ROLE_ADMIN")));
+		userRepository.save(new User("test2@gmail.com", "Test2", "Test2", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(2L, "ROLE_OWNER")));
+		userRepository.save(new User("test3@gmail.com", "Test3", "Test3", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(3L, "ROLE_TENANT")));
 	}
 }
