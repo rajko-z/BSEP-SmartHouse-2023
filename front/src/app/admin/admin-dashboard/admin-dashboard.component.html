@@ -1,18 +1,18 @@
-<mat-toolbar >
+<mat-toolbar color="primary">
     <button mat-icon-button (click)="sidenav.toggle()" matTooltip="Menu">
         <mat-icon>menu</mat-icon>
     </button>
-    <span>UberApp</span>
+    <span class="header">Smart Home</span>
     <span class="toolbar-item-spacer"></span>
     <button mat-icon-button matTooltip="My Account" [matMenuTriggerFor]="userAccountMenu">
         <mat-icon>account_circle</mat-icon>
     </button>
-    <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
+    <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below" color="primary">
         <button mat-menu-item [routerLink]="['/admin', {outlets: {'AdminRouter': ['profile']}}]">
             <mat-icon>person</mat-icon><span>My Account</span>
         </button>
         <mat-divider></mat-divider>
-        <button mat-menu-item>
+        <button mat-menu-item >
             <mat-icon>exit_to_app</mat-icon>Logout
         </button>
     </mat-menu>
@@ -33,10 +33,9 @@
             </mat-list-item>
         </mat-nav-list>
     </mat-sidenav>
-    <mat-sidenav-content>
+    <mat-sidenav-content color='primary'>
         <router-outlet name="AdminRouter">
             
         </router-outlet>
     </mat-sidenav-content>
 </mat-sidenav-container> 
-
