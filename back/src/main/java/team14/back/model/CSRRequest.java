@@ -11,15 +11,10 @@ public class CSRRequest {
     private String firstName;
     private String lastName;
 
+    private String filePath;
+
     public CSRRequest() {
 
-    }
-
-    public CSRRequest(Long id, String email, String firstName, String lastName) {
-        this.id = id;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -52,5 +47,21 @@ public class CSRRequest {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public CSRRequest(Long id, String email, String firstName, String lastName, String filePath) {
+        this.id = id;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.filePath = filePath;
     }
 }
