@@ -1,42 +1,37 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import { CertificatesComponent } from './components/admin/certificates/certificates.component';
+import {AppRoutingModule} from './app-routing.module';
+import {AppComponent} from './app.component';
+import {CommonModule, DatePipe} from '@angular/common';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {HttpClientModule} from "@angular/common/http";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {AngularMaterialModule} from "./modules/shared/angular-material.module";
 
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { LoginComponent } from './auth/login/login.component';
-import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatMenuModule } from '@angular/material/menu';
-import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.component';
-import { CommonModule } from '@angular/common';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatButtonModule} from '@angular/material/button';
-import { CsrRequestsComponent } from './admin/csr-requests/csr-requests.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    AdminDashboardComponent,
-    UserDashboardComponent,
-    CsrRequestsComponent
+    CertificatesComponent
   ],
   imports: [
-    BrowserModule,
+    AngularMaterialModule,
     AppRoutingModule,
-    MatSidenavModule,
-    MatListModule,
-    MatIconModule,
-    MatToolbarModule,
-    MatMenuModule,
-    BrowserAnimationsModule,
     CommonModule,
-    MatButtonModule
+    BrowserModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    DatePipe
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DIALOG_DATA, useValue: {}},
+    DatePipe
+  ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
