@@ -8,16 +8,6 @@ import { Router } from '@angular/router';
 })
 export class AdminDashboardComponent implements OnInit {
 
-  chatHidden:boolean = false;
-
-  navbarItems = [
-    {
-      label:'Certificates',
-      icon: 'verified_user',
-      router: 'certificates'
-    }
-  ];
-
   constructor(private router: Router){}
 
   ngOnInit(): void {
