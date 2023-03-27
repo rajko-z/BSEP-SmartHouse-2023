@@ -14,13 +14,15 @@ import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.com
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatButtonModule} from '@angular/material/button';
+import { CsrRequestsComponent } from './admin/csr-requests/csr-requests.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     AdminDashboardComponent,
-    UserDashboardComponent
+    UserDashboardComponent,
+    CsrRequestsComponent
   ],
   imports: [
     BrowserModule,
