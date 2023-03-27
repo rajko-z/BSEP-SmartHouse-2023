@@ -1,1 +1,27 @@
-<p>admin-certificates-page works!</p>
+<div class="containerDiv">
+    <h1 class="table-title">Certificates</h1>
+    <table mat-table matSort>
+        <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> Id </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="firstName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> First Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.oldData.name}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Last Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.oldData.surname}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="verifyButton">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear></th>
+            <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" style="cursor:pointer">Verify</button></td>
+        </ng-container>
+        
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr> 
+    </table>
+</div>

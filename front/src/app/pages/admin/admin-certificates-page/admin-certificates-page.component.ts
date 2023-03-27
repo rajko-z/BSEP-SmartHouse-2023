@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./admin-certificates-page.component.scss']
 })
 export class AdminCertificatesPageComponent {
-
+  displayedColumns = ['firstName', 'lastName', 'verifyButton'];
 }
