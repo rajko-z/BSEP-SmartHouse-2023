@@ -1,7 +1,5 @@
 
 import { NgModule } from '@angular/core';
-import { AdminDashboardComponent } from './components/admin/admin-dashboard/admin-dashboard.component';
-import { CertificatesComponent } from './components/admin/certificates/certificates.component';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
 import {AnonymousGuard} from "./guards/auth/anonymous.guard";
 import {AdminGuard} from "./guards/auth/admin.guard";

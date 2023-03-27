@@ -4,18 +4,6 @@
     </button>
     <span class="header">Smart Home</span>
     <span class="toolbar-item-spacer"></span>
-    <button mat-icon-button matTooltip="My Account" [matMenuTriggerFor]="userAccountMenu">
-        <mat-icon>account_circle</mat-icon>
-    </button>
-    <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below" color="primary">
-        <button mat-menu-item [routerLink]="['/admin/certificates']">
-            <mat-icon>person</mat-icon><span>My Account</span>
-        </button>
-        <mat-divider></mat-divider>
-        <button mat-menu-item >
-            <mat-icon>exit_to_app</mat-icon>Logout
-        </button>
-    </mat-menu>
 </mat-toolbar>
 
 <mat-sidenav-container class="app-container">

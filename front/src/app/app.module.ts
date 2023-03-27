@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import { CertificatesComponent } from './components/admin/certificates/certificates.component';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {CommonModule, DatePipe} from '@angular/common';
@@ -14,8 +13,7 @@ import {AngularMaterialModule} from "./modules/shared/angular-material.module";
 
 @NgModule({
   declarations: [
-    AppComponent,
-    CertificatesComponent
+    AppComponent
   ],
   imports: [
     AngularMaterialModule,
