@@ -1,21 +1,43 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
-import { UserDashboardComponent } from './user/user-dashboard/user-dashboard.component';
+import {NgModule} from '@angular/core';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {AnonymousGuard} from "./guards/auth/anonymous.guard";
+import {AdminGuard} from "./guards/auth/admin.guard";
+import {OwnerGuard} from "./guards/auth/owner.guard";
+import {HomePageComponent} from "./pages/home-page/home-page.component";
+import {HomepageGuard} from "./guards/homepage.guard";
 
 const routes: Routes = [
   {
-    path: 'user',
-    component: UserDashboardComponent
+    path: 'anon',
+    canActivate: [AnonymousGuard],
+    loadChildren: () => import('./modules/anonymous/anonymous.module').then(m => m.AnonymousModule)
   },
   {
     path: 'admin',
-    component: AdminDashboardComponent
+    canActivate: [AdminGuard],
+    loadChildren: () => import('./modules/admin/admin.module').then(m => m.AdminModule)
+  },
+  {
+    path: 'owner',
+    canActivate: [OwnerGuard],
+    loadChildren: () => import('./modules/owner/owner.module').then(m => m.OwnerModule)
+  },
+  {
+    path: '**',
+    component: HomePageComponent,
+    canActivate: [HomepageGuard],
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(
+      routes,
+      {
+        preloadingStrategy: PreloadAllModules
+      }
+    )
+  ],
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
