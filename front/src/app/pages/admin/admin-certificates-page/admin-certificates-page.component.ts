@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Certificate } from 'src/app/model/certificate';
+import { RemovedCertificate } from 'src/app/model/removedCertificate';
 import { CertificateService } from 'src/app/services/certificate/certificate.service';
 
 
@@ -10,7 +10,7 @@ import { CertificateService } from 'src/app/services/certificate/certificate.ser
 })
 export class AdminCertificatesPageComponent {
   displayedColumns = ['firstName', 'lastName', 'verifyButton', 'cancelButton'];
-  certificates: Certificate[];
+  certificates: RemovedCertificate[];
 
   constructor(private certificateService: CertificateService){
   }

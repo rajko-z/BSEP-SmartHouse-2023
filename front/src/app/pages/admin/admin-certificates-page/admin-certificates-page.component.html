@@ -2,13 +2,13 @@
     <h1 class="table-title">Certificates</h1>
     <table mat-table matSort [dataSource]="certificates">
         <ng-container matColumnDef="firstName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> First Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.firstName}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Certificate Alias </th>
+            <td mat-cell *matCellDef="let element"> {{element.certificateAlias}} </td>
         </ng-container>
 
         <ng-container matColumnDef="lastName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Last Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Reason for rejection </th>
+            <td mat-cell *matCellDef="let element"> {{element.reason}} </td>
         </ng-container>
 
         <ng-container matColumnDef="verifyButton">

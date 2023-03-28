@@ -1,11 +1,13 @@
 package team14.back.dto;
 
+import lombok.*;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@Builder
 public class RemovedCertificateDTO {
     private String certificateAlias;
     private String reason;
-
-    public RemovedCertificateDTO(String certificateAlias, String reason) {
-        this.certificateAlias = certificateAlias;
-        this.reason = reason;
-    }
 }
