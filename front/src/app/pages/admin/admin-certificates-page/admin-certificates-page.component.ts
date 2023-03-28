@@ -1,15 +1,7 @@
 import { Component } from '@angular/core';
+import { Certificate } from 'src/app/model/certificate';
+import { CertificateService } from 'src/app/services/certificate/certificate.service';
 
-export interface UserData {
-  firstName: string;
-  lastName: string
-}
-
-const TABLE_DATA: UserData[] = [
-  {firstName: "Djura", lastName: "Djuric"},
-  {firstName: "Mika", lastName: "Djuric"},
-  {firstName: "Pera", lastName: "Djuric"},
-]
 
 @Component({
   selector: 'app-admin-certificates-page',
@@ -18,5 +10,25 @@ const TABLE_DATA: UserData[] = [
 })
 export class AdminCertificatesPageComponent {
   displayedColumns = ['firstName', 'lastName', 'verifyButton', 'cancelButton'];
-  dataSource = TABLE_DATA;
+  certificates: Certificate[];
+
+  constructor(private certificateService: CertificateService){
+  }
+
+  ngOnInit(): void {
+    this.loadRemovedCertificates();
+  }
+
+  loadRemovedCertificates(){
+    this.certificateService.getRemovedCertificates()
+    .subscribe({
+      next: (data) => {
+        console.log(data);
+        this.certificates = data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 }
