@@ -17,7 +17,7 @@ const declaredModules = [
     JsonPipe,
     ReactiveFormsModule,
     FormsModule,
-    RouterLinkWithHref
+    RouterLinkWithHref,
   ],
   exports: declaredModules,
 })

@@ -1,4 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import { Observable } from 'rxjs';
+import { AuthCredentials } from 'src/app/model/auth';
+import { environment } from 'src/environments/environment';
 import {User, UserWithToken} from "../../model/user";
 
 @Injectable({
@@ -6,7 +10,7 @@ import {User, UserWithToken} from "../../model/user";
 })
 export class AuthService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getCurrentUserToken() : string | null{
     const currentUser : UserWithToken | null = this.getCurrentUserWithToken();
@@ -32,5 +36,10 @@ export class AuthService {
 
   setCurrentUser(userWithToken: UserWithToken){
     sessionStorage.setItem('currentUser', JSON.stringify(userWithToken));
+  }
+
+  login(credentials: AuthCredentials):Observable<any>{
+    return this.http.post(environment.apiURL+ "/auth/login", credentials);
+
   }
 }
