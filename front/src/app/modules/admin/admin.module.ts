@@ -8,6 +8,7 @@ import {
 import {AdminDashboardComponent} from "../../components/admin/admin-dashboard/admin-dashboard.component";
 import {AngularMaterialModule} from "../shared/angular-material.module";
 import {NgForOf} from "@angular/common";
+import {CommonModule, DatePipe} from '@angular/common';
 
 const declaredModules = [
   AdminCSRRequestsPageComponent,
@@ -21,7 +22,9 @@ const declaredModules = [
     AngularMaterialModule,
     AdminRoutingModule,
     SharedComponentsModule,
-    NgForOf
+    NgForOf,
+    CommonModule,
+    DatePipe
   ],
   exports: declaredModules
 })

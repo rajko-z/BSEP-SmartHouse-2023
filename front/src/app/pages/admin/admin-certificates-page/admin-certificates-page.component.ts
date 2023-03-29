@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { RemovedCertificate } from 'src/app/model/removedCertificate';
+import { CertificateData } from 'src/app/model/certificate';
 import { CertificateService } from 'src/app/services/certificate/certificate.service';
-
 
 @Component({
   selector: 'app-admin-certificates-page',
@@ -9,18 +8,18 @@ import { CertificateService } from 'src/app/services/certificate/certificate.ser
   styleUrls: ['./admin-certificates-page.component.scss']
 })
 export class AdminCertificatesPageComponent {
-  displayedColumns = ['firstName', 'lastName', 'verifyButton', 'cancelButton'];
-  certificates: RemovedCertificate[];
+  displayedColumns = ['alias', 'algorithm', 'keySize', 'creationDate', 'expiryDate', 'verifyButton', 'cancelButton'];
+  certificates: CertificateData[];
 
   constructor(private certificateService: CertificateService){
   }
 
   ngOnInit(): void {
-    this.loadRemovedCertificates();
+    this.loadAllCertificates();
   }
 
-  loadRemovedCertificates(){
-    this.certificateService.getRemovedCertificates()
+  loadAllCertificates(){
+    this.certificateService.getAllCertificates()
     .subscribe({
       next: (data) => {
         console.log(data);
