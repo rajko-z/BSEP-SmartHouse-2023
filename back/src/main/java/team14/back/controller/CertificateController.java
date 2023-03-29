@@ -1,14 +1,14 @@
 package team14.back.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import team14.back.dto.CertificateDataDTO;
 import team14.back.dto.RemovedCertificateDTO;
 import team14.back.service.CertificateService;
 
+import java.math.BigInteger;
 import java.security.KeyStoreException;
 import java.util.List;
 
@@ -27,5 +27,12 @@ public class CertificateController {
     @GetMapping("get-all-certificates")
     public List<CertificateDataDTO> getAllCertificates() throws KeyStoreException {
         return certificateService.getAllCertificates();
+    }
+
+    @PostMapping("verify-certificate")
+    public ResponseEntity<?> verifyCertificate(@RequestBody BigInteger certificateSerialNumber)
+    {
+        this.certificateService.verifyCertificate(certificateSerialNumber);
+        return ResponseEntity.ok("Success!");
     }
 }

@@ -1,6 +1,7 @@
 package team14.back.dto;
 import lombok.*;
 
+import java.math.BigInteger;
 import java.security.cert.X509Certificate;
 import java.util.Date;
 
@@ -10,6 +11,7 @@ import java.util.Date;
 @Setter
 @Builder
 public class CertificateDataDTO {
+    private BigInteger serialNumber;
     private String alias;
     private String algorithm;
     private int keySize;
@@ -17,6 +19,7 @@ public class CertificateDataDTO {
     private Date expiryDate;
 
     public CertificateDataDTO(String alias, X509Certificate certificate) {
+        this.serialNumber = certificate.getSerialNumber();
         this.alias = alias;
         this.algorithm = certificate.getPublicKey().getAlgorithm();
         this.keySize = certificate.getPublicKey().getEncoded().length * 8;

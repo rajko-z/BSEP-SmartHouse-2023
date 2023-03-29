@@ -25,4 +25,12 @@ export class CertificateService {
     queryParams = queryParams.append("format", "json");
     return this.http.get<CertificateData[]>(environment.backUrl + "certificates/get-all-certificates", { params: queryParams });
   }
+
+  verifyCertificate(certificateSerialNumber: number): Observable<String>
+  {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("certificateSerialNumber", certificateSerialNumber);
+    queryParams = queryParams.append("format", "json");
+    return this.http.post<String>(environment.backUrl + "certificates/verify-certificate", { params: queryParams });
+  }
 }

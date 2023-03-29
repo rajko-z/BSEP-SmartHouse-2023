@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { ToastrService } from 'ngx-toastr';
 import { CertificateData } from 'src/app/model/certificate';
 import { CertificateService } from 'src/app/services/certificate/certificate.service';
 
@@ -24,6 +26,19 @@ export class AdminCertificatesPageComponent {
       next: (data) => {
         console.log(data);
         this.certificates = data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  verifyCertificate(certificateSerialNumber: number)
+  {
+    this.certificateService.verifyCertificate(certificateSerialNumber)
+    .subscribe({
+      next: (data) => {
+        console.log(data);
       },
       error: (err) => {
         console.log(err);
