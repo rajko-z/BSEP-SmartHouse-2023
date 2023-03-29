@@ -5,9 +5,11 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import team14.back.dto.CertificateDataDTO;
 import team14.back.dto.RemovedCertificateDTO;
 import team14.back.service.CertificateService;
 
+import java.security.KeyStoreException;
 import java.util.List;
 
 @RestController
@@ -20,5 +22,10 @@ public class CertificateController {
     @GetMapping("get-removed-certificates")
     public List<RemovedCertificateDTO> getRemovedCertificates() {
         return certificateService.getRemovedCertificates();
+    }
+
+    @GetMapping("get-all-certificates")
+    public List<CertificateDataDTO> getAllCertificates() throws KeyStoreException {
+        return certificateService.getAllCertificates();
     }
 }
