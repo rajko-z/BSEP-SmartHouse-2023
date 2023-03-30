@@ -50,7 +50,7 @@ export class AuthService {
   }
 
   login(credentials: AuthCredentials):Observable<any>{
-    return this.http.post(environment.apiURL+ "/auth/login", credentials);
+    return this.http.post(environment.backUrl+ "/auth/login", credentials);
 
   }
 

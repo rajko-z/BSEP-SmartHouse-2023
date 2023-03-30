@@ -56,6 +56,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .cors().and()
             .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService), BasicAuthenticationFilter.class);
         http.csrf().disable();
+        //privremeno sam zakomentarisao da ne dobijam 401 - Raffayet
     }
 
     @Override

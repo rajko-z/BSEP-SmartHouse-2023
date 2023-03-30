@@ -9,6 +9,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {AngularMaterialModule} from "./modules/shared/angular-material.module";
 import { RouterModule } from '@angular/router';
+import {MatTableModule} from '@angular/material/table';
 
 
 
@@ -25,7 +26,8 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     ReactiveFormsModule,
     DatePipe,
-    RouterModule
+    RouterModule,
+    MatTableModule
   ],
   providers: [
     {provide: MAT_DIALOG_DATA, useValue: {}},
