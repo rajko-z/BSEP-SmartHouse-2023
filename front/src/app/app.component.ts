@@ -1,5 +1,7 @@
+import { AuthService } from './services/auth/auth.service';
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +13,7 @@ export class AppComponent {
 
   chatHidden:boolean = false;
   navbarItems:any = [];
+  loggedUser:boolean = false;
 
   adminNavbarItems = [
     {
@@ -24,10 +27,18 @@ export class AppComponent {
     //Links for owner
   ];
 
-  constructor(private router: Router){}
+  constructor(private router: Router, private authService:AuthService){
+    authService.isloggedUser.subscribe((nextValue)=>{
+      this.loggedUser = nextValue;
+    })
+  }
 
   ngOnInit(): void {
     this.navbarItems = this.adminNavbarItems;
+  }
 
+  LogOut():void{
+    this.authService.logout();
+    this.loggedUser = false;
   }
 }

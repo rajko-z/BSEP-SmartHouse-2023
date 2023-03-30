@@ -1,0 +1,36 @@
+mat-card {
+    max-width: 400px;
+    margin: 5em auto;
+    text-align: center;
+  }
+  
+  mat-form-field {
+    display: block;
+  }
+
+.registerLink{
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.buttonDiv{
+  display: block;
+}
+
+.fileDiv{
+  margin: 0 auto;
+  // background-color: aqua;
+}
+
+#file{
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}

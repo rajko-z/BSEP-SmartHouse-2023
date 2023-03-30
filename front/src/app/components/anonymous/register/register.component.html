@@ -1,1 +1,37 @@
-<p>register works!</p>
+<mat-card>
+    <mat-card-content>
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-icon color="primary">assignment_ind</mat-icon>
+        <h2>Register</h2>
+        <mat-error *ngIf="!registerValid">
+          The username and password were not recognized
+        </mat-error>
+        <mat-form-field>
+          <input matInput placeholder="Email" [(ngModel)]="email" name="email" type="email" required>
+          <mat-error>
+            Please provide a valid email address
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="First Name" [(ngModel)]="firstName" name="firstName" required>
+          <mat-error>
+            Please provide a valid First Name
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" [(ngModel)]="lastName" name="lastName" required>
+          <mat-error>
+            Please provide a valid Last Name
+          </mat-error>
+        </mat-form-field>
+        <h4>CSR File:</h4>
+        <div class="fileDiv">
+            <input type="file" id="file" (change)="onBasicUpload($event)" accept=".csr">
+        </div>
+        <div class="buttonDiv">
+          <button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Register</button><br/>
+          <button  class="registerLink" type="button" [routerLink]="['/anon/login']">Have an account? Log In</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>

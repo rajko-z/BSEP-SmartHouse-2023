@@ -1,1 +1,27 @@
-<p>login works!</p>
+<mat-card>
+    <mat-card-content>
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
+        <mat-icon color="primary">lock</mat-icon>
+        <h2>Log In</h2>
+        <mat-error *ngIf="!loginValid">
+          The username and password were not recognized
+        </mat-error>
+        <mat-form-field>
+          <input matInput placeholder="Email" [(ngModel)]="email" name="email" type="email" required>
+          <mat-error>
+            Please provide a valid email address
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+          <mat-error>
+            Please provide a valid password
+          </mat-error>
+        </mat-form-field>
+        <div class="buttonDiv">
+          <button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Login</button><br/>
+          <button  class="registerLink" type="button" [routerLink]="['/anon/register']">Register with Certificate Request</button>
+        </div>
+      </form>
+    </mat-card-content>
+  </mat-card>
