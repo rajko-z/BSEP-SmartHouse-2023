@@ -20,7 +20,7 @@
         </mat-form-field>
         <div class="buttonDiv">
           <button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Login</button><br/>
-          <button  class="registerLink" type="button">Register with Certificate Request</button>
+          <button  class="registerLink" type="button" [routerLink]="['/anon/register']">Register with Certificate Request</button>
         </div>
       </form>
     </mat-card-content>

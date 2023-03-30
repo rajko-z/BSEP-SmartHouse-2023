@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   apiURL: 'http://localhost:8081/smarthouse',
   frontURL: 'http://localhost:4200/',
+  loggedUser: false,
 };
 
 /*

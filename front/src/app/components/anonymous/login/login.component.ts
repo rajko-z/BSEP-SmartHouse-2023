@@ -1,6 +1,7 @@
 import { AuthService } from './../../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -25,10 +26,10 @@ export class LoginComponent implements OnInit{
 
     this.authService.login({password:this.password, email:this.email}).subscribe({
       next:(res)=>{
-        let token = res.accessToken;
-        localStorage.setItem("user", token);
+        this.authService.setCurrentUser(res);
         this.toastService.success("Successfully logged in!");
-        console.log("Uspesno")
+        console.log("Uspesno");
+        this.authService.loggedUser = true;
 
         let role:string | undefined = this.authService.getCurrentUser()?.role;
 

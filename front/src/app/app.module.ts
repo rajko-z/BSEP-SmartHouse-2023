@@ -8,6 +8,7 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {AngularMaterialModule} from "./modules/shared/angular-material.module";
+import { RouterModule } from '@angular/router';
 
 
 
@@ -23,7 +24,8 @@ import {AngularMaterialModule} from "./modules/shared/angular-material.module";
     BrowserAnimationsModule,
     HttpClientModule,
     ReactiveFormsModule,
-    DatePipe
+    DatePipe,
+    RouterModule
   ],
   providers: [
     {provide: MAT_DIALOG_DATA, useValue: {}},

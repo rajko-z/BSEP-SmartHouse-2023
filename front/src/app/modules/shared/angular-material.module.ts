@@ -26,6 +26,7 @@ import {MatSidenavModule} from "@angular/material/sidenav";
 import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatMenuModule} from "@angular/material/menu";
 import { ToastrModule } from 'ngx-toastr';
+import {FileUploadModule} from 'primeng/fileupload';
 
 
 const materialModules:any = [
@@ -59,6 +60,7 @@ const materialModules:any = [
   ToastrModule.forRoot({
     positionClass :'toast-bottom-center'
   }),
+  FileUploadModule
 ];
 
 @NgModule({
