@@ -24,7 +24,7 @@ public class KeyStoreServiceImpl implements KeyStoreService {
 
     private static final String SMARTHOUSE_CERT_STORE = "src/main/resources/smarthouse_certstore.p12";
 
-    private static final String CRL_FILE = "src/main/resources/invalid_certificates.crl";
+    private static final String CRL_FILE = "src/main/resources/revoked_certificates.crl";
 
     private KeyStore keyStore;
 

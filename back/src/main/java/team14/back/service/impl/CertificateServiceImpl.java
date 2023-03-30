@@ -75,16 +75,16 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
-    public boolean isCertificateValid(X509Certificate certificateToCheck) throws CertificateException, NoSuchAlgorithmException, SignatureException, InvalidKeyException, NoSuchProviderException, IOException, CRLException {
+    public boolean isCertificateValid(X509Certificate certificateToCheck) throws CertificateException, NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException, IOException, CRLException {
         boolean revoked = keyStoreService.isCertificateRevoked(certificateToCheck);
 
         try {
             certificateToCheck.checkValidity();
             certificateToCheck.verify(certificateToCheck.getPublicKey());
-        } catch (CertificateException e) {
+        }
+        catch (SignatureException | CertificateException e){
             return false;
         }
-
         return !revoked;
     }
 }

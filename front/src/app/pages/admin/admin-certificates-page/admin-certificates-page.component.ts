@@ -20,7 +20,7 @@ export class AdminCertificatesPageComponent {
 
   ngOnInit(): void {
     this.loadAllCertificates();
-    let Sock = new SockJS(environment.backUrl + "ws");
+    let Sock = new SockJS(environment.backUrl + "/ws");
     this.stompClient = over(Sock);
     this.stompClient.connect({}, this.onConnected, () => {});
   }
