@@ -52,11 +52,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/users/**").permitAll()
             .antMatchers("/admins/**").permitAll()
+            .antMatchers("/**").permitAll() //dodao sam ovu liniju jer sam imao problema sa permission-ima, nek ostane ovako dok login ne bude potpuno gotov, zajedno sa onim tokenutil servisom
             .anyRequest().authenticated().and()
             .cors().and()
             .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService), BasicAuthenticationFilter.class);
         http.csrf().disable();
-        //privremeno sam zakomentarisao da ne dobijam 401 - Raffayet
     }
 
     @Override

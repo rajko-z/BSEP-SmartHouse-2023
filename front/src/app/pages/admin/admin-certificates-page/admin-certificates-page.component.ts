@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { CertificateData } from 'src/app/model/certificate';
 import { CertificateService } from 'src/app/services/certificate/certificate.service';
+import { environment } from 'src/environments/environment';
+import * as SockJS from 'sockjs-client';
+import { over, Client, Message as StompMessage} from 'stompjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-certificates-page',
@@ -8,14 +12,18 @@ import { CertificateService } from 'src/app/services/certificate/certificate.ser
   styleUrls: ['./admin-certificates-page.component.scss']
 })
 export class AdminCertificatesPageComponent {
-  displayedColumns = ['alias', 'algorithm', 'keySize', 'creationDate', 'expiryDate', 'verifyButton', 'cancelButton'];
+  displayedColumns = ['alias', 'algorithm', 'keySize', 'creationDate', 'expiryDate', 'isValid', 'verifyButton', 'revokeButton'];
   certificates: CertificateData[];
+  private stompClient : Client;
 
-  constructor(private certificateService: CertificateService){
+  constructor(private certificateService: CertificateService, private toastrService: ToastrService){
   }
 
   ngOnInit(): void {
     this.loadAllCertificates();
+    let Sock = new SockJS(environment.backUrl + "/ws");
+    this.stompClient = over(Sock);
+    this.stompClient.connect({}, this.onConnected, () => {});
   }
 
   loadAllCertificates(){
@@ -24,6 +32,51 @@ export class AdminCertificatesPageComponent {
       next: (data) => {
         console.log(data);
         this.certificates = data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  verifyCertificate(certificateSerialNumber: number)
+  {
+    this.certificateService.verifyCertificate(certificateSerialNumber.toString())
+    .subscribe({
+      next: (data) => {
+        console.log(data); 
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  onConnected = () => {
+    this.stompClient.subscribe("/verify-certificate-response", (data) => this.onVerifyResponseReceived(data));
+  }
+
+  onVerifyResponseReceived(payload: StompMessage)
+  {
+    let payloadData = JSON.parse(payload.body);
+    if (payloadData.messageType === 'success')
+    {
+      this.toastrService.success('Certificate is valid!');
+    }
+
+    else
+    {
+      this.toastrService.error('Certificate is not valid!');
+    }
+    
+  }
+
+  revokeCertificate(certificateSerialNumber: number)
+  {
+    this.certificateService.revokeCertificate(certificateSerialNumber.toString())
+    .subscribe({
+      next: (data) => {
+        console.log(data); 
       },
       error: (err) => {
         console.log(err);
