@@ -3,6 +3,8 @@ package team14.back.service.impl;
 import lombok.AllArgsConstructor;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import team14.back.model.IssuerData;
 import team14.back.service.KeyStoreService;
@@ -10,20 +12,19 @@ import team14.back.service.KeyStoreService;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.security.*;
+import java.security.cert.*;
 import java.security.cert.Certificate;
-import java.security.cert.CertificateException;
-import java.security.cert.X509Certificate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 @Service
 @AllArgsConstructor
 public class KeyStoreServiceImpl implements KeyStoreService {
 
     private static final String SMARTHOUSE_CERT_STORE = "src/main/resources/smarthouse_certstore.p12";
+
+    private static final String CRL_FILE = "src/main/resources/invalid_certificates.crl";
 
     private KeyStore keyStore;
 
@@ -122,5 +123,12 @@ public class KeyStoreServiceImpl implements KeyStoreService {
         }
 
         return certificates;
+    }
+
+    public boolean isCertificateRevoked(X509Certificate certificate) throws CertificateException, IOException, CRLException {
+        Resource crlResource = new FileSystemResource(CRL_FILE);
+        CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
+        X509CRL crl = (X509CRL) certFactory.generateCRL(crlResource.getInputStream());
+        return crl.isRevoked(certificate);
     }
 }
