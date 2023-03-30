@@ -31,13 +31,21 @@ public class CertificateController {
     }
 
     @GetMapping("get-all-certificates")
-    public List<CertificateDataDTO> getAllCertificates() throws KeyStoreException {
+    public List<CertificateDataDTO> getAllCertificates() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
         return certificateService.getAllCertificates();
     }
 
     @PostMapping("verify-certificate")
     public ResponseEntity<?> verifyCertificate(@Param("certificateSerialNumber") String certificateSerialNumber) throws CertificateException, KeyStoreException, NoSuchAlgorithmException, SignatureException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
         this.certificateService.verifyCertificate(new BigInteger(certificateSerialNumber));
+        Map<String, String> response = new HashMap<>();
+        response.put("message", "Success!");
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("revoke-certificate")
+    public ResponseEntity<?> revokeCertificate(@Param("certificateSerialNumber") String certificateSerialNumber) throws CertificateException, KeyStoreException, NoSuchAlgorithmException, SignatureException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
+        this.certificateService.revokeCertificate(new BigInteger(certificateSerialNumber));
         Map<String, String> response = new HashMap<>();
         response.put("message", "Success!");
         return ResponseEntity.ok(response);

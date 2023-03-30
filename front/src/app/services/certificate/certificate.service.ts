@@ -32,4 +32,11 @@ export class CertificateService {
     queryParams = queryParams.append("format", "json");
     return this.http.post<string>(environment.backUrl + "/certificates/verify-certificate", null, { params: queryParams });
   }
+
+  revokeCertificate(certificateSerialNumber: string): Observable<string> {
+    let queryParams = new HttpParams();
+    queryParams = queryParams.append("certificateSerialNumber", certificateSerialNumber);
+    queryParams = queryParams.append("format", "json");
+    return this.http.post<string>(environment.backUrl + "/certificates/revoke-certificate", null, { params: queryParams });
+  }
 }

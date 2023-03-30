@@ -4,6 +4,7 @@ import { CertificateService } from 'src/app/services/certificate/certificate.ser
 import { environment } from 'src/environments/environment';
 import * as SockJS from 'sockjs-client';
 import { over, Client, Message as StompMessage} from 'stompjs';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-admin-certificates-page',
@@ -11,11 +12,11 @@ import { over, Client, Message as StompMessage} from 'stompjs';
   styleUrls: ['./admin-certificates-page.component.scss']
 })
 export class AdminCertificatesPageComponent {
-  displayedColumns = ['alias', 'algorithm', 'keySize', 'creationDate', 'expiryDate', 'verifyButton', 'cancelButton'];
+  displayedColumns = ['alias', 'algorithm', 'keySize', 'creationDate', 'expiryDate', 'isValid', 'verifyButton', 'revokeButton'];
   certificates: CertificateData[];
   private stompClient : Client;
 
-  constructor(private certificateService: CertificateService){
+  constructor(private certificateService: CertificateService, private toastrService: ToastrService){
   }
 
   ngOnInit(): void {
@@ -57,6 +58,29 @@ export class AdminCertificatesPageComponent {
 
   onVerifyResponseReceived(payload: StompMessage)
   {
-    console.log(payload);
+    let payloadData = JSON.parse(payload.body);
+    if (payloadData.messageType === 'success')
+    {
+      this.toastrService.success('Certificate is valid!');
+    }
+
+    else
+    {
+      this.toastrService.error('Certificate is not valid!');
+    }
+    
+  }
+
+  revokeCertificate(certificateSerialNumber: number)
+  {
+    this.certificateService.revokeCertificate(certificateSerialNumber.toString())
+    .subscribe({
+      next: (data) => {
+        console.log(data); 
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 }

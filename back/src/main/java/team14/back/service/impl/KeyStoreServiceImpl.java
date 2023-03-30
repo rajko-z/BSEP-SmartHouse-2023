@@ -9,10 +9,7 @@ import org.springframework.stereotype.Service;
 import team14.back.model.IssuerData;
 import team14.back.service.KeyStoreService;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.security.*;
 import java.security.cert.*;
 import java.security.cert.Certificate;
@@ -130,5 +127,10 @@ public class KeyStoreServiceImpl implements KeyStoreService {
         CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
         X509CRL crl = (X509CRL) certFactory.generateCRL(crlResource.getInputStream());
         return crl.isRevoked(certificate);
+    }
+
+    @Override
+    public void addCertificateToCRL(X509Certificate certificate) throws IOException, CertificateException, CRLException {
+        //TODO
     }
 }

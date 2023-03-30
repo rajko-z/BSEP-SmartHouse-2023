@@ -42,27 +42,19 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public List<CertificateDataDTO> getAllCertificates() throws KeyStoreException {
+    public List<CertificateDataDTO> getAllCertificates() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
         HashMap<String, X509Certificate> allCertificates = this.keyStoreService.getAllCertificates();
         List<CertificateDataDTO> certificateDataDTOS = new ArrayList<>();
         for(Map.Entry<String, X509Certificate> entry: allCertificates.entrySet()) {
             X509Certificate certificate = entry.getValue();
-            certificateDataDTOS.add(new CertificateDataDTO(entry.getKey(), certificate));
+            certificateDataDTOS.add(new CertificateDataDTO(entry.getKey(), certificate, isCertificateValid(certificate)));
         }
         return certificateDataDTOS;
     }
 
     @Override
     public void verifyCertificate(BigInteger certificateSerialNumber) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, SignatureException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
-        HashMap<String, X509Certificate> allCertificates = this.keyStoreService.getAllCertificates();
-        X509Certificate certificateToCheck = allCertificates.values().iterator().next();
-        for(Map.Entry<String, X509Certificate> entry: allCertificates.entrySet()) {
-            X509Certificate certificate = entry.getValue();
-            if (certificate.getSerialNumber().equals(certificateSerialNumber)) {
-                certificateToCheck = certificate;
-                break;
-            }
-        }
+        X509Certificate certificateToCheck = findCertificateBySerialNumber(certificateSerialNumber);
 
         if (isCertificateValid(certificateToCheck))
         {
@@ -73,6 +65,28 @@ public class CertificateServiceImpl implements CertificateService {
         {
             simpMessagingTemplate.convertAndSend("/verify-certificate-response", new VerifyCertificateResponseDTO("error", "Certificate is not valid"));
         }
+    }
+
+
+
+    @Override
+    public void revokeCertificate(BigInteger certificateSerialNumber) throws KeyStoreException, CertificateException, IOException, CRLException {
+        X509Certificate certificate = findCertificateBySerialNumber(certificateSerialNumber);
+        keyStoreService.addCertificateToCRL(certificate);
+    }
+
+    @Override
+    public X509Certificate findCertificateBySerialNumber(BigInteger serialNumber) throws KeyStoreException {
+        HashMap<String, X509Certificate> allCertificates = this.keyStoreService.getAllCertificates();
+        X509Certificate certificateToCheck = allCertificates.values().iterator().next();
+        for(Map.Entry<String, X509Certificate> entry: allCertificates.entrySet()) {
+            X509Certificate certificate = entry.getValue();
+            if (certificate.getSerialNumber().equals(serialNumber)) {
+                certificateToCheck = certificate;
+                break;
+            }
+        }
+        return certificateToCheck;
     }
 
     public boolean isCertificateValid(X509Certificate certificateToCheck) throws CertificateException, NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException, IOException, CRLException {

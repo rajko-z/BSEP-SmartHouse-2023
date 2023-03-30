@@ -6,4 +6,5 @@ export interface CertificateData
     keySize: number
     creationDate: Date
     expiryDate: Date
+    isValid: Boolean
 }
