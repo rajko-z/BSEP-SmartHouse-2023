@@ -11,7 +11,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "^15.2.4",
-    "@angular/cdk": "^15.2.4",
+    "@angular/cdk": "^15.0.0",
     "@angular/common": "^15.0.0",
     "@angular/compiler": "^15.0.0",
     "@angular/core": "^15.0.0",
@@ -22,6 +22,7 @@
     "@angular/router": "^15.0.0",
     "net": "^1.0.2",
     "ngx-toastr": "^16.1.0",
+    "primeng": "^15.3.0",
     "rxjs": "~7.5.0",
     "sockjs": "^0.3.24",
     "sockjs-client": "^1.6.1",

@@ -45,24 +45,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http
-//            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
-//            .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
-//
-//            .authorizeRequests()
-//            .antMatchers("/users/**").permitAll()
-//            .antMatchers("/admins/**").permitAll()
-//            .anyRequest().authenticated().and()
-//            .cors().and()
-//            .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService), BasicAuthenticationFilter.class);
-//        http.csrf().disable();
-        //privremeno sam zakomentarisao da ne dobijam 401 - Raffayet
+        http
+            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+            .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
-        http.csrf().disable()
-                .authorizeRequests()
-                .antMatchers("/api/**").authenticated()
-                .and()
-                .httpBasic();
+            .authorizeRequests()
+            .antMatchers("/users/**").permitAll()
+            .antMatchers("/admins/**").permitAll()
+            .antMatchers("/**").permitAll() //dodao sam ovu liniju jer sam imao problema sa permission-ima, nek ostane ovako dok login ne bude potpuno gotov, zajedno sa onim tokenutil servisom
+            .anyRequest().authenticated().and()
+            .cors().and()
+            .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService), BasicAuthenticationFilter.class);
+        http.csrf().disable();
     }
 
     @Override
