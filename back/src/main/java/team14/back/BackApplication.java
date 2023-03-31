@@ -1,18 +1,22 @@
 package team14.back;
 
+import com.mongodb.client.MongoDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import team14.back.model.CSRRequest;
-import team14.back.model.RemovedCertificate;
+import team14.back.model.RevokedCertificate;
 import team14.back.model.Role;
 import team14.back.model.User;
 import team14.back.repository.CSRRequestRepository;
-import team14.back.repository.RemovedCertificateRepository;
+import team14.back.repository.RevokedCertificateRepository;
 import team14.back.repository.RoleRepository;
 import team14.back.repository.UserRepository;
+
+import java.math.BigInteger;
 
 @SpringBootApplication
 @EnableMongoRepositories
@@ -22,7 +26,7 @@ public class BackApplication implements CommandLineRunner {
 	private UserRepository userRepository;
 
 	@Autowired
-	private RemovedCertificateRepository removedCertificateRepository;
+	private RevokedCertificateRepository revokedCertificateRepository;
 
 	@Autowired
 	private CSRRequestRepository csrRequestRepository;
@@ -49,8 +53,7 @@ public class BackApplication implements CommandLineRunner {
 	}
 
 	private void createRemoveCertificates() {
-		removedCertificateRepository.save(new RemovedCertificate("alias1", "neki razlog1"));
-		removedCertificateRepository.save(new RemovedCertificate("alias2", "neki razlog2"));
+
 	}
 
 	private void createCSRRequests() {

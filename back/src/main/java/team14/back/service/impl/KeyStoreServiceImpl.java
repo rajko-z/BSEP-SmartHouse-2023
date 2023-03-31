@@ -121,16 +121,4 @@ public class KeyStoreServiceImpl implements KeyStoreService {
 
         return certificates;
     }
-
-    public boolean isCertificateRevoked(X509Certificate certificate) throws CertificateException, IOException, CRLException {
-        Resource crlResource = new FileSystemResource(CRL_FILE);
-        CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
-        X509CRL crl = (X509CRL) certFactory.generateCRL(crlResource.getInputStream());
-        return crl.isRevoked(certificate);
-    }
-
-    @Override
-    public void addCertificateToCRL(X509Certificate certificate) throws IOException, CertificateException, CRLException {
-        //TODO
-    }
 }

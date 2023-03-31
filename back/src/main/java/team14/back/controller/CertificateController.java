@@ -3,10 +3,9 @@ package team14.back.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import team14.back.dto.CertificateDataDTO;
-import team14.back.dto.RemovedCertificateDTO;
+import team14.back.dto.RevokedCertificateDTO;
 import team14.back.service.CertificateService;
 
 import java.io.IOException;
@@ -25,9 +24,9 @@ public class CertificateController {
     private final CertificateService certificateService;
 
 //    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER')")
-    @GetMapping("get-removed-certificates")
-    public List<RemovedCertificateDTO> getRemovedCertificates() {
-        return certificateService.getRemovedCertificates();
+    @GetMapping("get-revoked-certificates")
+    public List<String> getRevokedCertificatesSerialNumbers() {
+        return certificateService.getRevokedCertificatesSerialNumbers();
     }
 
     @GetMapping("get-all-certificates")
@@ -44,8 +43,8 @@ public class CertificateController {
     }
 
     @PostMapping("revoke-certificate")
-    public ResponseEntity<?> revokeCertificate(@Param("certificateSerialNumber") String certificateSerialNumber) throws CertificateException, KeyStoreException, NoSuchAlgorithmException, SignatureException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
-        this.certificateService.revokeCertificate(new BigInteger(certificateSerialNumber));
+    public ResponseEntity<?> revokeCertificate(@Param("certificateSerialNumber") String certificateSerialNumber, @Param("reasonForRevoking") String reasonForRevoking) throws CertificateException, KeyStoreException, NoSuchAlgorithmException, SignatureException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
+        this.certificateService.revokeCertificate(new BigInteger(certificateSerialNumber), reasonForRevoking);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Success!");
         return ResponseEntity.ok(response);
