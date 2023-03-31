@@ -12,11 +12,11 @@ export class CertificateService {
 
   constructor(private http: HttpClient) { }
 
-  getRemovedCertificates(): Observable<RemovedCertificate[]>
+  getRevokedCertificatesSerialNumbers(): Observable<String[]>
   {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("format", "json");
-    return this.http.get<RemovedCertificate[]>(environment.backUrl + "/certificates/get-removed-certificates", { params: queryParams });
+    return this.http.get<String[]>(environment.backUrl + "/certificates/get-revoked-certificates", { params: queryParams });
   }
 
   getAllCertificates(): Observable<CertificateData[]>
@@ -33,9 +33,10 @@ export class CertificateService {
     return this.http.post<string>(environment.backUrl + "/certificates/verify-certificate", null, { params: queryParams });
   }
 
-  revokeCertificate(certificateSerialNumber: string): Observable<string> {
+  revokeCertificate(certificateSerialNumber: string, reasonForRevoking: string): Observable<string> {
     let queryParams = new HttpParams();
     queryParams = queryParams.append("certificateSerialNumber", certificateSerialNumber);
+    queryParams = queryParams.append("reasonForRevoking", reasonForRevoking);
     queryParams = queryParams.append("format", "json");
     return this.http.post<string>(environment.backUrl + "/certificates/revoke-certificate", null, { params: queryParams });
   }

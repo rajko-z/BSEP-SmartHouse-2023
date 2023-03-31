@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import team14.back.dto.CertificateDataDTO;
-import team14.back.dto.RemovedCertificateDTO;
+import team14.back.dto.RevokedCertificateDTO;
 import team14.back.dto.VerifyCertificateResponseDTO;
-import team14.back.model.RemovedCertificate;
-import team14.back.repository.RemovedCertificateRepository;
+import team14.back.model.RevokedCertificate;
+import team14.back.repository.RevokedCertificateRepository;
 import team14.back.service.CertificateService;
 import team14.back.service.KeyStoreService;
 
@@ -19,26 +19,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Date;
 
 @Service
 @AllArgsConstructor
 public class CertificateServiceImpl implements CertificateService {
-    private final RemovedCertificateRepository removedCertificateRepository;
+    private final RevokedCertificateRepository revokedCertificateRepository;
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     private final KeyStoreService keyStoreService;
 
     @Override
-    public List<RemovedCertificateDTO> getRemovedCertificates() {
-        List<RemovedCertificate> removedCertificates = this.removedCertificateRepository.findAll();
-        List<RemovedCertificateDTO> removedCertificateDTOS = new ArrayList<>();
-        for (RemovedCertificate removedCertificate: removedCertificates)
+    public List<String> getRevokedCertificatesSerialNumbers() {
+        List<RevokedCertificate> revokedCertificates = this.revokedCertificateRepository.findAll();
+        List<String> revokedCertificateSerialNumbers = new ArrayList<>();
+        for (RevokedCertificate revokedCertificate : revokedCertificates)
         {
-            removedCertificateDTOS.add(new RemovedCertificateDTO(removedCertificate.getCertificateAlias(), removedCertificate.getReason()));
+            revokedCertificateSerialNumbers.add(String.valueOf(revokedCertificate.getSerialNumber()));
         }
-        return removedCertificateDTOS;
+        return revokedCertificateSerialNumbers;
     }
 
     @Override
@@ -67,12 +66,10 @@ public class CertificateServiceImpl implements CertificateService {
         }
     }
 
-
-
     @Override
-    public void revokeCertificate(BigInteger certificateSerialNumber) throws KeyStoreException, CertificateException, IOException, CRLException {
-        X509Certificate certificate = findCertificateBySerialNumber(certificateSerialNumber);
-        keyStoreService.addCertificateToCRL(certificate);
+    public void revokeCertificate(BigInteger certificateSerialNumber, String reasonForRevoking) throws KeyStoreException, CertificateException, IOException, CRLException {
+        RevokedCertificate revokedCertificate = new RevokedCertificate(certificateSerialNumber, reasonForRevoking);
+        revokedCertificateRepository.save(revokedCertificate);
     }
 
     @Override
@@ -90,7 +87,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     public boolean isCertificateValid(X509Certificate certificateToCheck) throws CertificateException, NoSuchAlgorithmException, InvalidKeyException, NoSuchProviderException, IOException, CRLException {
-        boolean revoked = keyStoreService.isCertificateRevoked(certificateToCheck);
+        boolean revoked = isCertificateRevoked(certificateToCheck);
 
         try {
             certificateToCheck.checkValidity();
@@ -100,5 +97,19 @@ public class CertificateServiceImpl implements CertificateService {
             return false;
         }
         return !revoked;
+    }
+
+    public boolean isCertificateRevoked(X509Certificate certificateToCheck)
+    {
+        List<RevokedCertificate> revokedCertificates = revokedCertificateRepository.findAll();
+        for (RevokedCertificate revokedCertificate: revokedCertificates)
+        {
+            if (revokedCertificate.getSerialNumber().equals(certificateToCheck.getSerialNumber()))
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

@@ -10,12 +10,14 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {AngularMaterialModule} from "./modules/shared/angular-material.module";
 import { RouterModule } from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
+import { RevokeDialogComponent } from './components/admin/revoke-dialog/revoke-dialog.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RevokeDialogComponent
   ],
   imports: [
     AngularMaterialModule,

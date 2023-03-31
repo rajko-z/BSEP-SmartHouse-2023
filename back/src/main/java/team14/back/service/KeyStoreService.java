@@ -21,8 +21,4 @@ public interface KeyStoreService {
     PrivateKey readPrivateKey(String keyStoreFile, String keyStorePass, String alias, String pass);
 
     HashMap<String, X509Certificate> getAllCertificates() throws KeyStoreException;
-
-    boolean isCertificateRevoked(X509Certificate certificate) throws CertificateException, IOException, CRLException;
-
-    void addCertificateToCRL(X509Certificate certificate) throws IOException, CertificateException, CRLException;
 }
