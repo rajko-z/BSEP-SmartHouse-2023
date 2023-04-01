@@ -8,16 +8,14 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {AngularMaterialModule} from "./modules/shared/angular-material.module";
-import { RouterModule } from '@angular/router';
+import {RouterModule} from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
-import { RevokeDialogComponent } from './components/admin/revoke-dialog/revoke-dialog.component';
-
-
+import { AdminRejectCsrCheckComponent } from './components/admin/admin-reject-csr-check/admin-reject-csr-check.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    RevokeDialogComponent
+    AdminRejectCsrCheckComponent,
   ],
   imports: [
     AngularMaterialModule,

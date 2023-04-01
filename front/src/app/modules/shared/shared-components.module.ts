@@ -4,6 +4,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AngularMaterialModule} from './angular-material.module';
 import {RouterLinkWithHref} from "@angular/router";
 import {HomePageComponent} from "../../pages/home-page/home-page.component";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 const declaredModules = [
   HomePageComponent

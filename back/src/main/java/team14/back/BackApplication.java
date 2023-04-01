@@ -1,14 +1,11 @@
 package team14.back;
 
-import com.mongodb.client.MongoDatabase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import team14.back.model.CSRRequest;
-import team14.back.model.RevokedCertificate;
 import team14.back.model.Role;
 import team14.back.model.User;
 import team14.back.repository.CSRRequestRepository;
@@ -16,7 +13,7 @@ import team14.back.repository.RevokedCertificateRepository;
 import team14.back.repository.RoleRepository;
 import team14.back.repository.UserRepository;
 
-import java.math.BigInteger;
+import java.time.LocalDateTime;
 
 @SpringBootApplication
 @EnableMongoRepositories
@@ -57,8 +54,11 @@ public class BackApplication implements CommandLineRunner {
 	}
 
 	private void createCSRRequests() {
-		csrRequestRepository.save(new CSRRequest(11111111L, "test1@gmail.com", "test1", "test1", "test1fajl"));
-		csrRequestRepository.save(new CSRRequest(22222222L, "test2gmail.com", "test2", "test2", "test2fajl"));
+		csrRequestRepository.save(new CSRRequest(11111111L, "rajkozgrc4@gmail.com", "test1", "test1", "test1fajl", LocalDateTime.now().minusDays(5)));
+		csrRequestRepository.save(new CSRRequest(222232222L, "test2gmail.com", "test2", "test2", "test2fajl", LocalDateTime.now().minusDays(2)));
+		csrRequestRepository.save(new CSRRequest(222212222L, "test3gmail.com", "test3", "test3", "test3fajl", LocalDateTime.now().minusDays(10).minusHours(2)));
+		csrRequestRepository.save(new CSRRequest(432433332L, "test4gmail.com", "test4", "test4", "test4fajl", LocalDateTime.now().minusDays(4).minusMinutes(3)));
+		csrRequestRepository.save(new CSRRequest(445555555L, "test5gmail.com", "test5", "test5", "test5fajl", LocalDateTime.now().minusDays(4).minusMinutes(3)));
 	}
 
 	// sifra za sve korisnike je 12345678

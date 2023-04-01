@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="title">
+      Enter optional reason
+  </div>
+  <hr/>
+  <br/>
+  <mat-form-field class="reasonField" appearance="outline">
+    <textarea matInput [(ngModel)]="reason"></textarea>
+  </mat-form-field>
+  <br/>
+  <div *ngIf="loading === false" class="footerDiv">
+    <button mat-raised-button color="primary" (click)="ok()">
+      Confirm rejection
+    </button>
+    <button mat-raised-button color="primary" (click)="cancel()">
+      Cancel
+    </button>
+  </div>
+  <div *ngIf="loading === true" class="footerDiv">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+</div>

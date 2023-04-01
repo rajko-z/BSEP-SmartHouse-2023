@@ -1,7 +1,14 @@
 package team14.back.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
+import java.time.LocalDateTime;
 
 @Document("csr_requests")
 public class CSRRequest {
@@ -10,7 +17,7 @@ public class CSRRequest {
     private String email;
     private String firstName;
     private String lastName;
-
+    private LocalDateTime timestamp;
     private String filePath;
 
     public CSRRequest() {
@@ -57,11 +64,20 @@ public class CSRRequest {
         this.filePath = filePath;
     }
 
-    public CSRRequest(Long id, String email, String firstName, String lastName, String filePath) {
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public CSRRequest(Long id, String email, String firstName, String lastName, String filePath, LocalDateTime timestamp) {
         this.id = id;
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.filePath = filePath;
+        this.timestamp = timestamp;
     }
 }

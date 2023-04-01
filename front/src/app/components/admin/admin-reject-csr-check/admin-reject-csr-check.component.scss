@@ -1,0 +1,26 @@
+.container {
+  width: 50vw;
+  margin-top:1%;
+}
+
+.title {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.footerDiv {
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  button {
+    margin-left: 15px;
+  }
+}
+
+.reasonField {
+  width: 50vw;
+}
