@@ -1,24 +1,47 @@
 <div class="containerDiv">
     <h1 class="table-title">Certificates</h1>
     <table mat-table matSort [dataSource]="certificates">
-        <ng-container matColumnDef="firstName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Certificate Alias </th>
-            <td mat-cell *matCellDef="let element"> {{element.certificateAlias}} </td>
+        <ng-container matColumnDef="alias">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Alias </th>
+            <td mat-cell *matCellDef="let certificate"> {{certificate.alias}} </td>
         </ng-container>
 
-        <ng-container matColumnDef="lastName">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Reason for rejection </th>
-            <td mat-cell *matCellDef="let element"> {{element.reason}} </td>
+        <ng-container matColumnDef="algorithm">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Algorithm </th>
+            <td mat-cell *matCellDef="let certificate"> {{certificate.algorithm}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="keySize">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Key Size </th>
+            <td mat-cell *matCellDef="let certificate"> {{certificate.keySize}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="creationDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Creation Date </th>
+            <td mat-cell *matCellDef="let certificate"> {{certificate.creationDate | date: 'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="expiryDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Expiry Date </th>
+            <td mat-cell *matCellDef="let certificate"> {{certificate.expiryDate | date: 'dd/MM/yyyy'}}</td>
+        </ng-container>
+
+        <ng-container matColumnDef="isValid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Validation </th>
+            <td mat-cell *matCellDef="let certificate">
+                <button id="valid-button" *ngIf="certificate.valid" mat-raised-button disabled>Valid</button>
+                <button id="invalid-button" *ngIf="!certificate.valid" mat-raised-button disabled>Not valid</button>
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="verifyButton">
             <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear></th>
-            <td mat-cell *matCellDef="let element"><button mat-raised-button color="primary" style="cursor:pointer">Verify</button></td>
+            <td mat-cell *matCellDef="let certificate"><button mat-raised-button color="primary" style="cursor:pointer" (click)="verifyCertificate(certificate.serialNumber)">Verify</button></td>
         </ng-container>
 
-        <ng-container matColumnDef="cancelButton">
+        <ng-container matColumnDef="revokeButton">
             <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear></th>
-            <td mat-cell *matCellDef="let element"><button mat-raised-button color="warn" style="cursor:pointer">Cancel</button></td>
+            <td mat-cell *matCellDef="let certificate"><button [disabled]="revokedCertificatesSerialNumbers.includes(certificate.serialNumber.toString())" mat-raised-button color="warn" style="cursor:pointer" (click)="openRevokingDialog(certificate.serialNumber)">Revoke</button></td>
         </ng-container>
         
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

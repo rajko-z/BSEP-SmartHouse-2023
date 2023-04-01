@@ -8,13 +8,16 @@ import {HttpClientModule} from "@angular/common/http";
 import {ReactiveFormsModule} from "@angular/forms";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {AngularMaterialModule} from "./modules/shared/angular-material.module";
+import { RouterModule } from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
+import { RevokeDialogComponent } from './components/admin/revoke-dialog/revoke-dialog.component';
 
 
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RevokeDialogComponent
   ],
   imports: [
     AngularMaterialModule,
@@ -25,6 +28,7 @@ import {MatTableModule} from '@angular/material/table';
     HttpClientModule,
     ReactiveFormsModule,
     DatePipe,
+    RouterModule,
     MatTableModule
   ],
   providers: [
