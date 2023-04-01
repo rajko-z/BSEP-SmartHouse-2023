@@ -1,12 +1,13 @@
 package team14.back.model;
 
 import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document("csr_requests")
 public class CSRRequest {
+
     @Id
-    private Long id;
     private String email;
     private String firstName;
     private String lastName;
@@ -15,14 +16,6 @@ public class CSRRequest {
 
     public CSRRequest() {
 
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getEmail() {
@@ -57,8 +50,7 @@ public class CSRRequest {
         this.filePath = filePath;
     }
 
-    public CSRRequest(Long id, String email, String firstName, String lastName, String filePath) {
-        this.id = id;
+    public CSRRequest(String email, String firstName, String lastName, String filePath) {
         this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
