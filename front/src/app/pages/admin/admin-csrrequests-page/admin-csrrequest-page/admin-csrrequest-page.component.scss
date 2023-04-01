@@ -1,0 +1,46 @@
+.centerContainer {
+  width: 50vw;
+  margin-left: 25%;
+  margin-right: 25%;
+  margin-top:1%;
+}
+
+.spinnerContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10%;
+
+  .spinner {
+    width: 40vw;
+  }
+}
+
+.tableClass {
+  height: 100%;
+  width:100%;
+}
+
+.increaseWidth {
+  width: 30vw;
+}
+
+.validSignature {
+  background-color: lightgreen;
+}
+.invalidSignature {
+  background-color: red;
+}
+.subjectTitle {
+  margin-top: 2%;
+}
+.footerDiv {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  button {
+    margin-left: 15px;
+  }
+}

@@ -1,0 +1,250 @@
+<div *ngIf="loading === true" class="spinnerContainer">
+  <mat-spinner class="spinner"></mat-spinner>
+</div>
+<div class="centerContainer" *ngIf="errorActive === true && loading === false">
+  <h1>Sorry, we can't load this request. Please make sure that url to request is valid.</h1>
+</div>
+<div class="centerContainer" *ngIf="errorActive === false && loading === false">
+  <mat-card *ngIf="csrRequestData.validSignature" class="validSignature">
+    <mat-card-content>CRS Request has valid signature</mat-card-content>
+  </mat-card>
+  <mat-card *ngIf="!csrRequestData.validSignature" class="invalidSignature">
+    <mat-card-content>CRS Request has invalid signature</mat-card-content>
+  </mat-card>
+  <h2 class="subjectTitle">Subject Data</h2>
+  <mat-card>
+    <mat-card-content>
+      <ng-form [formGroup]="subjectDataForm">
+        <table class="tableClass">
+          <tr>
+            <td><span>Email: </span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput
+                       readOnly
+                       formControlName="email">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Common Name (CN): </span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput
+                       value="{{csrRequestData?.commonName}}"
+                       formControlName="commonName">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Organization Unit (OU):</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput
+                       value="{{csrRequestData?.organizationUnit}}"
+                       formControlName="organizationUnit">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Organization Name (O):</span></td>
+            <td>
+              <mat-form-field class="increaseWidth"  appearance="outline">
+                <input matInput
+                       value="{{csrRequestData?.organizationName}}"
+                       formControlName="organizationName">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Locality Name (L):</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput
+                       value="{{csrRequestData?.localityName}}"
+                       formControlName="localityName">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>State Name (ST):</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput
+                       value="{{csrRequestData?.stateName}}"
+                       formControlName="stateName">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Country (C):</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput
+                       value="{{csrRequestData?.countryName}}"
+                       formControlName="country">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Public Key (PK):</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <textarea matInput
+                          value="{{csrRequestData?.publicKey}}"
+                          formControlName="pk"
+                ></textarea>
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Signature:</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <textarea matInput
+                          value="{{csrRequestData?.signature}}"
+                          formControlName="signature"
+                ></textarea>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </ng-form>
+    </mat-card-content>
+  </mat-card>
+  <br/>
+
+
+
+
+  <h2>Certificate template</h2>
+  <mat-card>
+    <mat-card-content>
+      <ng-form [formGroup]="templateExtensionsForm">
+        <table class="tableClass">
+          <tr>
+            <td><span>Authority Key Identifier:</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput formControlName="authorityKeyIdentifier">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Extended Key Usage:</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput formControlName="extendedKeyUsage">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Subject Alternative Name:</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput formControlName="subjectAlternativeName">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Subject Key Identifier:</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput formControlName="subjectKeyIdentifier">
+              </mat-form-field>
+            </td>
+          </tr>
+          <br/>
+          <tr>
+            <td><span>Choose template:</span></td>
+            <td>
+              <mat-radio-group aria-label="Select an option" formControlName="templateType">
+                <mat-radio-button value="1">SSL Server</mat-radio-button>
+                <mat-radio-button value="2">SSL Client</mat-radio-button>
+              </mat-radio-group>
+            </td>
+          </tr>
+          <br/>
+          <tr>
+            <td><span>Select Key Usages:</span></td>
+            <td>
+              <section>
+                <mat-checkbox formControlName="certificateSigning">Certificate Signing</mat-checkbox>
+                <mat-checkbox formControlName="decipherOnly">Decipher Only</mat-checkbox>
+                <mat-checkbox formControlName="keyAgreement">Key Agreement</mat-checkbox>
+                <mat-checkbox formControlName="crlSign">CRL Sign</mat-checkbox>
+                <mat-checkbox formControlName="digitalSignature">Digital Signature</mat-checkbox>
+                <mat-checkbox formControlName="keyEncipherment">Key Encipherment</mat-checkbox>
+                <mat-checkbox formControlName="dataEncipherment">Data Encipherment</mat-checkbox>
+                <mat-checkbox formControlName="encipherOnly">Encipher Only</mat-checkbox>
+                <mat-checkbox formControlName="nonRepudiation">Non Repudiation</mat-checkbox>
+              </section>
+            </td>
+          </tr>
+        </table>
+      </ng-form>
+    </mat-card-content>
+  </mat-card>
+  <br/>
+
+
+
+  <h2>Signing</h2>
+  <mat-card>
+    <mat-card-content>
+      <ng-form [formGroup]="signingForm">
+        <table class="tableClass">
+          <tr>
+            <td><span>Certificate Version:</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput formControlName="certificateVersion">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Signature Algorithm:</span></td>
+            <td>
+              <mat-form-field class="increaseWidth" appearance="outline">
+                <input matInput formControlName="signatureAlgorithm">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td><span>Choose Intermediate CA:</span></td>
+            <td>
+              <mat-radio-group aria-label="Select an option" formControlName="intermediateType">
+                <mat-radio-button value="1">Smarthouse2023FirstICA</mat-radio-button>
+                <mat-radio-button value="2">Smarthouse2023SecondICA</mat-radio-button>
+              </mat-radio-group>
+            </td>
+          </tr>
+          <br/>
+          <tr>
+            <td><span>Valid Until:</span></td>
+            <td>
+              <mat-form-field appearance="fill">
+                <mat-label>Choose a date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="validUntil">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </ng-form>
+    </mat-card-content>
+  </mat-card>
+  <br/>
+  <br/>
+  <hr/>
+  <div class="footerDiv">
+    <button mat-raised-button color="primary" (click)="reject()">
+      Reject
+    </button>
+    <button mat-raised-button color="primary" (click)="issueCertificate()">
+      Issue Certificate
+    </button>
+  </div>
+</div>

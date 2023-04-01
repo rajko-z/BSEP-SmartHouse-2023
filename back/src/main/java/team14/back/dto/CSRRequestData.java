@@ -9,12 +9,13 @@ import lombok.*;
 @Builder
 public class CSRRequestData {
 
-    public String commonName;
-    public String organizationUnit;
-    public String organizationName;
-    public String localityName;
-    public String stateName;
-    public String countryName;
-    public String publicKey;
-    public String isValidSignature;
+    private String commonName;
+    private String organizationUnit;
+    private String organizationName;
+    private String localityName;
+    private String stateName;
+    private String countryName;
+    private String publicKey;
+    private String signature;
+    private boolean isValidSignature;
 }

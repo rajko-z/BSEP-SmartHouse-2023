@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class ProbaParsingCSR {
 
@@ -65,7 +66,7 @@ public class ProbaParsingCSR {
     private static final String EMAIL = "2.5.4.9";
 
     public void test() throws IOException {
-        File file = ResourceUtils.getFile("classpath:rajkotest.csr");
+        File file = ResourceUtils.getFile("classpath:rajkozgrc4@gmail.com.csr");
 
         try (final ByteArrayInputStream bais = new ByteArrayInputStream(moj.getBytes());
              final InputStreamReader isr = new InputStreamReader(bais, StandardCharsets.UTF_8);
@@ -96,6 +97,7 @@ public class ProbaParsingCSR {
             System.out.println(c.toString());
             System.out.println(c.getVersion().toString());
             System.out.println(c.getAttributes().toString());
+            System.out.println(Arrays.toString(csr.getSignature()));
 
             boolean isValid = isSignatureValidd(csr);
             System.out.println(isValid);

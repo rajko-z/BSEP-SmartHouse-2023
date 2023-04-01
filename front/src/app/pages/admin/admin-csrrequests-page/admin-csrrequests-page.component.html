@@ -13,7 +13,9 @@
 
     <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-      <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+      <td mat-cell *matCellDef="let element">
+        <a routerLink="/admin/csr_requests/{{element.email}}" >{{element.email}}</a>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="firstName">

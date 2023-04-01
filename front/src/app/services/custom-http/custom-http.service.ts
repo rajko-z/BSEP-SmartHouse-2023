@@ -68,9 +68,11 @@ export class CustomHttpService {
     });
   }
 
-  deleteT<Type>(url: string) {
+  deleteT<Type>(url: string, data?: any) {
     return this.http.delete<Type>(url, {
       headers: this.createHeader(),
+      body: data
     });
   }
+
 }

@@ -7,13 +7,19 @@ import {
 } from "../../pages/admin/admin-certificates-page/admin-certificates-page.component";
 import {AdminDashboardComponent} from "../../components/admin/admin-dashboard/admin-dashboard.component";
 import {AngularMaterialModule} from "../shared/angular-material.module";
-import {NgForOf} from "@angular/common";
-import {CommonModule, DatePipe} from '@angular/common';
+import {CommonModule, DatePipe, NgForOf} from "@angular/common";
+import {
+  AdminCsrrequestPageComponent
+} from "../../pages/admin/admin-csrrequests-page/admin-csrrequest-page/admin-csrrequest-page.component";
+import {RevokeDialogComponent} from "../../components/admin/revoke-dialog/revoke-dialog.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 const declaredModules = [
   AdminCSRRequestsPageComponent,
   AdminCertificatesPageComponent,
-  AdminDashboardComponent
+  AdminDashboardComponent,
+  AdminCsrrequestPageComponent,
+  RevokeDialogComponent,
 ];
 
 @NgModule({
@@ -24,7 +30,8 @@ const declaredModules = [
     SharedComponentsModule,
     NgForOf,
     CommonModule,
-    DatePipe
+    DatePipe,
+    ReactiveFormsModule
   ],
   exports: declaredModules
 })
