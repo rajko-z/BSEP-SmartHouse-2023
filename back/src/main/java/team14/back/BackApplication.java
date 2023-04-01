@@ -54,8 +54,8 @@ public class BackApplication implements CommandLineRunner {
 	}
 
 	private void createCSRRequests() {
-		csrRequestRepository.save(new CSRRequest(11111111L, "test1@gmail.com", "test1", "test1", "test1fajl"));
-		csrRequestRepository.save(new CSRRequest(22222222L, "test2gmail.com", "test2", "test2", "test2fajl"));
+		csrRequestRepository.save(new CSRRequest("test1@gmail.com", "test1", "test1", "test1fajl"));
+		csrRequestRepository.save(new CSRRequest("test2gmail.com", "test2", "test2", "test2fajl"));
 	}
 
 	// sifra za sve korisnike je 12345678
