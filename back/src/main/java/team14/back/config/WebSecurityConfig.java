@@ -52,7 +52,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .authorizeRequests()
             .antMatchers("/users/**").permitAll()
             .antMatchers("/admins/**").permitAll()
-            .antMatchers("/csrrequests/**").permitAll()
             .anyRequest().authenticated().and()
             .cors().and()
             .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService), BasicAuthenticationFilter.class);
@@ -62,7 +61,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(HttpMethod.POST,
-                "/auth/login");
+      "/auth/login",
+                "/users/register");
 
         web.ignoring().antMatchers(HttpMethod.GET,
                 "/", "/webjars/**",
@@ -71,8 +71,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/**/*.html",
                 "/socket/**",
                 "/**/*.css",
-                "/**/*.js",
-                "**/csrrequests"
+                "/**/*.js"
                 );
     }
 }

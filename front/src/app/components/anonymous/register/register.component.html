@@ -26,11 +26,11 @@
         </mat-form-field>
         <h4>CSR File:</h4>
         <div class="fileDiv">
-            <input type="file" id="file" (change)="onBasicUpload($event)" accept=".csr">
+          <input type="file" id="file" (change)="onBasicUpload($event)" accept=".csr">
         </div>
         <div class="buttonDiv">
           <button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Register</button><br/>
-          <button  class="registerLink" type="button" [routerLink]="['/anon/login']">Have an account? Log In</button>
+          <button  class="registerLink" type="button" [routerLink]="['/anon/login']">Already have an account? Log In</button>
         </div>
       </form>
     </mat-card-content>

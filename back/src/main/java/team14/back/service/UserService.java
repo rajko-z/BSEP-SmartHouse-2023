@@ -1,11 +1,13 @@
 package team14.back.service;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
-import team14.back.dto.UserDTO;
+import org.springframework.web.multipart.MultipartFile;
+import team14.back.dto.CSRRequestDTO;
 
-import java.util.List;
+import java.io.IOException;
 
 
 public interface UserService extends UserDetailsService {
-    List<UserDTO> findAll();
+
+    void register(CSRRequestDTO requestDTO, MultipartFile document) throws IOException;
 }

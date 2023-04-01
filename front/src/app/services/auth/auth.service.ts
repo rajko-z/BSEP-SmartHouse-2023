@@ -4,6 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { AuthCredentials } from 'src/app/model/auth';
 import { environment } from 'src/environments/environment';
 import {User, UserWithToken} from "../../model/user";
+import {Router} from "@angular/router";
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import {User, UserWithToken} from "../../model/user";
 export class AuthService {
   isloggedUser = new BehaviorSubject(this.loggedUser);
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, private router: Router) {
   }
 
   set loggedUser(isLogged:any){
@@ -57,5 +58,6 @@ export class AuthService {
   logout(){
     sessionStorage.removeItem("currentUser");
     this.loggedUser = false;
+    this.router.navigate(['/anon/login'])
   }
 }

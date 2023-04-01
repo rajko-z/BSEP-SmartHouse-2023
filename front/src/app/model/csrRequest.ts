@@ -1,10 +1,7 @@
 export interface CSRRequest{
     email:string,
     firstName:string,
-    lastName:string,
-
-    filePath:string,
-
+    lastName:string
 }
 
 export class CSRRequestData {
@@ -22,4 +19,11 @@ export class CSRRequestData {
 export class RejectCSR {
   email: string;
   reason?: string;
+}
+
+export class SimpleCSRRequest {
+  email: string;
+  firstName: string;
+  lastName: string;
+  timestamp: string;
 }

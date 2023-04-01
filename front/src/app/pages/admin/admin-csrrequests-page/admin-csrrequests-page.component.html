@@ -1,21 +1,16 @@
 <div class="containerDiv">
   <h1 class="table-title">CSR Requests</h1>
   <table mat-table matSort [dataSource]="csrRequests">
-    <ng-container matColumnDef="id">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-
-    <ng-container matColumnDef="timestamp">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header> Timestamp </th>
-      <td mat-cell *matCellDef="let element"> {{element.timestamp}} </td>
-    </ng-container>
-
     <ng-container matColumnDef="email">
       <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
       <td mat-cell *matCellDef="let element">
         <a routerLink="/admin/csr_requests/{{element.email}}" >{{element.email}}</a>
       </td>
+    </ng-container>
+
+    <ng-container matColumnDef="timestamp">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Timestamp </th>
+      <td mat-cell *matCellDef="let element"> {{element.timestamp}} </td>
     </ng-container>
 
     <ng-container matColumnDef="firstName">

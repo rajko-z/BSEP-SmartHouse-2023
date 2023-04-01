@@ -54,11 +54,11 @@ public class BackApplication implements CommandLineRunner {
 	}
 
 	private void createCSRRequests() {
-		csrRequestRepository.save(new CSRRequest(11111111L, "rajkozgrc4@gmail.com", "test1", "test1", "test1fajl", LocalDateTime.now().minusDays(5)));
-		csrRequestRepository.save(new CSRRequest(222232222L, "test2gmail.com", "test2", "test2", "test2fajl", LocalDateTime.now().minusDays(2)));
-		csrRequestRepository.save(new CSRRequest(222212222L, "test3gmail.com", "test3", "test3", "test3fajl", LocalDateTime.now().minusDays(10).minusHours(2)));
-		csrRequestRepository.save(new CSRRequest(432433332L, "test4gmail.com", "test4", "test4", "test4fajl", LocalDateTime.now().minusDays(4).minusMinutes(3)));
-		csrRequestRepository.save(new CSRRequest(445555555L, "test5gmail.com", "test5", "test5", "test5fajl", LocalDateTime.now().minusDays(4).minusMinutes(3)));
+		csrRequestRepository.save(new CSRRequest("rajkozgrc4@gmail.com", "test1", "test1", LocalDateTime.now().minusDays(5)));
+		csrRequestRepository.save(new CSRRequest("test2gmail.com", "test2", "test2", LocalDateTime.now().minusDays(2)));
+		csrRequestRepository.save(new CSRRequest("test3gmail.com", "test3", "test3", LocalDateTime.now().minusDays(10).minusHours(2)));
+		csrRequestRepository.save(new CSRRequest("test4gmail.com", "test4", "test4", LocalDateTime.now().minusDays(4).minusMinutes(3)));
+		csrRequestRepository.save(new CSRRequest("test5gmail.com", "test5", "test5", LocalDateTime.now().minusDays(4).minusMinutes(3)));
 	}
 
 	// sifra za sve korisnike je 12345678

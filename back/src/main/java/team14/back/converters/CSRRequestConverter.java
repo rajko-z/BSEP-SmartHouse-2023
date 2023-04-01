@@ -9,11 +9,9 @@ public class CSRRequestConverter {
 
     public static SimpleCSRRequestDTO convertToSimpleDTO(CSRRequest csrRequest) {
         return SimpleCSRRequestDTO.builder()
-                .id(csrRequest.getId())
+                .email(csrRequest.getEmail())
                 .firstName(csrRequest.getFirstName())
                 .lastName(csrRequest.getLastName())
-                .email(csrRequest.getEmail())
-                .filePath(csrRequest.getFilePath())
                 .timestamp(csrRequest.getTimestamp())
                 .build();
     }

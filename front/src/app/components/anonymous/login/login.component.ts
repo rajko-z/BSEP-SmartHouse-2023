@@ -1,8 +1,8 @@
+import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { environment } from 'src/environments/environment';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +14,7 @@ export class LoginComponent implements OnInit{
   public email = '';
   public password = '';
 
-  constructor(private authService:AuthService, private toastService: ToastrService, private router: Router){
-    
+  constructor(private authService:AuthService, private toastService: ToastrService, private router:Router){
   }
 
   ngOnInit() {
@@ -29,20 +28,19 @@ export class LoginComponent implements OnInit{
       next:(res)=>{
         this.authService.setCurrentUser(res);
         this.toastService.success("Successfully logged in!");
-        console.log("Uspesno");
         this.authService.loggedUser = true;
 
         let role: string | undefined = this.authService.getCurrentUser()?.role;
 
         switch(role){
-          case 'CLIENT':
-            this.router.navigate(['/client', {outlets: {'ClientRouter': ['request-ride-page']}}]);
+          case 'ROLE_ADMIN':
+            this.router.navigateByUrl("admin/");
             break;
-          case 'ADMIN':
-            this.router.navigate(['/admin', {outlets: {'AdminRouter': ['homepage']}}]);
+          case 'ROLE_OWNER':
+            this.router.navigateByUrl("owner/");
             break;
           default:
-            this.router.navigateByUrl('/login');
+            this.router.navigateByUrl('anon/login');
         }
 
       },

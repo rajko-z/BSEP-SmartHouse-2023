@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
 import {CustomHttpService} from "../custom-http/custom-http.service";
-import {SimpleCSRRequest} from "../../model/csr_requests";
 import {environment} from "../../../environments/environment";
-import {CSRRequestData, RejectCSR} from "../../model/csrRequest";
+import {CSRRequestData, RejectCSR, SimpleCSRRequest} from "../../model/csrRequest";
 import {TextResponse} from "../../model/textResponse";
 
 @Injectable({

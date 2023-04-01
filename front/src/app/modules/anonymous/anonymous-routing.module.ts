@@ -7,7 +7,7 @@ import {AnonymousHomePageComponent} from "../../pages/anonymous/anonymous-home-p
 const routes: Routes = [
   {
     path: '',
-    component: AnonymousHomePageComponent
+    component: LoginComponent
   },{
     path: 'login',
     component: LoginComponent

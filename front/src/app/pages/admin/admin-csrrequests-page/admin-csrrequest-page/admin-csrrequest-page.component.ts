@@ -116,6 +116,6 @@ export class AdminCsrrequestPageComponent implements OnInit {
   }
 
   issueCertificate() {
-
+    alert("Not implemented")
   }
 }

@@ -17,12 +17,6 @@ export class CustomHttpService {
     });
     return headers;
   }
-  public createHeaderMock() {
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/json'
-    });
-    return headers;
-  }
 
   get(url: string) {
     return this.http.get(url, {
@@ -44,7 +38,7 @@ export class CustomHttpService {
 
   getT<Type>(url: string) {
     return this.http.get<Type>(url, {
-      headers: this.createHeaderMock()
+      headers: this.createHeader()
     });
   }
 

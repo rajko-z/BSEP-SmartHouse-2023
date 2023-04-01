@@ -18,12 +18,6 @@ export class AdminGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
-    // za sada dok se ne uradi login admin guard ce uvek proci tako da ce sve putanje koje pocinju
-    // sa admin biti dostupne
-    return true;
-
-
-
     if (!this.authService.isUserLoggedIn()) {
       this.router.navigate(['/anon']);
       return false;

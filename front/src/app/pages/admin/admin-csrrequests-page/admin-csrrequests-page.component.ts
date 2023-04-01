@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {SimpleCSRRequest} from "../../../model/csr_requests";
 import {CSRRequestService} from "../../../services/csr_requests/csrrequest.service";
+import {SimpleCSRRequest} from "../../../model/csrRequest";
 
 @Component({
   selector: 'app-admin-csrrequests-page',
@@ -9,7 +9,7 @@ import {CSRRequestService} from "../../../services/csr_requests/csrrequest.servi
 })
 export class AdminCSRRequestsPageComponent implements OnInit{
 
-  displayedColumns = ['id', 'timestamp', 'email', 'firstName', 'lastName'];
+  displayedColumns = ['email', 'timestamp', 'firstName', 'lastName'];
 
   csrRequests: SimpleCSRRequest[];
 

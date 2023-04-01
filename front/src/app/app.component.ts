@@ -1,7 +1,6 @@
-import { AuthService } from './services/auth/auth.service';
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment';
+import {AuthService} from './services/auth/auth.service';
+import {Component} from '@angular/core';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +10,6 @@ import { environment } from 'src/environments/environment';
 export class AppComponent {
   title = 'front';
 
-  chatHidden:boolean = false;
   navbarItems:any = [];
   loggedUser:boolean = false;
 
@@ -20,21 +18,59 @@ export class AppComponent {
       label:'Certificates',
       icon: 'verified_user',
       route: 'admin/certificates'
+    },
+    {
+      label:'CSR Requests',
+      icon: 'assignment_ind',
+      route: 'admin/csr_requests'
     }
   ];
-  
+
   ownerNavbarItems = [
-    //Links for owner
+    {
+      label:'Proba za ownera',
+      icon: 'verified_user',
+      route: 'owner'
+    },
   ];
+
+  anonymousNavbarItems = [
+    {
+      label:'Login',
+      icon: 'https',
+      route: 'anon/login'
+    },
+    {
+      label:'Register',
+      icon: 'person_add',
+      route: 'anon/register'
+    },
+  ]
 
   constructor(private router: Router, private authService:AuthService){
     authService.isloggedUser.subscribe((nextValue)=>{
       this.loggedUser = nextValue;
+      this.updateSideMenu();
     })
   }
 
+  updateSideMenu() {
+    if (this.loggedUser) {
+      const userRole = this.authService.getCurrentUser()?.role;
+      if (userRole === 'ROLE_ADMIN') {
+        this.navbarItems = this.adminNavbarItems;
+      } else if (userRole === 'ROLE_OWNER') {
+        this.navbarItems = this.ownerNavbarItems;
+      } else {
+        this.navbarItems = this.adminNavbarItems;
+      }
+    } else {
+      this.navbarItems = this.anonymousNavbarItems;
+    }
+  }
+
   ngOnInit(): void {
-    this.navbarItems = this.adminNavbarItems;
+    this.updateSideMenu();
   }
 
   LogOut():void{

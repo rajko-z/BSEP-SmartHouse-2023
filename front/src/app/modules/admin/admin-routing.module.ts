@@ -12,7 +12,7 @@ import {
 const routes: Routes = [
   {
     path: '',
-    component: AdminDashboardComponent
+    component: AdminCSRRequestsPageComponent
   },
   {
     path:'csr_requests',

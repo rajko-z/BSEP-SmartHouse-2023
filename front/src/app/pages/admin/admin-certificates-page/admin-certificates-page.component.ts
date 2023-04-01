@@ -59,7 +59,7 @@ export class AdminCertificatesPageComponent {
   }
 
   onConnected = () => {
-    this.stompClient.subscribe("/verify-certificate-response", (data) => this.onVerifyResponseReceived(data));
+    this.stompClient.subscribe("/verify-certificate-response", (data:any) => this.onVerifyResponseReceived(data));
   }
 
   onVerifyResponseReceived(payload: StompMessage)

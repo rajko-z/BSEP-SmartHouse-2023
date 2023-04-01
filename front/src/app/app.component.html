@@ -9,9 +9,6 @@
     </button>
     <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
         <div *ngIf="loggedUser">
-            <button mat-menu-item routerLink="">
-                <mat-icon>person</mat-icon><span>My Account</span>
-            </button>
             <mat-divider></mat-divider>
             <button mat-menu-item (click)="LogOut()">
                 <mat-icon>exit_to_app</mat-icon>Logout
@@ -23,7 +20,7 @@
             </button>
             <mat-divider></mat-divider>
             <button mat-menu-item [routerLink]="['/anon/register']">
-                <mat-icon>assignment_ind</mat-icon>Register
+                <mat-icon>person_add</mat-icon>Register
             </button>
         </div>
     </mat-menu>
