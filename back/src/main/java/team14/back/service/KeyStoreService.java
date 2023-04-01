@@ -2,9 +2,13 @@ package team14.back.service;
 
 import team14.back.model.IssuerData;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.security.KeyStoreException;
 import java.security.PrivateKey;
+import java.security.cert.CRLException;
 import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.HashMap;
 import java.util.List;

@@ -1,0 +1,19 @@
+<div class="rejection-dialog-container">
+    <h1 mat-dialog-title>Reason for revoking</h1>
+    <mat-form-field class="revoking-options">
+        <mat-label>Select an option</mat-label>
+        <mat-select [(ngModel)]="selectedOption">
+          <mat-option value="Encryption keys of the certificate have been compromised.">Encryption keys of the certificate have been compromised.</mat-option>
+          <mat-option value="Errors within an issued certificate.">Errors within an issued certificate.</mat-option>
+          <mat-option value="Change in usage of the certificate.">Change in usage of the certificate.</mat-option>
+          <mat-option value="Certificate owner is no longer deemed trusted.">Certificate owner is no longer deemed trusted.</mat-option>
+          <mat-option value="Other">Other</mat-option>
+        </mat-select>
+      </mat-form-field>
+    <mat-form-field class="rejection-textarea" *ngIf="selectedOption === 'Other'">
+        <mat-label>Reason for revoking...</mat-label>
+        <textarea matInput [(ngModel)]="otherReason"></textarea>
+    </mat-form-field>
+    <div></div>
+    <button class="confirm-button" mat-button (click)="onConfirmClick()">Confirm</button>
+</div>

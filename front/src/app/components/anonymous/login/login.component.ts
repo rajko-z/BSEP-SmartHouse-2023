@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit{
         this.toastService.success("Successfully logged in!");
         this.authService.loggedUser = true;
 
-        let role:string | undefined = this.authService.getCurrentUser()?.role;
+        let role: string | undefined = this.authService.getCurrentUser()?.role;
 
         switch(role){
           case 'ROLE_ADMIN':
