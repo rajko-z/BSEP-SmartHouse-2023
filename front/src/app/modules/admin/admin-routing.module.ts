@@ -12,7 +12,7 @@ const routes: Routes = [
     component: AdminDashboardComponent
   },
   {
-    path:'crs_requests',
+    path:'csr_requests',
     component: AdminCSRRequestsPageComponent
   },
   {
