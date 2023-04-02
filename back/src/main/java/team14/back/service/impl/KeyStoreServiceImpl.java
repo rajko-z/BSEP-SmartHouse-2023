@@ -37,16 +37,15 @@ public class KeyStoreServiceImpl implements KeyStoreService {
      * Zadatak ove funkcije jeste da ucita podatke o izdavaocu i odgovarajuci privatni kljuc.
      * Ovi podaci se mogu iskoristiti da se novi sertifikati izdaju.
      *
-     * @param keyStoreFile - datoteka odakle se citaju podaci
      * @param alias        - alias putem kog se identifikuje sertifikat izdavaoca
      * @param password     - lozinka koja je neophodna da se otvori key store
      * @param keyPass      - lozinka koja je neophodna da se izvuce privatni kljuc
      * @return - podatke o izdavaocu i odgovarajuci privatni kljuc
      */
-    public IssuerData readIssuerFromStore(String keyStoreFile, String alias, char[] password, char[] keyPass) {
+    public IssuerData readIssuerFromStore(String alias, char[] password, char[] keyPass) {
         try {
             // Datoteka se ucitava
-            BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(SMARTHOUSE_CERT_STORE));
             keyStore.load(in, password);
 
             // Iscitava se sertifikat koji ima dati alias
@@ -110,7 +109,7 @@ public class KeyStoreServiceImpl implements KeyStoreService {
 
     public HashMap<String, X509Certificate> getAllCertificates() throws KeyStoreException {
         String rootAlias = "smarthouse2023rootca";
-        IssuerData issuerData = readIssuerFromStore(SMARTHOUSE_CERT_STORE, rootAlias, "admin".toCharArray(), "admin".toCharArray());
+        IssuerData issuerData = readIssuerFromStore(rootAlias, "admin".toCharArray(), "admin".toCharArray());
         HashMap<String, X509Certificate> certificates = new HashMap<String, X509Certificate>();
 
         for (Iterator<String> it = keyStore.aliases().asIterator(); it.hasNext(); ) {

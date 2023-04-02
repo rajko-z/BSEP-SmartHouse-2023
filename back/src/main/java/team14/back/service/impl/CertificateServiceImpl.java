@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import team14.back.dto.CertificateDataDTO;
+import team14.back.dto.NewCertificateDTO;
 import team14.back.dto.RevokedCertificateDTO;
 import team14.back.dto.VerifyCertificateResponseDTO;
 import team14.back.model.RevokedCertificate;

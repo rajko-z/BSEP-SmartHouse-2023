@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 
 public interface KeyStoreService {
-    IssuerData readIssuerFromStore(String keyStoreFile, String alias, char[] password, char[] keyPass);
+    IssuerData readIssuerFromStore(String alias, char[] password, char[] keyPass);
 
     Certificate readCertificate(String keyStoreFile, String keyStorePass, String alias);
 

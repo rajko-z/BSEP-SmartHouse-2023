@@ -4,13 +4,16 @@ import { Observable } from 'rxjs';
 import { CertificateData } from 'src/app/model/certificate';
 import { RemovedCertificate } from 'src/app/model/removedCertificate';
 import { environment } from 'src/environments/environment';
+import {CustomHttpService} from "../custom-http/custom-http.service";
+import {NewCertificate} from "../../model/newCertificate";
+import {TextResponse} from "../../model/textResponse";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CertificateService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private customHttp: CustomHttpService) { }
 
   getRevokedCertificatesSerialNumbers(): Observable<String[]>
   {
@@ -39,5 +42,9 @@ export class CertificateService {
     queryParams = queryParams.append("reasonForRevoking", reasonForRevoking);
     queryParams = queryParams.append("format", "json");
     return this.http.post<string>(environment.backUrl + "/certificates/revoke-certificate", null, { params: queryParams });
+  }
+
+  issueCertificate(data: NewCertificate) {
+    return this.customHttp.putT<TextResponse>(environment.backUrl + "/certificates/issue-certificate", data);
   }
 }

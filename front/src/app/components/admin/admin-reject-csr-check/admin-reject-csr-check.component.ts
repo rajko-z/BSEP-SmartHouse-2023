@@ -48,7 +48,7 @@ export class AdminRejectCsrCheckComponent implements OnInit{
           },
           error: (error) => {
             this.loading = false;
-            this.toast.error(error.message);
+            this.toast.error(error.error.message);
           }
         }
       );
