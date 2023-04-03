@@ -1,6 +1,9 @@
 package team14.back.service.crt.impl;
 
 import lombok.AllArgsConstructor;
+import org.bouncycastle.asn1.ASN1ObjectIdentifier;
+import org.bouncycastle.asn1.x500.RDN;
+import org.bouncycastle.asn1.x500.X500Name;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import team14.back.dto.crt.CertificateDataDTO;
@@ -9,11 +12,15 @@ import team14.back.model.RevokedCertificate;
 import team14.back.repository.RevokedCertificateRepository;
 import team14.back.service.crt.CertificateService;
 import team14.back.service.keystore.KeyStoreService;
+import team14.back.service.keystore.KeyStoreServiceImpl;
+import team14.back.utils.Constants;
 
+import javax.security.auth.x500.X500Principal;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.*;
 import java.security.cert.*;
+import java.security.cert.Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -90,12 +97,24 @@ public class CertificateServiceImpl implements CertificateService {
 
         try {
             certificateToCheck.checkValidity();
-            certificateToCheck.verify(certificateToCheck.getPublicKey());
+            certificateToCheck.verify(getPublicKeyFromIssuer(certificateToCheck));
         }
         catch (SignatureException | CertificateException e){
             return false;
         }
         return !revoked;
+    }
+
+    private PublicKey getPublicKeyFromIssuer(X509Certificate certificate) {
+        String issuerName = certificate.getIssuerX500Principal().getName(X500Principal.RFC2253).split(",")[0].substring(3);
+        if (issuerName.contains("First")) {
+            return keyStoreService
+                    .readCertificate("admin", Constants.INTERMEDIATE_FIRST_ICA).getPublicKey();
+        } else if (issuerName.contains("Second")) {
+            return keyStoreService
+                    .readCertificate("admin", Constants.INTERMEDIATE_SECOND_ICA).getPublicKey();
+        }
+        return certificate.getPublicKey();
     }
 
     public boolean isCertificateRevoked(X509Certificate certificateToCheck)

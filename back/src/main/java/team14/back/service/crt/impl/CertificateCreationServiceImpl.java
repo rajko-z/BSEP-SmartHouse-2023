@@ -161,7 +161,7 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
 
     private BigInteger generateSerialNumber() {
         SecureRandom random = new SecureRandom();
-        byte[] bytes = new byte[16];
+        byte[] bytes = new byte[4];
         random.nextBytes(bytes);
         return new BigInteger(1, bytes);
     }

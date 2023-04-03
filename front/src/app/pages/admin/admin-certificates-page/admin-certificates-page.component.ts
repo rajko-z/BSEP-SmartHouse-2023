@@ -15,7 +15,7 @@ import { Observable } from 'rxjs';
   styleUrls: ['./admin-certificates-page.component.scss']
 })
 export class AdminCertificatesPageComponent {
-  displayedColumns = ['alias', 'algorithm', 'keySize', 'creationDate', 'expiryDate', 'isValid', 'verifyButton', 'revokeButton'];
+  displayedColumns = ['alias', 'algorithm', 'keySize', 'creationDate', 'expiryDate', 'isValid', 'revokeButton'];
   certificates: CertificateData[];
   private stompClient : Client;
   reasonForRevoking$: Observable<string>;
@@ -74,7 +74,7 @@ export class AdminCertificatesPageComponent {
     {
       this.toastrService.error('Certificate is not valid!');
     }
-    
+
   }
 
   getRevokedCertificatesSerialNumbers()
@@ -93,7 +93,7 @@ export class AdminCertificatesPageComponent {
 
   revokeCertificate(certificateSerialNumber: number, reasonForRevoking: string)
   {
-    this.certificateService.revokeCertificate(certificateSerialNumber.toString(), reasonForRevoking)
+    this.certificateService.revokeCertificate(certificateSerialNumber, reasonForRevoking)
     .subscribe({
       next: (data) => {
         this.loadAllCertificates();

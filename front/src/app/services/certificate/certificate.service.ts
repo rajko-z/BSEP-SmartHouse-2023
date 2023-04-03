@@ -32,12 +32,11 @@ export class CertificateService {
     });
   }
 
-  revokeCertificate(certificateSerialNumber: string, reasonForRevoking: string): Observable<string> {
+  revokeCertificate(certificateSerialNumber: number, reasonForRevoking: string): Observable<string> {
     let headers = this.customHttp.createHeader();
     let queryParams = new HttpParams();
     queryParams = queryParams.append("certificateSerialNumber", certificateSerialNumber);
     queryParams = queryParams.append("reasonForRevoking", reasonForRevoking);
-    queryParams = queryParams.append("format", "json");
     return this.http.post<string>(environment.backUrl + "/certificates/revoke-certificate", null, { params: queryParams, headers: headers });
   }
 

@@ -18,7 +18,7 @@ import java.util.List;
 public interface KeyStoreService {
     IssuerData readIssuerFromStore(String alias, char[] password, char[] keyPass);
 
-    Certificate readCertificate(String keyStoreFile, String keyStorePass, String alias);
+    Certificate readCertificate(String keyStorePass, String alias);
 
     HashMap<String, X509Certificate> getAllCertificates() throws KeyStoreException, NoSuchProviderException, IOException, CertificateException, NoSuchAlgorithmException;
 

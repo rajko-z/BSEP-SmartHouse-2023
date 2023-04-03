@@ -7,6 +7,7 @@ import team14.back.exception.BadRequestException;
 import team14.back.exception.InternalServerException;
 import team14.back.model.IssuerData;
 import team14.back.service.csr.CSRRequestService;
+import team14.back.utils.Constants;
 
 import java.io.*;
 import java.security.*;
@@ -58,12 +59,12 @@ public class KeyStoreServiceImpl implements KeyStoreService {
      * Ucitava sertifikat is KS fajla
      */
     @Override
-    public Certificate readCertificate(String keyStoreFile, String keyStorePass, String alias) {
+    public Certificate readCertificate(String keyStorePass, String alias) {
         try {
             // kreiramo instancu KeyStore
             KeyStore ks = KeyStore.getInstance("JKS", "SUN");
             // ucitavamo podatke
-            BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
+            BufferedInputStream in = new BufferedInputStream(new FileInputStream(SMARTHOUSE_CERT_STORE));
             ks.load(in, keyStorePass.toCharArray());
 
             Certificate cert = ks.getCertificate(alias);
@@ -85,7 +86,10 @@ public class KeyStoreServiceImpl implements KeyStoreService {
 
         for (Iterator<String> it = ks.aliases().asIterator(); it.hasNext(); ) {
             String alias = it.next();
-            X509Certificate certificate = (X509Certificate) readCertificate(SMARTHOUSE_CERT_STORE, "admin", alias);
+            if (alias.equals(Constants.INTERMEDIATE_FIRST_ICA) || alias.equals(Constants.INTERMEDIATE_SECOND_ICA) || alias.equals(Constants.ROOT_CA)) {
+                continue;
+            }
+            X509Certificate certificate = (X509Certificate) readCertificate("admin", alias);
             certificates.put(alias, certificate);
         }
 

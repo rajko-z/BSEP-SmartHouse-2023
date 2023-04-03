@@ -8,6 +8,8 @@ public class Constants {
     public static final String ORGANIZATION_UNIT = "2.5.4.11";
     public static final String COMMON_NAME = "2.5.4.3";
 
+    public static final String ROOT_CA = "smarthouse2023rootca";
     public static final String INTERMEDIATE_FIRST_ICA = "smarthouse2023firstica";
     public static final String INTERMEDIATE_SECOND_ICA = "smarthouse2023secondica";
+
 }
