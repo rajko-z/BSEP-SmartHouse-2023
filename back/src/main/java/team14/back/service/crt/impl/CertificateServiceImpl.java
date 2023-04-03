@@ -72,7 +72,7 @@ public class CertificateServiceImpl implements CertificateService {
     }
 
     @Override
-    public X509Certificate findCertificateBySerialNumber(BigInteger serialNumber) throws KeyStoreException {
+    public X509Certificate findCertificateBySerialNumber(BigInteger serialNumber) throws KeyStoreException, CertificateException, IOException, NoSuchAlgorithmException, NoSuchProviderException {
         HashMap<String, X509Certificate> allCertificates = this.keyStoreService.getAllCertificates();
         X509Certificate certificateToCheck = allCertificates.values().iterator().next();
         for(Map.Entry<String, X509Certificate> entry: allCertificates.entrySet()) {

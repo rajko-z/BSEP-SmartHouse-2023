@@ -21,8 +21,6 @@ public class KeyStoreServiceImpl implements KeyStoreService {
 
     private static final String SMARTHOUSE_CERT_STORE = "src/main/resources/data/p12/smarthouse_certstore.p12";
 
-    private static final String CRL_FILE = "src/main/resources/revoked_certificates.crl";
-
     private final CSRRequestService csrRequestService;
 
     private KeyStore keyStore;
@@ -68,10 +66,8 @@ public class KeyStoreServiceImpl implements KeyStoreService {
             BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
             ks.load(in, keyStorePass.toCharArray());
 
-            if (ks.isKeyEntry(alias)) {
-                Certificate cert = ks.getCertificate(alias);
-                return cert;
-            }
+            Certificate cert = ks.getCertificate(alias);
+            return cert;
         } catch (KeyStoreException | NoSuchProviderException | NoSuchAlgorithmException
                 | CertificateException | IOException e) {
             e.printStackTrace();
@@ -79,34 +75,15 @@ public class KeyStoreServiceImpl implements KeyStoreService {
         return null;
     }
 
-    /**
-     * Ucitava privatni kljuc is KS fajla
-     */
     @Override
-    public PrivateKey readPrivateKey(String keyStoreFile, String keyStorePass, String alias, String pass) {
-        try {
-            // kreiramo instancu KeyStore
-            KeyStore ks = KeyStore.getInstance("JKS", "SUN");
-            // ucitavamo podatke
-            BufferedInputStream in = new BufferedInputStream(new FileInputStream(keyStoreFile));
-            ks.load(in, keyStorePass.toCharArray());
+    public HashMap<String, X509Certificate> getAllCertificates() throws KeyStoreException, NoSuchProviderException, IOException, CertificateException, NoSuchAlgorithmException {
+        KeyStore ks = KeyStore.getInstance("JKS", "SUN");
+        BufferedInputStream in = new BufferedInputStream(new FileInputStream(SMARTHOUSE_CERT_STORE));
+        ks.load(in, "admin".toCharArray());
 
-            if (ks.isKeyEntry(alias)) {
-                PrivateKey pk = (PrivateKey) ks.getKey(alias, pass.toCharArray());
-                return pk;
-            }
-        } catch (KeyStoreException | NoSuchAlgorithmException | NoSuchProviderException | CertificateException
-                | IOException | UnrecoverableKeyException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
-    public HashMap<String, X509Certificate> getAllCertificates() throws KeyStoreException {
         HashMap<String, X509Certificate> certificates = new HashMap<String, X509Certificate>();
 
-        for (Iterator<String> it = keyStore.aliases().asIterator(); it.hasNext(); ) {
+        for (Iterator<String> it = ks.aliases().asIterator(); it.hasNext(); ) {
             String alias = it.next();
             X509Certificate certificate = (X509Certificate) readCertificate(SMARTHOUSE_CERT_STORE, "admin", alias);
             certificates.put(alias, certificate);

@@ -41,17 +41,12 @@ public class BackApplication implements CommandLineRunner {
 		createRoles();
 		createUsers();
 		createCSRRequests();
-		createRemoveCertificates();
 	}
 
 	private void createRoles() {
 		roleRepository.save(new Role(1L, "ROLE_ADMIN"));
 		roleRepository.save(new Role(2L, "ROLE_OWNER"));
 		roleRepository.save(new Role(3L, "ROLE_TENANT"));
-	}
-
-	private void createRemoveCertificates() {
-
 	}
 
 	private void createCSRRequests() {

@@ -17,5 +17,5 @@ public interface CertificateService {
 
     void revokeCertificate(BigInteger certificateSerialNumber, String reasonForRevoking) throws KeyStoreException, CertificateException, IOException, CRLException;
 
-    X509Certificate findCertificateBySerialNumber(BigInteger serialNumber) throws KeyStoreException;
+    X509Certificate findCertificateBySerialNumber(BigInteger serialNumber) throws KeyStoreException, CertificateException, IOException, NoSuchAlgorithmException, NoSuchProviderException;
 }
