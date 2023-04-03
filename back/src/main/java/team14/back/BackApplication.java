@@ -37,6 +37,7 @@ public class BackApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		deleteEverything();
 		createRoles();
 		createUsers();
 		createCSRRequests();
@@ -63,8 +64,14 @@ public class BackApplication implements CommandLineRunner {
 
 	// sifra za sve korisnike je 12345678
 	private void createUsers() {
-		userRepository.save(new User("test1@gmail.com", "Test1", "Test1", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(1L, "ROLE_ADMIN")));
-		userRepository.save(new User("test2@gmail.com", "Test2", "Test2", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(2L, "ROLE_OWNER")));
-		userRepository.save(new User("test3@gmail.com", "Test3", "Test3", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(3L, "ROLE_TENANT")));
+		userRepository.save(new User("admin@gmail.com", "Admin", "Admin", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(1L, "ROLE_ADMIN")));
+		userRepository.save(new User("john@gmail.com", "John", "John", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(2L, "ROLE_OWNER")));
+		userRepository.save(new User("bobi@gmail.com", "Bob", "Bobic", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(3L, "ROLE_TENANT")));
+	}
+
+	private void deleteEverything() {
+		this.roleRepository.deleteAll();
+		this.userRepository.deleteAll();
+		this.csrRequestRepository.deleteAll();
 	}
 }

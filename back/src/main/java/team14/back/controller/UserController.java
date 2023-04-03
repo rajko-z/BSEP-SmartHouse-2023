@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import team14.back.dto.CSRRequestDTO;
-import team14.back.service.UserService;
+import team14.back.dto.csr.CSRRequestDTO;
+import team14.back.service.user.UserService;
 
 import java.io.IOException;
 
