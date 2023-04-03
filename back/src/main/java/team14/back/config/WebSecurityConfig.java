@@ -14,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import team14.back.service.UserService;
+import team14.back.service.user.UserService;
 import team14.back.service.security.RestAuthenticationEntryPoint;
 import team14.back.service.security.TokenAuthenticationFilter;
 import team14.back.utils.TokenUtils;

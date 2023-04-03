@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
 import {CSRRequestData} from "../../../../model/csrRequest";
 import {CSRRequestService} from "../../../../services/csr_requests/csrrequest.service";
 import {FormControl, FormGroup, Validators} from "@angular/forms";
@@ -41,6 +41,8 @@ export class AdminCsrrequestPageComponent implements OnInit {
   errorActive: boolean = false;
 
   loading: boolean = false;
+
+  sendingCert: boolean = false;
 
   maxLength: number = 64;
 
@@ -89,7 +91,8 @@ export class AdminCsrrequestPageComponent implements OnInit {
     private matDialog: MatDialog,
     private toastService: ToastrService,
     private certificatesService: CertificateService,
-    private dateUtils: DateUtilsService)
+    private dateUtils: DateUtilsService,
+    private router: Router)
   {
     this.id = route.snapshot.paramMap.get('id');
 
@@ -153,14 +156,19 @@ export class AdminCsrrequestPageComponent implements OnInit {
     const certificateData: NewCertificate = this.createRequestBody();
     console.log(certificateData);
 
+    this.sendingCert = true;
+
     this.certificatesService.issueCertificate(certificateData)
       .subscribe({
           next: (_) => {
             this.toastService.success("Successfully issued certificate");
+            this.sendingCert = false;
+            this.router.navigate(['/admin/csr_requests']);
           },
           error: (error) => {
             console.log(error);
             this.toastService.error(error.error.message);
+            this.sendingCert = false;
           }
         }
       );

@@ -278,7 +278,7 @@
   <br/>
   <br/>
   <hr/>
-  <div class="footerDiv">
+  <div class="footerDiv" *ngIf="sendingCert === false">
     <button mat-raised-button color="primary" (click)="reject()">
       Reject
     </button>
@@ -286,4 +286,8 @@
       Issue Certificate
     </button>
   </div>
+  <div *ngIf="sendingCert === true">
+    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+  </div>
+  <div style="height:100px; width:100%; clear:both;"></div>
 </div>

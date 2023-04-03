@@ -5,11 +5,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import team14.back.dto.CSRRequestData;
-import team14.back.dto.RejectCSRRequestDTO;
-import team14.back.dto.SimpleCSRRequestDTO;
+import team14.back.dto.csr.CSRRequestData;
+import team14.back.dto.csr.RejectCSRRequestDTO;
+import team14.back.dto.csr.SimpleCSRRequestDTO;
 import team14.back.dto.TextResponse;
-import team14.back.service.CSRRequestService;
+import team14.back.service.csr.CSRRequestService;
 
 import javax.validation.Valid;
 import java.util.List;
