@@ -10,7 +10,6 @@ import javax.validation.constraints.NotBlank;
 @Setter
 @Builder
 public class SubjectDataDTO {
-    @NotBlank
     private String email;
     private String commonName;
     private String organizationUnit;

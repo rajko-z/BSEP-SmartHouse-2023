@@ -1,6 +1,9 @@
 package team14.back.dto.crt;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import java.math.BigInteger;
 import java.security.cert.X509Certificate;
 import java.util.Date;
@@ -11,11 +14,19 @@ import java.util.Date;
 @Setter
 @Builder
 public class CertificateDataDTO {
+    @NotBlank
+    @Positive
     private BigInteger serialNumber;
+    @NotBlank
     private String alias;
+    @NotBlank
     private String algorithm;
+    @NotBlank
+    @Positive
     private int keySize;
+    @NotNull
     private Date creationDate;
+    @NotNull
     private Date expiryDate;
     private boolean isValid;
 
