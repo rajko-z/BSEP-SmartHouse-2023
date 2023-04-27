@@ -23,6 +23,11 @@ export class AppComponent {
       label:'CSR Requests',
       icon: 'assignment_ind',
       route: 'admin/csr_requests'
+    },
+    {
+      label:'Add User',
+      icon: 'person_add',
+      route: 'admin/add_user'
     }
   ];
 

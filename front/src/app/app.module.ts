@@ -11,11 +11,13 @@ import {AngularMaterialModule} from "./modules/shared/angular-material.module";
 import {RouterModule} from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
 import { AdminRejectCsrCheckComponent } from './components/admin/admin-reject-csr-check/admin-reject-csr-check.component';
+import { AdminAddUserPageComponent } from './pages/admin/admin-add-user-page/admin-add-user-page.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AdminRejectCsrCheckComponent,
+    AdminAddUserPageComponent,
   ],
   imports: [
     AngularMaterialModule,
