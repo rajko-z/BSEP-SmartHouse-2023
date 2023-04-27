@@ -1,7 +1,8 @@
 mat-card {
-    max-width: 600px;
+    max-width: 700px;
     margin: 5em auto;
     text-align: center;
+    padding: 3em;
   }
   
   mat-form-field {
@@ -33,4 +34,18 @@ mat-card {
 #file{
   margin: 0 auto;
   margin-bottom: 2rem;
+}
+
+.add-user-title{
+    font-size: 30px;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.add-facility-button{
+    margin-right: 30em;
+}
+
+.facility-title-icon{
+    margin-right: 1rem;
 }
