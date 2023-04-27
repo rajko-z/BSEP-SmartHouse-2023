@@ -46,38 +46,43 @@
         </form>
 
         <h2>Facilities</h2>
-
+        
         <mat-accordion class="example-headers-align" multi>
-            <mat-expansion-panel *ngFor="let facility of facilities; let i = index">
-                
-                <mat-expansion-panel-header>
-                    <mat-panel-title>
-                        <mat-icon *ngIf="facility.getFacilityType() === 'Apartment'" class="facility-title-icon">apartment</mat-icon>
-                        <mat-icon *ngIf="facility.getFacilityType() === 'Cottage'" class="facility-title-icon">cottage</mat-icon>
-                        <mat-icon *ngIf="facility.getFacilityType() !== 'Apartment' && facility.getFacilityType() !== 'Cottage'" class="facility-title-icon">house</mat-icon>
-                        Facility {{ facilities.indexOf(facility) + 1 }}
-                    </mat-panel-title>
-                </mat-expansion-panel-header>
-
-                    <mat-form-field appearance="fill">
-                        <mat-label>Name</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-
-                    <mat-radio-group>
-                    <mat-radio-button class="example-radio-button" *ngFor="let facilityType of facilityTypes" [value]="facilityType" (change)="facility.setFacilityType(facilityType)">
-                        {{facilityType}}
-                    </mat-radio-button>
-                    </mat-radio-group>
-                
-                </mat-expansion-panel>
-              
+            <form [formGroup]="facilitiesForm">
+                <mat-expansion-panel *ngFor="let facility of facilities; let i = index" class="facility-expansion-panel">
+                    
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <mat-icon *ngIf="facility.getFacilityType() === 'Apartment'" class="facility-title-icon">apartment</mat-icon>
+                            <mat-icon *ngIf="facility.getFacilityType() === 'Cottage'" class="facility-title-icon">cottage</mat-icon>
+                            <mat-icon *ngIf="facility.getFacilityType() !== 'Apartment' && facility.getFacilityType() !== 'Cottage'" class="facility-title-icon">house</mat-icon>
+                            Facility {{ facilities.indexOf(facility) + 1 }}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+    
+                        <mat-form-field appearance="fill">
+                            <mat-label>Name</mat-label>
+                            <input matInput formControlName="name{{i}}">
+                        </mat-form-field>
+    
+                        <mat-radio-group formControlName="facilityType{{i}}">
+                        <mat-radio-button class="example-radio-button" *ngFor="let facilityType of facilityTypes" [value]="facilityType" (change)="facility.setFacilityType(facilityType)">
+                            {{facilityType}}
+                        </mat-radio-button>
+                        </mat-radio-group>
+                        
+                        <button (click)="deleteFacility(i)" mat-mini-fab color="warn" class="delete-facility-button">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    
+                    </mat-expansion-panel>
+            </form>
         </mat-accordion>
 
         <button mat-icon-button (click)="addFacility()" class="add-facility-button">
             <mat-icon>add_circle</mat-icon>
         </button>
           
-        <button mat-raised-button color="primary" [disabled]="!userDataForm.valid">Submit</button><br/>
+        <button mat-raised-button color="primary" type="button" [disabled]="!userDataForm.valid || !facilitiesForm.valid" (click)="onSubmit()">Submit</button><br/>
     </mat-card-content>
   </mat-card>
