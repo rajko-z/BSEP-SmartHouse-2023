@@ -50,9 +50,12 @@ export class AuthService {
     sessionStorage.setItem('currentUser', JSON.stringify(userWithToken));
   }
 
-  login(credentials: AuthCredentials):Observable<any>{
-    return this.http.post(environment.backUrl+ "/auth/login", credentials);
+  // login(credentials: AuthCredentials):Observable<any>{
+  //   return this.http.post(environment.backUrl+ "/auth/login", credentials);
+  // }
 
+  loginFirstStep(credentials: AuthCredentials): Observable<any> {
+    return this.http.post(environment.backUrl + "/auth/login-first-step", credentials);
   }
 
   logout(){

@@ -17,6 +17,7 @@ public class User implements UserDetails {
     private String password;
     private boolean deleted;
     private Role role;
+    private boolean blocked;
 
     public User() {
 
@@ -29,6 +30,15 @@ public class User implements UserDetails {
         this.password = password;
         this.deleted = deleted;
         this.role = role;
+        this.blocked = false;
+    }
+
+    public boolean isBlocked() {
+        return blocked;
+    }
+
+    public void setBlocked(boolean blocked) {
+        this.blocked = blocked;
     }
 
     public String getEmail() {
@@ -98,7 +108,7 @@ public class User implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !blocked;
     }
 
     @Override
@@ -108,6 +118,6 @@ public class User implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return !deleted;
+        return !deleted && !blocked;
     }
 }

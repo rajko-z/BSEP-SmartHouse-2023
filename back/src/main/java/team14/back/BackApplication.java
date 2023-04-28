@@ -6,12 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import team14.back.model.CSRRequest;
+import team14.back.model.LoginFailure;
 import team14.back.model.Role;
 import team14.back.model.User;
-import team14.back.repository.CSRRequestRepository;
-import team14.back.repository.RevokedCertificateRepository;
-import team14.back.repository.RoleRepository;
-import team14.back.repository.UserRepository;
+import team14.back.repository.*;
 
 import java.time.LocalDateTime;
 
@@ -30,6 +28,9 @@ public class BackApplication implements CommandLineRunner {
 
 	@Autowired
 	private RoleRepository roleRepository;
+
+	@Autowired
+	private LoginFailureRepository loginFailureRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackApplication.class, args);
@@ -59,14 +60,15 @@ public class BackApplication implements CommandLineRunner {
 
 	// sifra za sve korisnike je 12345678
 	private void createUsers() {
-		userRepository.save(new User("admin@gmail.com", "Admin", "Admin", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(1L, "ROLE_ADMIN")));
-		userRepository.save(new User("john@gmail.com", "John", "John", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(2L, "ROLE_OWNER")));
-		userRepository.save(new User("bobi@gmail.com", "Bob", "Bobic", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(3L, "ROLE_TENANT")));
+		userRepository.save(new User("smarthouse2023tim14+admin@gmail.com", "Admin", "Admin", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(1L, "ROLE_ADMIN")));
+		userRepository.save(new User("smarthouse2023tim14+john@gmail.com", "John", "John", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(2L, "ROLE_OWNER")));
+		userRepository.save(new User("smarthouse2023tim14+bob@gmail.com", "Bob", "Bobic", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(3L, "ROLE_TENANT")));
 	}
 
 	private void deleteEverything() {
 		this.roleRepository.deleteAll();
 		this.userRepository.deleteAll();
 		this.csrRequestRepository.deleteAll();
+		this.loginFailureRepository.deleteAll();
 	}
 }

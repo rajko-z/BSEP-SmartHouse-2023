@@ -82,6 +82,19 @@ public class UserServiceImpl implements UserService {
         return new LoginDTO(email, password);
     }
 
+    @Override
+    public void blockUser(String email) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + email));
+        user.setBlocked(true);
+        this.userRepository.save(user);
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
+    }
+
+
     public static String generatePassword() {
         SecureRandom random = new SecureRandom();
         byte[] bytes = new byte[14];

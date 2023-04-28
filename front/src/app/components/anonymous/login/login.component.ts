@@ -1,8 +1,9 @@
 import { Router } from '@angular/router';
 import { AuthService } from './../../../services/auth/auth.service';
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment';
+import {FormControl, Validators} from "@angular/forms";
+import {DOCUMENT} from "@angular/common";
 
 @Component({
   selector: 'app-login',
@@ -13,43 +14,48 @@ export class LoginComponent implements OnInit{
   public loginValid = true;
   public email = '';
   public password = '';
+  public is2FAVisible = false;
+  public code = '';
+  public codeEntered = false;
 
-  constructor(private authService:AuthService, private toastService: ToastrService, private router:Router){
+  public loading = false;
+
+
+  constructor(
+    private authService:AuthService,
+    private toastService: ToastrService,
+    private router:Router,
+    @Inject(DOCUMENT) document: Document){
   }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit(): void {}
 
-  public onSubmit(): void {
+  public onFirstLoginStep(): void {
     this.loginValid = true;
+    this.loading = true;
 
-    this.authService.login({password:this.password, email:this.email}).subscribe({
+    this.authService.loginFirstStep({password:this.password, email:this.email}).subscribe({
       next:(res)=>{
-        this.authService.setCurrentUser(res);
-        this.toastService.success("Successfully logged in!");
-        this.authService.loggedUser = true;
-
-        let role: string | undefined = this.authService.getCurrentUser()?.role;
-
-        switch(role){
-          case 'ROLE_ADMIN':
-            this.router.navigateByUrl("admin/");
-            break;
-          case 'ROLE_OWNER':
-            this.router.navigateByUrl("owner/");
-            break;
-          default:
-            this.router.navigateByUrl('anon/login');
-        }
-
+        this.loading = false;
+        this.is2FAVisible = true;
       },
       error:(err)=>{
-        this.toastService.warning("Credentials are not valid!");  
+        this.loading = false;
+        this.toastService.warning("Credentials are not valid!");
         this.loginValid = false;
       }
     });
   }
 
+  public onCodeInputChange(): void {
+    let inputElement = document.getElementById('mfa-partitioned') as HTMLInputElement;
+    inputElement.value = inputElement.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+    this.codeEntered = inputElement.value.length == 6;
+  }
+
+  public onSecondLoginStep(): void {
+    let inputElement = document.getElementById('mfa-partitioned') as HTMLInputElement;
+    console.log(inputElement.value);
+  }
 
 }

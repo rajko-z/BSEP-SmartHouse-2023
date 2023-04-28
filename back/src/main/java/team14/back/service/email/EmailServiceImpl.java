@@ -43,6 +43,7 @@ public class EmailServiceImpl implements EmailService {
         javaMailSender.send(message);
     }
 
+    @Async
     @Override
     public void sendCreatedCertificateAndPasswordToUser(LoginDTO createdCredentials) {
         try {
@@ -63,4 +64,17 @@ public class EmailServiceImpl implements EmailService {
             throw new InternalServerException("Error happened while sending email to user: " + createdCredentials.getEmail());
         }
     }
+
+    @Async
+    @Override
+    public void sendBlockingUserEmail(String email) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setFrom(Objects.requireNonNull(env.getProperty("spring.mail.username")));
+        message.setSubject("Your account has been blocked");
+        message.setText("Someone tried to login with your email 3 times in last 10 minutes.\nIf this was you, contact admin support to unblock your account.\nIf this was not your activity please contact admin as soon as possible.\n\nYour smarthouse team");
+        javaMailSender.send(message);
+    }
+
+
 }
