@@ -1,14 +1,24 @@
 package team14.back.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Document("users")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class User implements UserDetails {
     @Id
     private String email;
@@ -17,10 +27,7 @@ public class User implements UserDetails {
     private String password;
     private boolean deleted;
     private Role role;
-
-    public User() {
-
-    }
+    private List<Facility> facilities;
 
     public User(String email, String firstName, String lastName, String password, boolean deleted, Role role) {
         this.email = email;
@@ -28,50 +35,6 @@ public class User implements UserDetails {
         this.lastName = lastName;
         this.password = password;
         this.deleted = deleted;
-        this.role = role;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFirstName() {
-        return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
         this.role = role;
     }
 

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormArray} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { AddUserDTO } from 'src/app/model/addUserDTO';
 import { FacilityData } from 'src/app/model/facilityData';
 import { UserService } from 'src/app/services/user/user.service';
 
@@ -86,7 +87,30 @@ export class AdminAddUserPageComponent {
   }
 
   public onSubmit(): void {
-    console.log(this.userDataForm.value);
-    console.log(this.facilitiesForm.value);
+    this.fillFacilitiesData();
+
+    let userData: AddUserDTO = this.userDataForm.value;
+    userData.facilities = this.facilities;
+
+    this.userService.addUser(userData).subscribe(
+      {
+        next:(res)=>{
+          this.toastrService.success("Request successfully send.");
+          console.log("Uspesno")
+          this.router.navigateByUrl("anon/login");
+  
+        },
+        error:(err)=>{
+          this.toastrService.warning("Something went wrong, please try again!");  
+        }
+      }
+    )
+  }
+
+  public fillFacilitiesData()
+  {
+    for (let i = 0; i < this.facilities.length; i++) {
+      this.facilities[i].setName(this.facilitiesForm.value[`name${i}`]);
+    }
   }
 }
