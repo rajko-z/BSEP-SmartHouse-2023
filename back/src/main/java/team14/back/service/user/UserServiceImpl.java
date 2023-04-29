@@ -6,11 +6,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import team14.back.dto.AddUserDTO;
+import team14.back.dto.FacilityDTO;
 import team14.back.dto.NewPasswordDTO;
 import team14.back.dto.csr.CSRRequestDTO;
 import team14.back.dto.login.LoginDTO;
+import team14.back.enumerations.FacilityType;
 import team14.back.exception.BadRequestException;
 import team14.back.model.CSRRequest;
+import team14.back.model.Facility;
 import team14.back.model.Role;
 import team14.back.model.User;
 import team14.back.repository.CSRRequestRepository;
@@ -25,7 +29,6 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -37,6 +40,7 @@ public class UserServiceImpl implements UserService {
     private final CSRRequestRepository csrRequestRepository;
 
     private final PasswordEncoder passwordEncoder;
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -126,10 +130,10 @@ public class UserServiceImpl implements UserService {
     }
 
     private boolean isNewPasswordInValidFormat(String password) {
-        if (password == null || password.isBlank() || password.length() < 8) {
+        if (password == null || password.isBlank() || password.length() < 8 || password.length() > 256) {
             return false;
         }
-        String regex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9]).{8,}$";
+        String regex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9]).{8,256}$";
         return Pattern.compile(regex).matcher(password).matches();
     }
 
@@ -139,6 +143,35 @@ public class UserServiceImpl implements UserService {
 
     private boolean passwordsMatch(String rawPassword, String encodedPassword) {
         return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
+
+    public void addUser(AddUserDTO addUserDTO) {
+        if (this.userRepository.findByEmail(addUserDTO.getEmail()).isPresent()) {
+            throw new BadRequestException("Can't create user with email: " + addUserDTO.getEmail() + " because user already exist");
+        }
+
+        User user = new User();
+        user.setDeleted(false);
+        user.setRole(new Role(2L, "ROLE_OWNER"));
+        user.setEmail(addUserDTO.getEmail());
+        user.setFirstName(addUserDTO.getFirstName());
+        user.setLastName(addUserDTO.getLastName());
+        user.setPassword(passwordEncoder.encode(addUserDTO.getPassword()));
+        user.setFacilities(new ArrayList<>());
+        for(FacilityDTO facilityDTO: addUserDTO.getFacilities())
+        {
+            user.getFacilities().add(new Facility(facilityDTO.getName(), facilityTypeConverter(facilityDTO.getFacilityType())));
+        }
+        this.userRepository.save(user);
+    }
+
+    private FacilityType facilityTypeConverter(String rawFacilityType)
+    {
+        if(rawFacilityType.equals("House"))
+            return FacilityType.HOUSE;
+        else if(rawFacilityType.equals("Apartment"))
+            return FacilityType.APARTMENT;
+        return FacilityType.COTTAGE;
     }
 
     public static String generatePassword() {

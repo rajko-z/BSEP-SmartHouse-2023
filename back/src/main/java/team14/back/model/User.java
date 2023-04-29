@@ -1,15 +1,23 @@
 package team14.back.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 
 @Document("users")
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class User implements UserDetails {
     @Id
     private String email;
@@ -24,9 +32,7 @@ public class User implements UserDetails {
 
     private Long mfaCodeTimestamp;
 
-    public User() {
-
-    }
+    private List<Facility> facilities;
 
     public User(String email, String firstName, String lastName, String password, boolean deleted, Role role) {
         this.email = email;

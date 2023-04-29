@@ -2,6 +2,7 @@ package team14.back.service.user;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
+import team14.back.dto.AddUserDTO;
 import team14.back.dto.NewPasswordDTO;
 import team14.back.dto.csr.CSRRequestDTO;
 import team14.back.dto.login.LoginDTO;
@@ -24,4 +25,6 @@ public interface UserService extends UserDetailsService {
     void save(User user);
 
     void changePassword(NewPasswordDTO newPasswordDTO);
+
+    void addUser(AddUserDTO addUserDTO);
 }

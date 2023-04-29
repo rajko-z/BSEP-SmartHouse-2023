@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import team14.back.dto.AddUserDTO;
 import team14.back.dto.NewPasswordDTO;
 import team14.back.dto.TextResponse;
 import team14.back.dto.csr.CSRRequestDTO;
@@ -37,5 +38,12 @@ public class UserController {
     public ResponseEntity<TextResponse> changePassword(@RequestBody @Valid NewPasswordDTO newPasswordDTO) {
         userService.changePassword(newPasswordDTO);
         return new ResponseEntity<>(new TextResponse("Password successfully changed"), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PostMapping(path = "/add-user", consumes = { MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<?> addUser(@Valid @RequestBody AddUserDTO addUserDTO) {
+        userService.addUser(addUserDTO);
+        return ResponseEntity.ok().build();
     }
 }

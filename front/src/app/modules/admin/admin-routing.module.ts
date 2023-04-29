@@ -8,6 +8,7 @@ import {AdminDashboardComponent} from "../../components/admin/admin-dashboard/ad
 import {
   AdminCsrrequestPageComponent
 } from "../../pages/admin/admin-csrrequests-page/admin-csrrequest-page/admin-csrrequest-page.component";
+import { AdminAddUserPageComponent } from "src/app/pages/admin/admin-add-user-page/admin-add-user-page.component";
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
   {
     path: 'certificates',
     component: AdminCertificatesPageComponent
+  },
+  {
+    path: 'add_user',
+    component: AdminAddUserPageComponent
   }
 ];
 

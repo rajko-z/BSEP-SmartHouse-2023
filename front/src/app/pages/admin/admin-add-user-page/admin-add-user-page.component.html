@@ -1,0 +1,88 @@
+<mat-card>
+    <mat-card-content>
+      <form [formGroup]="userDataForm" (ngSubmit)="onSubmit()">
+        <mat-icon class="title-icon" color="primary">assignment_ind</mat-icon>
+        <h2 class="add-user-title">Add User</h2>
+        <mat-form-field>
+            <input matInput placeholder="Email" formControlName="email" name="email" type="email" required>
+            <mat-error>
+              Please provide a valid email address
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="First Name" formControlName="firstName" name="firstName" required>
+          <mat-error>
+            Please provide a valid First Name
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+          <input matInput placeholder="Last Name" formControlName="lastName" name="lastName" required>
+          <mat-error>
+            Please provide a valid Last Name
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="formField" >
+            <mat-label>Password</mat-label>
+            <input matInput type="password" formControlName="password">
+            <mat-error *ngIf="password && password.errors?.['required'] && (password.touched || password.dirty|| userDataForm.invalid)">
+                This field is required
+            </mat-error>
+            <mat-error *ngIf="password && password.errors?.['pattern'] && (password.touched|| password.dirty || userDataForm.invalid) ">
+                Password must have 8 to 20 characters with at least one uppercase, one lowercase character and one digit
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="formField">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput type="password" formControlName="confirmPassword">
+            <mat-error *ngIf="confirmPassword && confirmPassword.errors?.['required'] && (confirmPassword.touched || confirmPassword.dirty|| userDataForm.invalid)">
+                This field is required
+            </mat-error>
+            <mat-error *ngIf="password && confirmPassword && password.value !== confirmPassword.value">
+                Passwords must match
+            </mat-error>
+        </mat-form-field>
+        </form>
+
+        <h2>Facilities</h2>
+        
+        <mat-accordion class="example-headers-align" multi>
+            <form [formGroup]="facilitiesForm">
+                <mat-expansion-panel *ngFor="let facility of facilities; let i = index" class="facility-expansion-panel">
+                    
+                    <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <mat-icon *ngIf="facility.getFacilityType() === 'Apartment'" class="facility-title-icon">apartment</mat-icon>
+                            <mat-icon *ngIf="facility.getFacilityType() === 'Cottage'" class="facility-title-icon">cottage</mat-icon>
+                            <mat-icon *ngIf="facility.getFacilityType() !== 'Apartment' && facility.getFacilityType() !== 'Cottage'" class="facility-title-icon">house</mat-icon>
+                            Facility {{ facilities.indexOf(facility) + 1 }}
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+    
+                        <mat-form-field appearance="fill">
+                            <mat-label>Name</mat-label>
+                            <input matInput formControlName="name{{i}}">
+                        </mat-form-field>
+    
+                        <mat-radio-group formControlName="facilityType{{i}}">
+                        <mat-radio-button class="example-radio-button" *ngFor="let facilityType of facilityTypes" [value]="facilityType" (change)="facility.setFacilityType(facilityType)">
+                            {{facilityType}}
+                        </mat-radio-button>
+                        </mat-radio-group>
+                        
+                        <button (click)="deleteFacility(i)" mat-mini-fab color="warn" class="delete-facility-button">
+                            <mat-icon>close</mat-icon>
+                        </button>
+                    
+                    </mat-expansion-panel>
+            </form>
+        </mat-accordion>
+
+        <button mat-icon-button (click)="addFacility()" class="add-facility-button">
+            <mat-icon>add_circle</mat-icon>
+        </button>
+          
+        <button mat-raised-button color="primary" type="button" [disabled]="!userDataForm.valid || !facilitiesForm.valid" (click)="onSubmit()">Submit</button><br/>
+    </mat-card-content>
+  </mat-card>
