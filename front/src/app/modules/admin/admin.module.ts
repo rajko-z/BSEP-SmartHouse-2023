@@ -13,6 +13,10 @@ import {
 } from "../../pages/admin/admin-csrrequests-page/admin-csrrequest-page/admin-csrrequest-page.component";
 import {RevokeDialogComponent} from "../../components/admin/revoke-dialog/revoke-dialog.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {
+  AdminRejectCsrCheckComponent
+} from "../../components/admin/admin-reject-csr-check/admin-reject-csr-check.component";
+import {AdminAddUserPageComponent} from "../../pages/admin/admin-add-user-page/admin-add-user-page.component";
 
 const declaredModules = [
   AdminCSRRequestsPageComponent,
@@ -20,6 +24,8 @@ const declaredModules = [
   AdminDashboardComponent,
   AdminCsrrequestPageComponent,
   RevokeDialogComponent,
+  AdminRejectCsrCheckComponent,
+  AdminAddUserPageComponent
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs';
-import { AuthCredentials } from 'src/app/model/auth';
+import {AuthCredentials, AuthCredentialsWith2FACode} from 'src/app/model/auth';
 import { environment } from 'src/environments/environment';
 import {User, UserWithToken} from "../../model/user";
 import {Router} from "@angular/router";
@@ -50,14 +50,22 @@ export class AuthService {
     sessionStorage.setItem('currentUser', JSON.stringify(userWithToken));
   }
 
-  login(credentials: AuthCredentials):Observable<any>{
-    return this.http.post(environment.backUrl+ "/auth/login", credentials);
+  loginFinalStep(credentials: AuthCredentialsWith2FACode):Observable<any>{
+    return this.http.post(environment.backUrl+ "/auth/login-final-step", credentials, { withCredentials: true} );
+  }
 
+  loginFirstStep(credentials: AuthCredentials): Observable<any> {
+    return this.http.post(environment.backUrl + "/auth/login-first-step", credentials);
   }
 
   logout(){
     sessionStorage.removeItem("currentUser");
     this.loggedUser = false;
     this.router.navigate(['/anon/login'])
+  }
+
+  getCurrentUserEmail() : string | null {
+    let currentUser = this.getCurrentUser();
+    return currentUser ? currentUser.email : null;
   }
 }

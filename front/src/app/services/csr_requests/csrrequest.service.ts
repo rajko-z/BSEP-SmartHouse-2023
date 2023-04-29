@@ -1,25 +1,25 @@
-import { Injectable } from '@angular/core';
-import {CustomHttpService} from "../custom-http/custom-http.service";
+import {Injectable} from '@angular/core';
 import {environment} from "../../../environments/environment";
 import {CSRRequestData, RejectCSR, SimpleCSRRequest} from "../../model/csrRequest";
 import {TextResponse} from "../../model/textResponse";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
 })
 export class CSRRequestService {
 
-  constructor(private httpService: CustomHttpService) { }
+  constructor(private http: HttpClient) { }
 
   getAllSimpleCSRRequestsData() {
-    return this.httpService.getT<SimpleCSRRequest[]>(environment.backUrl + '/csrrequests');
+    return this.http.get<SimpleCSRRequest[]>(environment.backUrl + '/csrrequests');
   }
 
   getCSRRequestDataForEmail(email:string) {
-    return this.httpService.getT<CSRRequestData>(environment.backUrl + '/csrrequests/' + email);
+    return this.http.get<CSRRequestData>(environment.backUrl + '/csrrequests/' + email);
   }
 
   rejectCSRRequest(rejectCSR: RejectCSR) {
-    return this.httpService.deleteT<TextResponse>(environment.backUrl + '/csrrequests/reject', rejectCSR);
+    return this.http.delete<TextResponse>(environment.backUrl + '/csrrequests/reject', {body: rejectCSR});
   }
 }
