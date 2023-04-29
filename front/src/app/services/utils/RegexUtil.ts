@@ -99,7 +99,8 @@ export const COUNTRY_NAME_TOOLTIP = "Country(C)\n" +
   "us (not uppercase letters)";
 export const COUNTRY_NAME_REGEX: RegExp = /^[A-Z]{2}$/;
 
-
-
-
-export const PASSWORD_REGEX: RegExp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9]).{8,}$/;
+/*
+* Password has at least 8 and maximum 256 chars
+* 1 uppercase, 1 lowercase, 1 number and 1 special characters are required
+* **/
+export const PASSWORD_REGEX: RegExp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9]).{8,256}$/;

@@ -1,6 +1,7 @@
 package team14.back.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,12 @@ public class AuthenticationController {
     @PostMapping("/login-final-step")
     public ResponseEntity<UserWithTokenDTO> createAuthenticationToken(@RequestBody @Valid LoginWith2FACodeDto loginDTO) {
         UserWithTokenDTO userWithToken = authenticationService.createAuthenticationToken(loginDTO);
-        return new ResponseEntity<>(userWithToken, HttpStatus.OK);
+
+        String cookie = "Fingerprint=" + userWithToken.getFingerprint() + "; HttpOnly; Path=/";
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Set-Cookie", cookie);
+
+        return ResponseEntity.ok().headers(headers).body(userWithToken);
     }
 
     @PostMapping("/login-first-step")

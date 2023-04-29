@@ -10,8 +10,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team14.back.converters.UserDTOConverter;
-import team14.back.dto.login.LoginDTO;
 import team14.back.dto.UserWithTokenDTO;
+import team14.back.dto.login.LoginDTO;
 import team14.back.dto.login.LoginWith2FACodeDto;
 import team14.back.exception.InvalidCredentialsException;
 import team14.back.model.User;
@@ -52,8 +52,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             User user = (User) authentication.getPrincipal();
-            String jwt = tokenUtils.generateTokenForUsername(user.getUsername());
-            return UserDTOConverter.convertToUserWithToken(user, jwt);
+            String fingerprint = tokenUtils.generateFingerprint();
+            String jwt = tokenUtils.generateToken(user.getUsername(), fingerprint);
+
+            return UserDTOConverter.convertToUserWithToken(user, jwt, fingerprint);
         }
         catch (BadCredentialsException ex) {
             throw new InvalidCredentialsException(ExceptionMessageConstants.INVALID_LOGIN);

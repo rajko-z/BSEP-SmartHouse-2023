@@ -51,7 +51,7 @@ export class AuthService {
   }
 
   loginFinalStep(credentials: AuthCredentialsWith2FACode):Observable<any>{
-    return this.http.post(environment.backUrl+ "/auth/login-final-step", credentials);
+    return this.http.post(environment.backUrl+ "/auth/login-final-step", credentials, { withCredentials: true} );
   }
 
   loginFirstStep(credentials: AuthCredentials): Observable<any> {

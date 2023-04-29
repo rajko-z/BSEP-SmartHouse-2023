@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  backUrl: 'http://localhost:8081/smarthouse',
-  frontURL: 'http://localhost:4200/'
+  backUrl: 'https://localhost:8081/smarthouse',
+  frontURL: 'https://localhost:4200/'
 };
 
 /*

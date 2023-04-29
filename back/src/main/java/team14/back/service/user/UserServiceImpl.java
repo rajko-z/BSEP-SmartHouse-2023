@@ -29,6 +29,7 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
@@ -126,6 +127,7 @@ public class UserServiceImpl implements UserService {
             throw new BadRequestException(ExceptionMessageConstants.PASSWORD_ON_LIST_OF_MOST_COMMON_PASSWORDS);
         }
         user.setPassword(passwordEncoder.encode(newPasswordDTO.getNewPassword()));
+        user.setLastPasswordResetDate(new Date());
         userRepository.save(user);
     }
 

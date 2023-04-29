@@ -1,9 +1,8 @@
 import {CSRRequest} from './../../model/csrRequest';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {AddUserDTO} from 'src/app/model/addUserDTO';
 import {environment} from 'src/environments/environment';
-import {CustomHttpService} from "../custom-http/custom-http.service";
 import {NewPassword} from "../../model/newPassword";
 import {TextResponse} from "../../model/textResponse";
 import {catchError, Observable, of} from 'rxjs';
@@ -13,7 +12,7 @@ import {catchError, Observable, of} from 'rxjs';
 })
 export class UserService {
 
-  constructor(private http: HttpClient, private customHttp: CustomHttpService) {
+  constructor(private http: HttpClient) {
   }
 
   private handleError<T>(operation = 'operation', result?: T) {
@@ -23,11 +22,6 @@ export class UserService {
   }
 
   register(request: CSRRequest, file: any): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        "Content-Type": "multipart/form-data" // 👈
-      })
-    };
     const formData = new FormData();
     formData.append("file", file);
     formData.append("request", new Blob([JSON.stringify(request)], {
@@ -35,11 +29,10 @@ export class UserService {
     }));
 
     return this.http.post(environment.backUrl + "/users/register", formData,);
-
   }
 
   changePassword(payload: NewPassword) {
-    return this.customHttp.putT<TextResponse>(environment.backUrl + "/users/change-password", payload);
+    return this.http.put<TextResponse>(environment.backUrl + "/users/change-password", payload);
   }
 
   addUser(addUserDTO: AddUserDTO): Observable<String> {

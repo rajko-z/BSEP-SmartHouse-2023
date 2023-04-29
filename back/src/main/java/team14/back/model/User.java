@@ -1,16 +1,15 @@
 package team14.back.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.sql.Timestamp;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Document("users")
@@ -34,6 +33,8 @@ public class User implements UserDetails {
 
     private List<Facility> facilities;
 
+    private Date lastPasswordResetDate;
+
     public User(String email, String firstName, String lastName, String password, boolean deleted, Role role) {
         this.email = email;
         this.firstName = firstName;
@@ -42,6 +43,22 @@ public class User implements UserDetails {
         this.deleted = deleted;
         this.role = role;
         this.blocked = false;
+    }
+
+    public List<Facility> getFacilities() {
+        return facilities;
+    }
+
+    public void setFacilities(List<Facility> facilities) {
+        this.facilities = facilities;
+    }
+
+    public Date getLastPasswordResetDate() {
+        return lastPasswordResetDate;
+    }
+
+    public void setLastPasswordResetDate(Date lastPasswordResetDate) {
+        this.lastPasswordResetDate = lastPasswordResetDate;
     }
 
     public Long getMfaCodeTimestamp() {

@@ -19,10 +19,11 @@ public class UserDTOConverter {
                 .build();
     }
 
-    public static UserWithTokenDTO convertToUserWithToken(User user, String token) {
+    public static UserWithTokenDTO convertToUserWithToken(User user, String token, String fingerprint) {
         return UserWithTokenDTO.builder()
                 .user(convertBase(user))
                 .token(token)
+                .fingerprint(fingerprint)
                 .build();
     }
 }
