@@ -1,6 +1,8 @@
 import {AuthService} from './services/auth/auth.service';
 import {Component} from '@angular/core';
 import {Router} from '@angular/router';
+import {MatDialog} from "@angular/material/dialog";
+import {ChangePasswordComponent} from "./components/shared/change-password/change-password.component";
 
 @Component({
   selector: 'app-root',
@@ -47,7 +49,7 @@ export class AppComponent {
     },
   ]
 
-  constructor(private router: Router, private authService:AuthService){
+  constructor(private router: Router, private authService:AuthService, private matDialog: MatDialog){
     authService.isloggedUser.subscribe((nextValue)=>{
       this.loggedUser = nextValue;
       this.updateSideMenu();
@@ -76,5 +78,9 @@ export class AppComponent {
   LogOut():void{
     this.authService.logout();
     this.loggedUser = false;
+  }
+
+  changePassword(): void {
+    this.matDialog.open(ChangePasswordComponent);
   }
 }

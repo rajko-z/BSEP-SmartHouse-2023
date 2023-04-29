@@ -19,7 +19,7 @@ import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.springframework.stereotype.Service;
 import team14.back.dto.crt.KeyUsageDTO;
-import team14.back.dto.LoginDTO;
+import team14.back.dto.login.LoginDTO;
 import team14.back.dto.crt.NewCertificateDTO;
 import team14.back.enumerations.IntermediateCA;
 import team14.back.enumerations.TemplateType;

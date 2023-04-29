@@ -1,6 +1,6 @@
 package team14.back.service.email;
 
-import team14.back.dto.LoginDTO;
+import team14.back.dto.login.LoginDTO;
 
 public interface EmailService {
 
@@ -9,4 +9,6 @@ public interface EmailService {
     void sendCreatedCertificateAndPasswordToUser(LoginDTO createdCredentials);
 
     void sendBlockingUserEmail(String email);
+
+    void sendMFACodeToUser(String email, String code);
 }

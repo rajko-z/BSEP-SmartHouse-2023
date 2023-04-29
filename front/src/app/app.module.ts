@@ -10,12 +10,10 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 import {AngularMaterialModule} from "./modules/shared/angular-material.module";
 import {RouterModule} from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
-import { AdminRejectCsrCheckComponent } from './components/admin/admin-reject-csr-check/admin-reject-csr-check.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AdminRejectCsrCheckComponent,
+    AppComponent
   ],
   imports: [
     AngularMaterialModule,

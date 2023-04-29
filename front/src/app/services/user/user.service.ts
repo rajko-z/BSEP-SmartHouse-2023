@@ -3,13 +3,16 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import {CustomHttpService} from "../custom-http/custom-http.service";
+import {NewPassword} from "../../model/newPassword";
+import {TextResponse} from "../../model/textResponse";
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private customHttp: CustomHttpService) { }
 
   register(request: CSRRequest, file:any):Observable<any>{
     const httpOptions = {
@@ -25,5 +28,9 @@ export class UserService {
 
     return this.http.post(environment.backUrl+ "/users/register", formData, );
 
+  }
+
+  changePassword(payload: NewPassword) {
+    return this.customHttp.putT<TextResponse>(environment.backUrl + "/users/change-password", payload);
   }
 }

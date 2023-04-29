@@ -10,12 +10,14 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team14.back.converters.UserDTOConverter;
-import team14.back.dto.LoginDTO;
+import team14.back.dto.login.LoginDTO;
 import team14.back.dto.UserWithTokenDTO;
+import team14.back.dto.login.LoginWith2FACodeDto;
 import team14.back.exception.InvalidCredentialsException;
 import team14.back.model.User;
-import team14.back.service.auth.AuthenticationService;
 import team14.back.service.auth.loginfailure.LoginFailureService;
+import team14.back.service.auth.mfa.MfaService;
+import team14.back.service.email.EmailService;
 import team14.back.service.user.UserService;
 import team14.back.utils.ExceptionMessageConstants;
 import team14.back.utils.TokenUtils;
@@ -34,35 +36,63 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private final UserService userService;
 
+    private final MfaService mfaService;
 
-    // TODO:: replace with code also, remove checkIfUserIsDeleted call
+    private final EmailService emailService;
+
     @Transactional
-    public UserWithTokenDTO createAuthenticationToken(LoginDTO loginDTO) {
-        try {
+    public UserWithTokenDTO createAuthenticationToken(LoginWith2FACodeDto loginDTO) {
+        try
+        {
             Authentication authentication = authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword()));
+
+            checkForMFACode((User) authentication.getPrincipal(), loginDTO.getEmail(), loginDTO.getMfaCode());
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
 
             User user = (User) authentication.getPrincipal();
-            checkIfUserIsDeleted(user);
             String jwt = tokenUtils.generateTokenForUsername(user.getUsername());
             return UserDTOConverter.convertToUserWithToken(user, jwt);
-        } catch (BadCredentialsException ex) {
+        }
+        catch (BadCredentialsException ex) {
             throw new InvalidCredentialsException(ExceptionMessageConstants.INVALID_LOGIN);
         }
     }
 
+    private void checkForMFACode(User user, String email, String code) {
+        boolean isCodeValid = mfaService.isCodeValidForUser(email, code);
+
+        if (!isCodeValid) {
+            boolean blocked = increaseLoginFailureAndBlockUserIfNeeded(email);
+            if (blocked) {
+                emailService.sendBlockingUserEmail(email);
+            }
+            user.setMfaCode(null);
+            user.setMfaCodeTimestamp(null);
+            userService.save(user);
+
+            throw new InvalidCredentialsException(ExceptionMessageConstants.INVALID_TWO_FACTOR);
+        }
+    }
+
     @Override
-    public boolean areCredentialsValid(LoginDTO loginDTO) {
+    public boolean firstLoginStep(LoginDTO loginDTO) {
         try {
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             loginDTO.getEmail(),
                             loginDTO.getPassword())
             );
+            mfaService.createAndSendCodeToUser(loginDTO.getEmail());
             return true;
-        } catch (BadCredentialsException | AccountStatusException ex) {
+        }
+        catch (BadCredentialsException | AccountStatusException ex)
+        {
+            boolean blocked = increaseLoginFailureAndBlockUserIfNeeded(loginDTO.getEmail());
+            if (blocked) {
+                emailService.sendBlockingUserEmail(loginDTO.getEmail());
+            }
             return false;
         }
     }
@@ -84,9 +114,4 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return false;
     }
 
-
-    private void checkIfUserIsDeleted(User user){
-        if(user.isDeleted())
-            throw new InvalidCredentialsException(ExceptionMessageConstants.INVALID_LOGIN);
-    }
 }

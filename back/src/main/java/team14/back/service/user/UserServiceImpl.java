@@ -6,23 +6,28 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import team14.back.dto.NewPasswordDTO;
 import team14.back.dto.csr.CSRRequestDTO;
-import team14.back.dto.LoginDTO;
+import team14.back.dto.login.LoginDTO;
 import team14.back.exception.BadRequestException;
 import team14.back.model.CSRRequest;
 import team14.back.model.Role;
 import team14.back.model.User;
 import team14.back.repository.CSRRequestRepository;
 import team14.back.repository.UserRepository;
-import team14.back.service.user.UserService;
+import team14.back.utils.CommonPasswords;
+import team14.back.utils.ExceptionMessageConstants;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 import java.util.Optional;
+import java.util.regex.Pattern;
 
 @Service
 @AllArgsConstructor
@@ -94,6 +99,47 @@ public class UserServiceImpl implements UserService {
         return this.userRepository.findByEmail(email);
     }
 
+    @Override
+    public void save(User user) {
+        this.userRepository.save(user);
+    }
+
+    @Override
+    public void changePassword(NewPasswordDTO newPasswordDTO) {
+        User user = userRepository.findByEmail(newPasswordDTO.getEmail())
+                .orElseThrow(() -> new UsernameNotFoundException("Can't find username with: " + newPasswordDTO.getEmail()));
+
+        if (passwordsMatch(newPasswordDTO.getNewPassword(), user.getPassword())) {
+            throw new BadRequestException(ExceptionMessageConstants.NEW_PASSWORD_SAME_AS_PREVIOUS);
+        }
+        if (!passwordsMatch(newPasswordDTO.getCurrentPassword(), user.getPassword())) {
+            throw new BadRequestException(ExceptionMessageConstants.INVALID_CURRENT_PASSWORD);
+        }
+        if (!isNewPasswordInValidFormat(newPasswordDTO.getNewPassword())) {
+            throw new BadRequestException(ExceptionMessageConstants.FORMAT_FOR_PASSWORD_NOT_VALID);
+        }
+        if (isPasswordOnListOfMostCommonPasswords(newPasswordDTO.getNewPassword())) {
+            throw new BadRequestException(ExceptionMessageConstants.PASSWORD_ON_LIST_OF_MOST_COMMON_PASSWORDS);
+        }
+        user.setPassword(passwordEncoder.encode(newPasswordDTO.getNewPassword()));
+        userRepository.save(user);
+    }
+
+    private boolean isNewPasswordInValidFormat(String password) {
+        if (password == null || password.isBlank() || password.length() < 8) {
+            return false;
+        }
+        String regex = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9]).{8,}$";
+        return Pattern.compile(regex).matcher(password).matches();
+    }
+
+    private boolean isPasswordOnListOfMostCommonPasswords(String password) {
+        return CommonPasswords.getCommonPasswords().stream().anyMatch(c -> c.equals(password));
+    }
+
+    private boolean passwordsMatch(String rawPassword, String encodedPassword) {
+        return passwordEncoder.matches(rawPassword, encodedPassword);
+    }
 
     public static String generatePassword() {
         SecureRandom random = new SecureRandom();

@@ -61,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(HttpMethod.POST,
-                "/auth/login",
+                "/auth/login-final-step",
                 "/auth/login-first-step",
                 "/users/register");
 

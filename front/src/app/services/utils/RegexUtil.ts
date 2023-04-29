@@ -98,3 +98,8 @@ export const COUNTRY_NAME_TOOLTIP = "Country(C)\n" +
   "U.S. (contains a period)\n" +
   "us (not uppercase letters)";
 export const COUNTRY_NAME_REGEX: RegExp = /^[A-Z]{2}$/;
+
+
+
+
+export const PASSWORD_REGEX: RegExp = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^a-zA-Z0-9]).{8,}$/;

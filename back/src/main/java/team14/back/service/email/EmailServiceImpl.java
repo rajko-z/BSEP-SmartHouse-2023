@@ -8,9 +8,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import team14.back.dto.LoginDTO;
+import team14.back.dto.login.LoginDTO;
 import team14.back.exception.InternalServerException;
-import team14.back.service.email.EmailService;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -76,5 +75,14 @@ public class EmailServiceImpl implements EmailService {
         javaMailSender.send(message);
     }
 
-
+    @Async
+    @Override
+    public void sendMFACodeToUser(String email, String code) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setFrom(Objects.requireNonNull(env.getProperty("spring.mail.username")));
+        message.setSubject("Your two factor authentication code");
+        message.setText("Your code is: " + code);
+        javaMailSender.send(message);
+    }
 }

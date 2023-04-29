@@ -5,8 +5,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
+import org.springframework.scheduling.annotation.EnableAsync;
 import team14.back.model.CSRRequest;
-import team14.back.model.LoginFailure;
 import team14.back.model.Role;
 import team14.back.model.User;
 import team14.back.repository.*;
@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 
 @SpringBootApplication
 @EnableMongoRepositories
+@EnableAsync
 public class BackApplication implements CommandLineRunner {
 
 	@Autowired

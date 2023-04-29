@@ -1,16 +1,18 @@
 package team14.back.controller;
 
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestPart;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import team14.back.dto.NewPasswordDTO;
+import team14.back.dto.TextResponse;
 import team14.back.dto.csr.CSRRequestDTO;
 import team14.back.service.user.UserService;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -30,4 +32,10 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER', 'ROLE_TENANT')")
+    @PutMapping(path = "/change-password")
+    public ResponseEntity<TextResponse> changePassword(@RequestBody @Valid NewPasswordDTO newPasswordDTO) {
+        userService.changePassword(newPasswordDTO);
+        return new ResponseEntity<>(new TextResponse("Password successfully changed"), HttpStatus.OK);
+    }
 }

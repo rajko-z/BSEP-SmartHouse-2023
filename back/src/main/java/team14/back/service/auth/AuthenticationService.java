@@ -1,12 +1,13 @@
 package team14.back.service.auth;
 
-import team14.back.dto.LoginDTO;
+import team14.back.dto.login.LoginDTO;
 import team14.back.dto.UserWithTokenDTO;
+import team14.back.dto.login.LoginWith2FACodeDto;
 
 public interface AuthenticationService {
-    UserWithTokenDTO createAuthenticationToken(LoginDTO loginDTO);
+    UserWithTokenDTO createAuthenticationToken(LoginWith2FACodeDto loginDTO);
 
-    boolean areCredentialsValid(LoginDTO loginDTO);
+    boolean firstLoginStep(LoginDTO loginDTO);
 
     /**
      * @param email email of user that failed to log in

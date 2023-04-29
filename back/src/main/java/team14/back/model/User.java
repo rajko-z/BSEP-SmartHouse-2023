@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 
@@ -19,6 +20,10 @@ public class User implements UserDetails {
     private Role role;
     private boolean blocked;
 
+    private String mfaCode;
+
+    private Long mfaCodeTimestamp;
+
     public User() {
 
     }
@@ -31,6 +36,14 @@ public class User implements UserDetails {
         this.deleted = deleted;
         this.role = role;
         this.blocked = false;
+    }
+
+    public Long getMfaCodeTimestamp() {
+        return mfaCodeTimestamp;
+    }
+
+    public void setMfaCodeTimestamp(Long mfaCodeTimestamp) {
+        this.mfaCodeTimestamp = mfaCodeTimestamp;
     }
 
     public boolean isBlocked() {
@@ -83,6 +96,14 @@ public class User implements UserDetails {
 
     public void setRole(Role role) {
         this.role = role;
+    }
+
+    public String getMfaCode() {
+        return mfaCode;
+    }
+
+    public void setMfaCode(String mfaCode) {
+        this.mfaCode = mfaCode;
     }
 
     ///////////////////////////////// FOR SECURITY //////////
