@@ -74,7 +74,10 @@
               "browserTarget": "front:build:production"
             },
             "development": {
-              "browserTarget": "front:build:development"
+              "browserTarget": "front:build:development",
+              "sslKey": "ssl/ca.key",
+              "sslCert": "ssl/ca.cer",
+              "ssl": true
             }
           },
           "defaultConfiguration": "development"

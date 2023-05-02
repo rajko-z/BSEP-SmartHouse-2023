@@ -1,27 +1,59 @@
-<mat-card>
-    <mat-card-content>
-      <form #loginForm="ngForm" (ngSubmit)="onSubmit()">
-        <mat-icon color="primary">lock</mat-icon>
-        <h2>Log In</h2>
-        <mat-error *ngIf="!loginValid">
-          The username and password were not recognized
+<mat-card *ngIf="!is2FAVisible">
+  <mat-card-content>
+    <form #loginForm="ngForm" (ngSubmit)="onFirstLoginStep()">
+      <mat-icon color="primary">lock</mat-icon>
+      <h2>Log In</h2>
+      <mat-error *ngIf="!loginValid">
+        The username and password were not recognized
+      </mat-error>
+      <mat-form-field>
+        <input matInput placeholder="Email" [(ngModel)]="email" name="email" type="email" required>
+        <mat-error>
+          Please provide a valid email address
         </mat-error>
-        <mat-form-field>
-          <input matInput placeholder="Email" [(ngModel)]="email" name="email" type="email" required>
-          <mat-error>
-            Please provide a valid email address
-          </mat-error>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
-          <mat-error>
-            Please provide a valid password
-          </mat-error>
-        </mat-form-field>
-        <div class="buttonDiv">
-          <button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Login</button><br/>
-          <button  class="registerLink" type="button" [routerLink]="['/anon/register']">Register with Certificate Request</button>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+        <mat-error>
+          Please provide a valid password
+        </mat-error>
+      </mat-form-field>
+      <div class="buttonDiv" *ngIf="!loading">
+        <button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Next</button>
+        <br/>
+        <button class="registerLink" type="button" [routerLink]="['/anon/register']">Register with Certificate Request
+        </button>
+      </div>
+      <div *ngIf="loading">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+<mat-card *ngIf="is2FAVisible">
+  <mat-card-content>
+    <div class="secondLoginStepForm">
+      <mat-icon color="primary">lock</mat-icon>
+      <h2>2FA</h2>
+      <h4>Enter the code we sent you by email</h4>
+      <hr>
+      <div id="mfa-divOuter">
+        <div id="mfa-divInner">
+          <input id="mfa-partitioned"
+                 type="text"
+                 minlength="6"
+                 maxlength="6"
+                 (input)="this.onCodeInputChange()"
+                 onKeyPress="if(this.value.length==6) return false;"
+          />
         </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
+      </div>
+      <br/>
+      <br/>
+      <div class="buttonDiv">
+        <button mat-raised-button color="primary" [disabled]="!codeEntered" (click)="onSecondLoginStep()">Login</button>
+        <br/>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -7,6 +7,7 @@ import { FacilityData } from 'src/app/model/facilityData';
 import { UserService } from 'src/app/services/user/user.service';
 import { DomSanitizer } from '@angular/platform-browser';
 import { SanitizedAddUserDTO } from 'src/app/model/sanitizedAddUserDTO';
+import {PASSWORD_REGEX} from "../../../services/utils/RegexUtil";
 
 
 @Component({
@@ -18,7 +19,7 @@ export class AdminAddUserPageComponent {
 
   userDataForm: FormGroup;
   facilitiesForm: FormGroup;
-  
+
   facilities: FacilityData[] = [
     new FacilityData('', 'House')
   ]
@@ -32,7 +33,7 @@ export class AdminAddUserPageComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       firstName: new FormControl('',[Validators.required]),
       lastName: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required, Validators.pattern("(?=.*\\d)(?=.*[a-z])(?=.*[A-Z]).{8,20}")]),
+      password: new FormControl('', [Validators.required, Validators.pattern(PASSWORD_REGEX)]),
       confirmPassword: new FormControl('', [Validators.required]),
     }, { validators: this.validatePassword })
 
@@ -49,14 +50,14 @@ export class AdminAddUserPageComponent {
   public validatePassword: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
-  
+
     if(password && confirmPassword && password.value !== confirmPassword.value){
       confirmPassword.setErrors({notEquivalent: true});
     }
     else if(password && confirmPassword && !confirmPassword.errors?.['required']){
       confirmPassword.setErrors(null);
     }
-  
+
     return password && confirmPassword && password.value !== confirmPassword.value ? { notMatchingPasswords: true } : null;
   }
 
@@ -86,9 +87,9 @@ export class AdminAddUserPageComponent {
     });
     this.facilitiesForm.addControl(nameAttribute, facility.get(nameAttribute));
     this.facilitiesForm.addControl(facilityTypeAttribute, facility.get(facilityTypeAttribute));
-  } 
+  }
 
-  deleteFacility(index: number) : void {   
+  deleteFacility(index: number) : void {
     this.facilities.splice(index, 1);
   }
 
@@ -104,10 +105,10 @@ export class AdminAddUserPageComponent {
           this.toastrService.success("Request successfully send.");
           console.log("Uspesno")
           this.router.navigateByUrl("anon/login");
-  
+
         },
         error:(err)=>{
-          this.toastrService.warning("Something went wrong, please try again!");  
+          this.toastrService.warning("Something went wrong, please try again!");
         }
       }
     )

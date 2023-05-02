@@ -1,8 +1,9 @@
-import { Router } from '@angular/router';
-import { AuthService } from './../../../services/auth/auth.service';
-import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
-import { environment } from 'src/environments/environment';
+import {Router} from '@angular/router';
+import {AuthService} from './../../../services/auth/auth.service';
+import {Component, Inject, OnInit} from '@angular/core';
+import {ToastrService} from 'ngx-toastr';
+import {DOCUMENT} from "@angular/common";
+import {AuthCredentialsWith2FACode} from "../../../model/auth";
 
 @Component({
   selector: 'app-login',
@@ -13,23 +14,63 @@ export class LoginComponent implements OnInit{
   public loginValid = true;
   public email = '';
   public password = '';
+  public is2FAVisible = false;
+  public code = '';
+  public codeEntered = false;
 
-  constructor(private authService:AuthService, private toastService: ToastrService, private router:Router){
+  public loading = false;
+
+
+  constructor(
+    private authService:AuthService,
+    private toastService: ToastrService,
+    private router:Router,
+    @Inject(DOCUMENT) document: Document){
   }
 
-  ngOnInit() {
-    
-  }
+  ngOnInit(): void {}
 
-  public onSubmit(): void {
+  public onFirstLoginStep(): void {
     this.loginValid = true;
+    this.loading = true;
 
-    this.authService.login({password:this.password, email:this.email}).subscribe({
+    this.authService.loginFirstStep({password:this.password, email:this.email}).subscribe({
       next:(res)=>{
-        this.authService.setCurrentUser(res);
-        this.toastService.success("Successfully logged in!");
-        this.authService.loggedUser = true;
+        this.loading = false;
+        this.is2FAVisible = true;
+      },
+      error:(err)=>{
+        this.loading = false;
+        this.toastService.warning("Credentials are not valid!");
+        this.loginValid = false;
+      }
+    });
+  }
 
+  public onCodeInputChange(): void {
+    let inputElement = document.getElementById('mfa-partitioned') as HTMLInputElement;
+    inputElement.value = inputElement.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');
+    this.codeEntered = inputElement.value.length == 6;
+  }
+
+  public onSecondLoginStep(): void {
+    let inputElement = document.getElementById('mfa-partitioned') as HTMLInputElement;
+    let code = inputElement.value;
+
+    let payload: AuthCredentialsWith2FACode = {
+      password: this.password,
+      email: this.email,
+      mfaCode: code
+    };
+
+    this.loading = true;
+
+    this.authService.loginFinalStep(payload).subscribe({
+      next:(res)=>{
+        this.loading = false;
+
+        this.authService.setCurrentUser(res);
+        this.authService.loggedUser = true;
         let role: string | undefined = this.authService.getCurrentUser()?.role;
 
         switch(role){
@@ -42,14 +83,14 @@ export class LoginComponent implements OnInit{
           default:
             this.router.navigateByUrl('anon/login');
         }
-
       },
       error:(err)=>{
-        this.toastService.warning("Credentials are not valid!");  
-        this.loginValid = false;
+        this.loading = false;
+        inputElement.value = '';
+        this.is2FAVisible = false;
+        this.toastService.error("2FA code is invalid or it has expired.");
       }
     });
   }
-
 
 }

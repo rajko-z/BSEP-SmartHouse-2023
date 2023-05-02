@@ -14,9 +14,9 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import team14.back.service.user.UserService;
 import team14.back.service.security.RestAuthenticationEntryPoint;
 import team14.back.service.security.TokenAuthenticationFilter;
+import team14.back.service.user.UserService;
 import team14.back.utils.TokenUtils;
 
 @Configuration
@@ -51,17 +51,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
             .authorizeRequests()
             .antMatchers("/users/**").permitAll()
-            .antMatchers("/admins/**").permitAll()
             .anyRequest().authenticated().and()
             .cors().and()
             .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService), BasicAuthenticationFilter.class);
+
         http.csrf().disable();
+
+        http.headers()
+            .xssProtection()
+            .and()
+            .contentSecurityPolicy("script-src 'self'");
     }
 
     @Override
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(HttpMethod.POST,
-      "/auth/login",
+                "/auth/login-final-step",
+                "/auth/login-first-step",
                 "/users/register");
 
         web.ignoring().antMatchers(HttpMethod.GET,

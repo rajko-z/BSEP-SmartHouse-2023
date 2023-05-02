@@ -13,6 +13,9 @@ public class JWTConfig {
     @Value("${security.jwt-token.expires}")
     private Long expires;
 
+    @Value("${security.jwt-app-name}")
+    private String appName;
+
     @Bean
     public String jwtSecret() {
         return secret;
@@ -22,4 +25,7 @@ public class JWTConfig {
     public Long jwtExpiresIn() {
         return expires;
     }
+
+    @Bean
+    public String appName() { return appName;}
 }
