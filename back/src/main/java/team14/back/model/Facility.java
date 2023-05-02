@@ -8,6 +8,8 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import team14.back.enumerations.FacilityType;
 
+import java.util.List;
+
 @Document("facilities")
 @Getter
 @Setter
@@ -18,4 +20,10 @@ public class Facility {
     private String name;
 
     private FacilityType facilityType;
+
+    private String address;
+
+    private User owner;
+
+    private List<User> tenants;
 }
