@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, SecurityContext } from '@angular/core';
 import {FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormArray} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AddUserDTO } from 'src/app/model/addUserDTO';
 import { FacilityData } from 'src/app/model/facilityData';
 import { UserService } from 'src/app/services/user/user.service';
+import { DomSanitizer } from '@angular/platform-browser';
+import { SanitizedAddUserDTO } from 'src/app/model/sanitizedAddUserDTO';
 
 
 @Component({
@@ -23,7 +25,7 @@ export class AdminAddUserPageComponent {
 
   facilityTypes: string[] = ['House', 'Apartment', 'Cottage'];
 
-  constructor(private userService:UserService, private toastrService:ToastrService, private router:Router) {}
+  constructor(private userService:UserService, private toastrService:ToastrService, private router:Router, private sanitizer: DomSanitizer) {}
 
   ngOnInit(){
     this.userDataForm = new FormGroup({
@@ -39,6 +41,10 @@ export class AdminAddUserPageComponent {
       facilityType0: new FormControl('', [Validators.required]),
     })
   }
+
+  // sanitizeInput(input: string): string {
+  //   return this.sanitizer.sanitize(SecurityContext.HTML, input) as string;
+  // }
 
   public validatePassword: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const password = control.get('password');
