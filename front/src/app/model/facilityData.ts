@@ -41,5 +41,13 @@ export class FacilityData {
     {
         this.address = address;
     }
+
+    public getTenantsEmails(){
+        return this.tenantsEmails;
+    }
+
+    public setTenantsEmails(tenantsEmails: string[]){
+        this.tenantsEmails = tenantsEmails;
+    }
 }
   
