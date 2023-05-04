@@ -8,13 +8,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import team14.back.dto.AddUserDTO;
+import team14.back.dto.ChangeRoleDto;
 import team14.back.dto.NewPasswordDTO;
 import team14.back.dto.TextResponse;
 import team14.back.dto.csr.CSRRequestDTO;
+import team14.back.model.User;
 import team14.back.service.user.UserService;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
+import javax.websocket.server.PathParam;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -46,4 +51,55 @@ public class UserController {
         userService.addUser(addUserDTO);
         return ResponseEntity.ok().build();
     }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllUsers(){
+        List<User> users = userService.getAllUsers();
+        return ResponseEntity.ok(users);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/change-user-role")
+    public ResponseEntity<?> changeUserRole(@RequestBody @Valid ChangeRoleDto changeRoleDto){
+        this.userService.changeUserRole(changeRoleDto);
+        return new ResponseEntity<>(new TextResponse("Role successfully changed"), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/delete-user")
+    public ResponseEntity<?> deleteUser(@RequestParam @Email String userEmail){
+        this.userService.deleteUser(userEmail);
+        return new ResponseEntity<>(new TextResponse("User successfully deleted"), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/undelete-user")
+    public ResponseEntity<?> undeleteUser(@RequestParam  @Email String userEmail){
+        this.userService.undeleteUser(userEmail);
+        return new ResponseEntity<>(new TextResponse("User successfully undeleted"), HttpStatus.OK);
+    }
+
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/block-user")
+    public ResponseEntity<?> blockUser(@RequestParam @Email String userEmail){
+        this.userService.blockUser(userEmail);
+        return new ResponseEntity<>(new TextResponse("User successfully blocked"), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @DeleteMapping("/unblock-user")
+    public ResponseEntity<?> unblockUser(@RequestParam @Email String userEmail){
+        this.userService.unblockUser(userEmail);
+        return new ResponseEntity<>(new TextResponse("User successfully unblocked"), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/{email}")
+    public ResponseEntity<?> getUser(@PathVariable @Email String email){
+        User user = this.userService.getUserByEmail(email);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
 }

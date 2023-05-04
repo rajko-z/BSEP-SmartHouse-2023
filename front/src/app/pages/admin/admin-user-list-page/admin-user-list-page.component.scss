@@ -1,0 +1,72 @@
+.containerDiv{
+    height: 450px;
+    padding-right: 8rem;
+    padding-left: 8rem;
+    text-align: center;
+    margin: 50px auto 0;
+    gap: 30px;
+  }
+  
+  .header{
+    text-align: center;
+    width: 100%;
+    margin-top:120px;
+    font-weight: 800;
+  }
+  
+  .table-title{
+    padding-bottom: 3rem;
+  }
+  
+  .search-container{
+    display: flex;
+    
+  }
+
+  .show-filter-button{
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+    transition: 200ms all ease-out;
+  }
+
+  .filter-button{
+    margin-left: 10px;
+    margin-top: 10px;
+  }
+
+  .inputValue{
+    margin-top: 0;
+    padding-top: 0;
+  }
+
+  .filterDiv{
+    display: flex;
+  }
+
+  .action-cell{
+    display: flex;
+  }
+
+  .delete-button{
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .demo-table {
+    width: 100%;
+  }
+  
+  .mat-mdc-row .mat-mdc-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+  }
+  
+  .mat-mdc-row:hover .mat-mdc-cell {
+    border-color: currentColor;
+  }
+  
+  .demo-row-is-clicked {
+    font-weight: bold;
+  }

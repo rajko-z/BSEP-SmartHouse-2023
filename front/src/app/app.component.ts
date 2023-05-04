@@ -30,6 +30,11 @@ export class AppComponent {
       label:'Add User',
       icon: 'person_add',
       route: 'admin/add_user'
+    }, 
+    {
+      label:'Users',
+      icon: 'people',
+      route: 'admin/all_users'
     }
   ];
 

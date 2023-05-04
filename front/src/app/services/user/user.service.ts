@@ -1,5 +1,5 @@
 import {CSRRequest} from './../../model/csrRequest';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {AddUserDTO} from 'src/app/model/addUserDTO';
 import {environment} from 'src/environments/environment';
@@ -11,6 +11,8 @@ import {catchError, Observable, of} from 'rxjs';
   providedIn: 'root'
 })
 export class UserService {
+  
+  
 
   constructor(private http: HttpClient) {
   }
@@ -40,5 +42,50 @@ export class UserService {
       .pipe(
         catchError(this.handleError<String>('add-user', ""))
       );
+  }
+
+  getAllUsers() {
+    return this.http.get(environment.backUrl + "/users/all");
+  }
+
+  changeRoleOfUser(user: any, newRole: any) {
+    let data = {
+      email:user.email,
+      newRole:newRole
+    }
+
+    return this.http.put(environment.backUrl + "/users/change-user-role", data);
+  }
+
+  deleteUser(element: any) {
+    let httpParams = new HttpParams()
+    .append("userEmail", element.email);
+
+    return this.http.delete(environment.backUrl + "/users/delete-user",{params:httpParams});
+  }
+  
+  undeleteUser(element: any) {
+    let httpParams = new HttpParams()
+    .append("userEmail", element.email);
+
+    return this.http.delete(environment.backUrl + "/users/undelete-user",{params:httpParams});
+  }
+
+  blockUser(element: any) {
+    let httpParams = new HttpParams()
+    .append("userEmail", element.email);
+
+    return this.http.delete(environment.backUrl + "/users/block-user",{params:httpParams});
+  } 
+  
+  unblockUser(element: any) {
+    let httpParams = new HttpParams()
+    .append("userEmail", element.email);
+
+    return this.http.delete(environment.backUrl + "/users/unblock-user",{params:httpParams});
+  }
+
+  getUserByEmail(email:string) {
+    return this.http.get(environment.backUrl + "/users/"+email);
   }
 }

@@ -7,17 +7,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import team14.back.dto.AddUserDTO;
+import team14.back.dto.ChangeRoleDto;
 import team14.back.dto.FacilityDTO;
 import team14.back.dto.NewPasswordDTO;
 import team14.back.dto.csr.CSRRequestDTO;
 import team14.back.dto.login.LoginDTO;
 import team14.back.enumerations.FacilityType;
 import team14.back.exception.BadRequestException;
+import team14.back.exception.NotFoundException;
 import team14.back.model.CSRRequest;
-import team14.back.model.Facility;
 import team14.back.model.Role;
 import team14.back.model.User;
 import team14.back.repository.CSRRequestRepository;
+import team14.back.repository.RoleRepository;
 import team14.back.repository.UserRepository;
 import team14.back.utils.CommonPasswords;
 import team14.back.utils.ExceptionMessageConstants;
@@ -27,17 +29,16 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final CSRRequestRepository csrRequestRepository;
 
     private final PasswordEncoder passwordEncoder;
@@ -96,6 +97,13 @@ public class UserServiceImpl implements UserService {
     public void blockUser(String email) {
         User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + email));
         user.setBlocked(true);
+        this.userRepository.save(user);
+    }
+
+    @Override
+    public void unblockUser(String email) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + email));
+        user.setBlocked(false);
         this.userRepository.save(user);
     }
 
@@ -162,9 +170,43 @@ public class UserServiceImpl implements UserService {
         user.setFacilities(new ArrayList<>());
         for(FacilityDTO facilityDTO: addUserDTO.getFacilities())
         {
-            user.getFacilities().add(new Facility(facilityDTO.getName(), facilityTypeConverter(facilityDTO.getFacilityType())));
+//            user.getFacilities().add(new Facility(facilityDTO.getName(), facilityTypeConverter(facilityDTO.getFacilityType())));
         }
         this.userRepository.save(user);
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        List<User> allUsers = userRepository.findAll();
+        return allUsers.stream().filter(user -> !user.getRole().getName().equals("ROLE_ADMIN")).collect(Collectors.toList());
+    }
+
+    @Override
+    public void changeUserRole(ChangeRoleDto changeRoleDto) {
+        User user = userRepository.findByEmail(changeRoleDto.getEmail()).orElseThrow(()-> new NotFoundException("Email "+changeRoleDto.getEmail()+" not found"));
+
+        Role role = roleRepository.findByName(changeRoleDto.getNewRole()).orElseThrow(()-> new NotFoundException("Role "+changeRoleDto.getNewRole()+" not found"));
+        user.setRole(role);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(String userEmail) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(()-> new NotFoundException("Email "+userEmail+" not found"));
+        user.setDeleted(true);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void undeleteUser(String userEmail) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(()-> new NotFoundException("Email "+userEmail+" not found"));
+        user.setDeleted(false);
+        userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("User with "+email+" not found!"));
     }
 
     private FacilityType facilityTypeConverter(String rawFacilityType)
