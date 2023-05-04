@@ -4,7 +4,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 @AllArgsConstructor
@@ -13,11 +15,10 @@ import javax.validation.constraints.NotBlank;
 @Setter
 public class NewPasswordDTO {
     @NotBlank
+    @Email
     private String email;
 
-    @NotBlank
     private String currentPassword;
 
-    @NotBlank
     private String newPassword;
 }

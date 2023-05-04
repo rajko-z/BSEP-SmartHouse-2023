@@ -154,7 +154,6 @@ export class AdminCsrrequestPageComponent implements OnInit {
       return;
     }
     const certificateData: NewCertificate = this.createRequestBody();
-    console.log(certificateData);
 
     this.sendingCert = true;
 

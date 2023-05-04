@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormArray} from '@angular/forms';
+import {FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AddUserDTO } from 'src/app/model/addUserDTO';
@@ -52,7 +52,6 @@ export class AdminAddUserPageComponent {
     this.userService.getAllNonAdminEmails()
     .subscribe({
       next: (data) => {
-        console.log(data);
         this.allUserEmails = data;
         this.filteredUserEmails = this.tenantEmailsControl.valueChanges.pipe(
           startWith(''),
@@ -136,7 +135,6 @@ export class AdminAddUserPageComponent {
     this.userService.addUser(userData).subscribe({
 		next: (res) => {
 		  this.toastrService.success("Request successfully send.");
-		  console.log("Uspesno");
 		  this.router.navigateByUrl("anon/login");
 		},
 		error: (err) => {
@@ -167,15 +165,13 @@ export class AdminAddUserPageComponent {
     if(!newStateArray.includes(tenantEmail))
 		newStateArray.push(tenantEmail);
     this.selectedTenantEmails.set(facilityIndex, newStateArray);
-    console.log(this.selectedTenantEmails);
   }
 
   public removeTenant(index: number, email: string) {
-	const emailList = this.selectedTenantEmails.get(index);
-	if (emailList) {
-	  const newEmailList = emailList.filter((value) => value !== email);
-	  this.selectedTenantEmails.set(index, newEmailList);
-	}
-	console.log(this.selectedTenantEmails);
+	  const emailList = this.selectedTenantEmails.get(index);
+    if (emailList) {
+      const newEmailList = emailList.filter((value) => value !== email);
+      this.selectedTenantEmails.set(index, newEmailList);
+    }
   }
 }

@@ -50,7 +50,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint).and()
 
             .authorizeRequests()
-            .antMatchers("/users/**").permitAll()
+            .antMatchers("/users/**", "/ws/**").permitAll()
             .anyRequest().authenticated().and()
             .cors().and()
             .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService), BasicAuthenticationFilter.class);
