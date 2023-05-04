@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 import team14.back.model.Facility;
 
 import javax.validation.constraints.Email;
@@ -19,13 +20,22 @@ import java.util.List;
 public class AddUserDTO {
     @Email
     private String email;
+
     @NotBlank
-    @Max(256)
+    @Length(max=256)
     private String firstName;
+
     @NotBlank
-    @Max(256)
+    @Length(max=256)
     private String lastName;
+
+    @Length(min=8)
+    @Length(max=256)
     private String password;
+
+    @Length(min=8)
+    @Length(max=256)
     private String confirmPassword;
+
     private List<FacilityDTO> facilities;
 }

@@ -1,12 +1,10 @@
-import { Component, SecurityContext } from '@angular/core';
+import { Component } from '@angular/core';
 import {FormControl, FormGroup, Validators, AbstractControl, ValidatorFn, ValidationErrors, FormArray} from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { AddUserDTO } from 'src/app/model/addUserDTO';
 import { FacilityData } from 'src/app/model/facilityData';
 import { UserService } from 'src/app/services/user/user.service';
-import { DomSanitizer } from '@angular/platform-browser';
-import { SanitizedAddUserDTO } from 'src/app/model/sanitizedAddUserDTO';
 import {PASSWORD_REGEX} from "../../../services/utils/RegexUtil";
 
 
@@ -21,12 +19,14 @@ export class AdminAddUserPageComponent {
   facilitiesForm: FormGroup;
 
   facilities: FacilityData[] = [
-    new FacilityData('', 'House')
+    new FacilityData('', '', 'House', [])
   ]
 
   facilityTypes: string[] = ['House', 'Apartment', 'Cottage'];
 
-  constructor(private userService:UserService, private toastrService:ToastrService, private router:Router, private sanitizer: DomSanitizer) {}
+  allUserEmails: String[];
+
+  constructor(private userService: UserService, private toastrService: ToastrService, private router: Router) {}
 
   ngOnInit(){
     this.userDataForm = new FormGroup({
@@ -39,13 +39,22 @@ export class AdminAddUserPageComponent {
 
     this.facilitiesForm = new FormGroup({
       name0: new FormControl('', [Validators.required]),
+      address0: new FormControl('', [Validators.required]),
       facilityType0: new FormControl('', [Validators.required]),
+      tenants0: new FormArray([], [Validators.required]),
     })
-  }
 
-  // sanitizeInput(input: string): string {
-  //   return this.sanitizer.sanitize(SecurityContext.HTML, input) as string;
-  // }
+    this.userService.getAllUserEmails()
+    .subscribe({
+      next: (data) => {
+        console.log(data);
+        this.allUserEmails = data;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
 
   public validatePassword: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
     const password = control.get('password');
@@ -76,21 +85,30 @@ export class AdminAddUserPageComponent {
   get confirmPassword(){
     return this.userDataForm.get("confirmPassword");
   }
+  get address(){
+    return this.userDataForm.get("address");
+  }
 
   addFacility() {
     let nameAttribute = `name${this.facilities.length}`;
     let facilityTypeAttribute = `facilityType${this.facilities.length}`
-    this.facilities.push(new FacilityData('', 'House'));
+    let addressAttribute = `address${this.facilities.length}`;
+
+    this.facilities.push(new FacilityData('', '', 'House', []));
     const facility = new FormGroup({
       [nameAttribute]: new FormControl('', [Validators.required]),
       [facilityTypeAttribute]: new FormControl('', [Validators.required]),
+      [addressAttribute]: new FormControl('', [Validators.required])
     });
     this.facilitiesForm.addControl(nameAttribute, facility.get(nameAttribute));
     this.facilitiesForm.addControl(facilityTypeAttribute, facility.get(facilityTypeAttribute));
+    this.facilitiesForm.addControl(addressAttribute, facility.get(addressAttribute));
   }
 
   deleteFacility(index: number) : void {
     this.facilities.splice(index, 1);
+    let facilityTypeAttribute = `facilityType${this.facilities.length}`;
+    this.facilitiesForm.removeControl(facilityTypeAttribute);
   }
 
   public onSubmit(): void {
@@ -118,6 +136,7 @@ export class AdminAddUserPageComponent {
   {
     for (let i = 0; i < this.facilities.length; i++) {
       this.facilities[i].setName(this.facilitiesForm.value[`name${i}`]);
+      this.facilities[i].setAddress(this.facilitiesForm.value[`address${i}`]);
     }
   }
 }

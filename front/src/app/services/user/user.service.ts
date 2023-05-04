@@ -21,6 +21,10 @@ export class UserService {
     };
   }
 
+  getAllUserEmails(): Observable<String[]> {
+    return this.http.get<String[]>(environment.backUrl + "/users/get-all-user-emails");
+  }
+
   register(request: CSRRequest, file: any): Observable<any> {
     const formData = new FormData();
     formData.append("file", file);

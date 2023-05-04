@@ -1,11 +1,15 @@
 export class FacilityData {
     name: string
+    address: string
     facilityType: string
+    tenantsEmails: string[]
 
-    constructor(name: string, facilityType: string)
+    constructor(name: string, address: string, facilityType: string, tenantsEmails: string[])
     {
         this.name = name;
         this.facilityType = facilityType;
+        this.address = address;
+        this.tenantsEmails = tenantsEmails;
     }
 
     public getName()
@@ -26,6 +30,16 @@ export class FacilityData {
     public setFacilityType(facilityType: string)
     {
         this.facilityType = facilityType;
+    }
+
+    public getAddress()
+    {
+        return this.address;
+    }
+
+    public setAddress(address: string)
+    {
+        this.address = address;
     }
 }
   

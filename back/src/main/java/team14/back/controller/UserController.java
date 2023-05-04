@@ -15,6 +15,7 @@ import team14.back.service.user.UserService;
 
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -31,6 +32,12 @@ public class UserController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok().build();
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("get-all-user-emails")
+    public List<String> getAllUserEmails() {
+        return userService.getAllUserEmails();
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER', 'ROLE_TENANT')")

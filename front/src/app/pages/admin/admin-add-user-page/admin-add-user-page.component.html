@@ -29,7 +29,7 @@
                 This field is required
             </mat-error>
             <mat-error *ngIf="password && password.errors?.['pattern'] && (password.touched|| password.dirty || userDataForm.invalid) ">
-                Password must have 8 to 20 characters with at least one uppercase, one lowercase character and one digit
+                8 to 20 characters with at least one uppercase, one lowercase, one special and one digit
             </mat-error>
         </mat-form-field>
 
@@ -64,12 +64,32 @@
                             <mat-label>Name</mat-label>
                             <input matInput formControlName="name{{i}}">
                         </mat-form-field>
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Address</mat-label>
+                            <input matInput formControlName="address{{i}}">
+                        </mat-form-field>
     
                         <mat-radio-group formControlName="facilityType{{i}}">
                         <mat-radio-button class="example-radio-button" *ngFor="let facilityType of facilityTypes" [value]="facilityType" (change)="facility.setFacilityType(facilityType)">
                             {{facilityType}}
                         </mat-radio-button>
                         </mat-radio-group>
+
+                        <mat-form-field class="example-full-width" appearance="fill">
+                            <mat-label>Add Tenants...</mat-label>
+                            <input type="text"
+                                   placeholder="Pick one"
+                                   aria-label="Add Tenants..."
+                                   matInput
+                                   formControlName="tenants{{i}}"
+                                   [matAutocomplete]="auto">
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                              <!-- <mat-option *ngFor="let userEmail of allUserEmails | async" [value]="userEmail">
+                                {{userEmail}}
+                              </mat-option> -->
+                            </mat-autocomplete>
+                        </mat-form-field>
                         
                         <button (click)="deleteFacility(i)" mat-mini-fab color="warn" class="delete-facility-button">
                             <mat-icon>close</mat-icon>

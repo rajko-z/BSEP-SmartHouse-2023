@@ -13,11 +13,13 @@ import team14.back.dto.csr.CSRRequestDTO;
 import team14.back.dto.login.LoginDTO;
 import team14.back.enumerations.FacilityType;
 import team14.back.exception.BadRequestException;
+import team14.back.exception.NotFoundException;
 import team14.back.model.CSRRequest;
 import team14.back.model.Facility;
 import team14.back.model.Role;
 import team14.back.model.User;
 import team14.back.repository.CSRRequestRepository;
+import team14.back.repository.FacilityRepository;
 import team14.back.repository.UserRepository;
 import team14.back.utils.CommonPasswords;
 import team14.back.utils.ExceptionMessageConstants;
@@ -27,10 +29,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Optional;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
@@ -39,6 +38,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final CSRRequestRepository csrRequestRepository;
+    private final FacilityRepository facilityRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -160,11 +160,38 @@ public class UserServiceImpl implements UserService {
         user.setLastName(addUserDTO.getLastName());
         user.setPassword(passwordEncoder.encode(addUserDTO.getPassword()));
         user.setFacilities(new ArrayList<>());
+        addUserFacilities(addUserDTO, user);
+        this.userRepository.save(user);
+    }
+
+    @Override
+    public List<String> getAllUserEmails() {
+        List<String> allUserEmails = new ArrayList<>();
+        List<User> allUsers = this.userRepository.findAll();
+        for(User user: allUsers){
+            allUserEmails.add(user.getEmail());
+        }
+        return allUserEmails;
+    }
+
+    private void addUserFacilities(AddUserDTO addUserDTO, User user) {
         for(FacilityDTO facilityDTO: addUserDTO.getFacilities())
         {
-            user.getFacilities().add(new Facility(facilityDTO.getName(), facilityTypeConverter(facilityDTO.getFacilityType())));
+            Facility facility = new Facility(facilityDTO.getName(), facilityTypeConverter(facilityDTO.getFacilityType()),
+                    facilityDTO.getAddress(), user, getTenantsByEmail(facilityDTO));
+            this.facilityRepository.save(facility);
+            user.getFacilities().add(facility);
         }
-        this.userRepository.save(user);
+    }
+
+    private List<User> getTenantsByEmail(FacilityDTO facilityDTO){
+        List<User> tenants = new ArrayList<>();
+        for(String tenantEmail: facilityDTO.getTenantsEmails()){
+            User foundTenant = this.userRepository.findByEmail(tenantEmail).orElseThrow(() ->
+                    new BadRequestException("Can't find csr request for user with email: " + tenantEmail));
+            tenants.add(foundTenant);
+        }
+        return tenants;
     }
 
     private FacilityType facilityTypeConverter(String rawFacilityType)
