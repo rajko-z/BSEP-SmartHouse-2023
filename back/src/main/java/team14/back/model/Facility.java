@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import team14.back.enumerations.FacilityType;
 
@@ -25,5 +26,6 @@ public class Facility {
 
     private User owner;
 
+    @DBRef
     private List<User> tenants;
 }

@@ -14,8 +14,10 @@ import javax.validation.constraints.NotBlank;
 public class NewPasswordDTO {
     @NotBlank
     private String email;
+
     @NotBlank
     private String currentPassword;
+
     @NotBlank
     private String newPassword;
 }

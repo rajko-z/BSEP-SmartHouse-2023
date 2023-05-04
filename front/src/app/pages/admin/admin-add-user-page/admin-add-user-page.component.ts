@@ -6,6 +6,7 @@ import { AddUserDTO } from 'src/app/model/addUserDTO';
 import { FacilityData } from 'src/app/model/facilityData';
 import { UserService } from 'src/app/services/user/user.service';
 import {PASSWORD_REGEX} from "../../../services/utils/RegexUtil";
+import { Observable, map, startWith } from 'rxjs';
 
 
 @Component({
@@ -14,19 +15,26 @@ import {PASSWORD_REGEX} from "../../../services/utils/RegexUtil";
   styleUrls: ['./admin-add-user-page.component.scss']
 })
 export class AdminAddUserPageComponent {
-
   userDataForm: FormGroup;
   facilitiesForm: FormGroup;
+  tenantEmailsControl = new FormControl('');
+  selectedTenantEmails: Map<number, string[]>;
 
   facilities: FacilityData[] = [
-    new FacilityData('', 'House')
+    new FacilityData('', '', 'House', [])
   ]
 
   facilityTypes: string[] = ['House', 'Apartment', 'Cottage'];
 
-  constructor(private userService:UserService, private toastrService:ToastrService, private router:Router) {}
+  allUserEmails: string[];
+
+  filteredUserEmails: Observable<string[]>;
+
+  constructor(private userService: UserService, private toastrService: ToastrService, private router: Router) {}
 
   ngOnInit(){
+    this.selectedTenantEmails = new Map<number, string[]>();
+
     this.userDataForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       firstName: new FormControl('',[Validators.required]),
@@ -37,8 +45,30 @@ export class AdminAddUserPageComponent {
 
     this.facilitiesForm = new FormGroup({
       name0: new FormControl('', [Validators.required]),
+      address0: new FormControl('', [Validators.required]),
       facilityType0: new FormControl('', [Validators.required]),
     })
+
+    this.userService.getAllUserEmails()
+    .subscribe({
+      next: (data) => {
+        console.log(data);
+        this.allUserEmails = data;
+        this.filteredUserEmails = this.tenantEmailsControl.valueChanges.pipe(
+          startWith(''),
+          map(value => this._filter(value || '')),
+        );
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.allUserEmails.filter(email => email.toLowerCase().includes(filterValue));
   }
 
   public validatePassword: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
@@ -70,21 +100,31 @@ export class AdminAddUserPageComponent {
   get confirmPassword(){
     return this.userDataForm.get("confirmPassword");
   }
+  get address(){
+    return this.userDataForm.get("address");
+  }
 
   addFacility() {
     let nameAttribute = `name${this.facilities.length}`;
     let facilityTypeAttribute = `facilityType${this.facilities.length}`
-    this.facilities.push(new FacilityData('', 'House'));
+    let addressAttribute = `address${this.facilities.length}`;
+
+    this.facilities.push(new FacilityData('', '', 'House', []));
     const facility = new FormGroup({
       [nameAttribute]: new FormControl('', [Validators.required]),
       [facilityTypeAttribute]: new FormControl('', [Validators.required]),
+      [addressAttribute]: new FormControl('', [Validators.required])
     });
+
     this.facilitiesForm.addControl(nameAttribute, facility.get(nameAttribute));
     this.facilitiesForm.addControl(facilityTypeAttribute, facility.get(facilityTypeAttribute));
+    this.facilitiesForm.addControl(addressAttribute, facility.get(addressAttribute));
   }
 
   deleteFacility(index: number) : void {
     this.facilities.splice(index, 1);
+    let facilityTypeAttribute = `facilityType${this.facilities.length}`;
+    this.facilitiesForm.removeControl(facilityTypeAttribute);
   }
 
   public onSubmit(): void {
@@ -109,9 +149,32 @@ export class AdminAddUserPageComponent {
   }
 
   public fillFacilitiesData()
-  {
-    for (let i = 0; i < this.facilities.length; i++) {
-      this.facilities[i].setName(this.facilitiesForm.value[`name${i}`]);
-    }
+{
+  for (let i = 0; i < this.facilities.length; i++) {
+    this.facilities[i].setName(this.facilitiesForm.value[`name${i}`]);
+    this.facilities[i].setAddress(this.facilitiesForm.value[`address${i}`]);
+    const tenantsEmails = this.selectedTenantEmails.get(i) ?? []; // use empty array as default value
+    this.facilities[i].setTenantsEmails(tenantsEmails);
+  }
+}
+
+
+  public addTenant(facilityIndex: number, tenantEmail: string) {
+	this.tenantEmailsControl.setValue('');	//emptying input field
+
+    let newStateArray = this.selectedTenantEmails.get(facilityIndex) ?? [];
+    if(!newStateArray.includes(tenantEmail))
+		newStateArray.push(tenantEmail);
+    this.selectedTenantEmails.set(facilityIndex, newStateArray);
+    console.log(this.selectedTenantEmails);
+  }
+
+  public removeTenant(index: number, email: string) {
+	const emailList = this.selectedTenantEmails.get(index);
+	if (emailList) {
+	  const newEmailList = emailList.filter((value) => value !== email);
+	  this.selectedTenantEmails.set(index, newEmailList);
+	}
+	console.log(this.selectedTenantEmails);
   }
 }

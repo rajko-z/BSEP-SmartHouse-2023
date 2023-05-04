@@ -9,6 +9,7 @@ import team14.back.dto.login.LoginDTO;
 import team14.back.model.User;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -27,4 +28,6 @@ public interface UserService extends UserDetailsService {
     void changePassword(NewPasswordDTO newPasswordDTO);
 
     void addUser(AddUserDTO addUserDTO);
+
+    List<String> getAllUserEmails();
 }
