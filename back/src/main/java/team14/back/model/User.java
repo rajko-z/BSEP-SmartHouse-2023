@@ -2,6 +2,7 @@ package team14.back.model;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,6 +32,7 @@ public class User implements UserDetails {
 
     private Long mfaCodeTimestamp;
 
+    @DBRef
     private List<Facility> facilities;
 
     private Date lastPasswordResetDate;
@@ -43,14 +45,6 @@ public class User implements UserDetails {
         this.deleted = deleted;
         this.role = role;
         this.blocked = false;
-    }
-
-    public List<Facility> getFacilities() {
-        return facilities;
-    }
-
-    public void setFacilities(List<Facility> facilities) {
-        this.facilities = facilities;
     }
 
     public Date getLastPasswordResetDate() {

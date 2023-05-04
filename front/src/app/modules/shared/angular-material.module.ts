@@ -29,6 +29,7 @@ import { ToastrModule } from 'ngx-toastr';
 import {FileUploadModule} from 'primeng/fileupload';
 import { FormsModule } from '@angular/forms';
 import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatChipsModule} from '@angular/material/chips';
 
 
 const materialModules:any = [
@@ -61,6 +62,7 @@ const materialModules:any = [
   MatMenuModule,
   FormsModule,
   MatSlideToggleModule,
+  MatChipsModule,
   ToastrModule.forRoot({
     positionClass :'toast-bottom-center'
   }),

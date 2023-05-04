@@ -154,7 +154,6 @@ export class AdminCsrrequestPageComponent implements OnInit {
       return;
     }
     const certificateData: NewCertificate = this.createRequestBody();
-    console.log(certificateData);
 
     this.sendingCert = true;
 
@@ -167,7 +166,10 @@ export class AdminCsrrequestPageComponent implements OnInit {
           },
           error: (error) => {
             console.log(error);
-            this.toastService.error(error.error.message);
+            if(error.error.message)
+              this.toastService.error(error.error.message);
+            else
+              this.toastService.error('Invalid form');
             this.sendingCert = false;
           }
         }

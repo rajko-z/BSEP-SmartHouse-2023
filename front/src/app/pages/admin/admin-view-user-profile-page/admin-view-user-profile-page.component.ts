@@ -18,7 +18,7 @@ export class AdminViewUserProfilePageComponent implements OnInit{
   user:any = "";
 
   facilities: FacilityData[] = [
-    new FacilityData('', 'House')
+    // new FacilityData('', 'House')
   ]
 
   facilityTypes: string[] = ['House', 'Apartment', 'Cottage'];
@@ -53,7 +53,7 @@ export class AdminViewUserProfilePageComponent implements OnInit{
   addFacility() {
     let nameAttribute = `name${this.facilities.length}`;
     let facilityTypeAttribute = `facilityType${this.facilities.length}`
-    this.facilities.push(new FacilityData('', 'House'));
+    // this.facilities.push(new FacilityData('', 'House'));
     const facility = new FormGroup({
       [nameAttribute]: new FormControl('', [Validators.required]),
       [facilityTypeAttribute]: new FormControl('', [Validators.required]),

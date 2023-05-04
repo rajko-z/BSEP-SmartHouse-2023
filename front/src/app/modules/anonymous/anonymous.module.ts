@@ -7,6 +7,7 @@ import {LoginComponent} from "../../components/anonymous/login/login.component";
 import {RegisterComponent} from "../../components/anonymous/register/register.component";
 import {AnonymousHomePageComponent} from "../../pages/anonymous/anonymous-home-page/anonymous-home-page.component";
 import { FormsModule } from '@angular/forms';
+import {ReactiveFormsModule} from "@angular/forms";
 
 const declaredModules = [
   LoginComponent,
@@ -21,7 +22,8 @@ const declaredModules = [
     SharedComponentsModule,
     AngularMaterialModule,
     FormsModule,
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule
   ],
   exports: declaredModules
 })

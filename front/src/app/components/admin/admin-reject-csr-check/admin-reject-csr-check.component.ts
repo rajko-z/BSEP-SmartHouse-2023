@@ -37,7 +37,6 @@ export class AdminRejectCsrCheckComponent implements OnInit{
     }
 
     this.loading = true;
-    console.log(body);
     this.csrRequestService.rejectCSRRequest(body)
       .subscribe({
           next: (_) => {

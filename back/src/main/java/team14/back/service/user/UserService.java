@@ -41,4 +41,6 @@ public interface UserService extends UserDetailsService {
     void undeleteUser(String userEmail);
 
     User getUserByEmail(String email);
+
+    List<String> getAllNonAdminEmails();
 }
