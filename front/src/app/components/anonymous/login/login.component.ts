@@ -3,7 +3,8 @@ import {AuthService} from './../../../services/auth/auth.service';
 import {Component, Inject, OnInit} from '@angular/core';
 import {ToastrService} from 'ngx-toastr';
 import {DOCUMENT} from "@angular/common";
-import {AuthCredentialsWith2FACode} from "../../../model/auth";
+import {AuthCredentials, AuthCredentialsWith2FACode} from "../../../model/auth";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,12 @@ import {AuthCredentialsWith2FACode} from "../../../model/auth";
 })
 export class LoginComponent implements OnInit{
   public loginValid = true;
-  public email = '';
-  public password = '';
   public is2FAVisible = false;
-  public code = '';
   public codeEntered = false;
 
   public loading = false;
 
+  loginDataForm: FormGroup;
 
   constructor(
     private authService:AuthService,
@@ -28,13 +27,20 @@ export class LoginComponent implements OnInit{
     @Inject(DOCUMENT) document: Document){
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loginDataForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      password: new FormControl('', [Validators.required]),
+    })
+  }
 
   public onFirstLoginStep(): void {
     this.loginValid = true;
     this.loading = true;
 
-    this.authService.loginFirstStep({password:this.password, email:this.email}).subscribe({
+    let authCredentials: AuthCredentials = this.loginDataForm.value;
+
+    this.authService.loginFirstStep(authCredentials).subscribe({
       next:(res)=>{
         this.loading = false;
         this.is2FAVisible = true;
@@ -58,11 +64,11 @@ export class LoginComponent implements OnInit{
     let code = inputElement.value;
 
     let payload: AuthCredentialsWith2FACode = {
-      password: this.password,
-      email: this.email,
+      password: this.loginDataForm.value['password'],
+      email: this.loginDataForm.value['email'] as string,
       mfaCode: code
     };
-
+    console.log(payload);
     this.loading = true;
 
     this.authService.loginFinalStep(payload).subscribe({

@@ -1,25 +1,25 @@
 <mat-card *ngIf="!is2FAVisible">
   <mat-card-content>
-    <form #loginForm="ngForm" (ngSubmit)="onFirstLoginStep()">
+    <form [formGroup]="loginDataForm" (ngSubmit)="onFirstLoginStep()">
       <mat-icon color="primary">lock</mat-icon>
       <h2>Log In</h2>
       <mat-error *ngIf="!loginValid">
         The username and password were not recognized
       </mat-error>
       <mat-form-field>
-        <input matInput placeholder="Email" [(ngModel)]="email" name="email" type="email" required>
+        <input matInput placeholder="Email" formControlName="email" name="email" type="email" required>
         <mat-error>
           Please provide a valid email address
         </mat-error>
       </mat-form-field>
       <mat-form-field>
-        <input matInput type="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+        <input matInput type="password" placeholder="Password" formControlName="password" name="password" required>
         <mat-error>
           Please provide a valid password
         </mat-error>
       </mat-form-field>
       <div class="buttonDiv" *ngIf="!loading">
-        <button mat-raised-button color="primary" [disabled]="!loginForm.form.valid">Next</button>
+        <button mat-raised-button color="primary" [disabled]="!loginDataForm.valid">Next</button>
         <br/>
         <button class="registerLink" type="button" [routerLink]="['/anon/register']">Register with Certificate Request
         </button>

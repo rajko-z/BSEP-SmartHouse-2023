@@ -58,7 +58,7 @@ export class ChangePasswordComponent {
     payload.currentPassword = this.passwordForm.controls.currPassword.value;
     payload.newPassword = this.passwordForm.controls.newPassword.value;
     payload.email = this.authService.getCurrentUserEmail();
-    console.log(payload)
+
     this.userService.changePassword(payload)
       .subscribe({
           next: (response) => {
@@ -68,6 +68,7 @@ export class ChangePasswordComponent {
             this.dialogRef.close();
           },
           error: (error) => {
+            console.log(error)
             this.toastService.error(error.error.message);
           }
         }

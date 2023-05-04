@@ -2,6 +2,8 @@ import { ToastrService } from 'ngx-toastr';
 import { UserService } from './../../../services/user/user.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CSRRequest } from 'src/app/model/csrRequest';
 
 @Component({
   selector: 'app-register',
@@ -11,25 +13,28 @@ import { Router } from '@angular/router';
 export class RegisterComponent implements OnInit{
 
   public registerValid = true;
-  public email = '';
-  public firstName = '';
-  public lastName = '';
   public csrFile:any;
+
+  public registerForm: FormGroup;
 
   constructor(private userService:UserService, private toastrService:ToastrService, private router:Router){
   }
 
 
   ngOnInit(): void {
-    
+    this.registerForm = new FormGroup({
+      email: new FormControl('', [Validators.required, Validators.email]),
+      firstName: new FormControl('', [Validators.required]),
+      lastName: new FormControl('', [Validators.required]),
+    })
   }
 
   public onSubmit(): void {
-    this.userService.register({firstName:this.firstName, lastName:this.lastName, email: this.email}, this.csrFile).subscribe(
+    let csrRequest: CSRRequest = this.registerForm.value;
+    this.userService.register(csrRequest, this.csrFile).subscribe(
       {
         next:(res)=>{
           this.toastrService.success("Request successfully send.");
-          console.log("Uspesno")
           this.router.navigateByUrl("anon/login");
   
         },

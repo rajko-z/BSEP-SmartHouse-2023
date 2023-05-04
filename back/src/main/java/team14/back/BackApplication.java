@@ -36,6 +36,7 @@ public class BackApplication implements CommandLineRunner {
 	@Autowired
 	private FacilityRepository facilityRepository;
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(BackApplication.class, args);
 	}
@@ -75,5 +76,6 @@ public class BackApplication implements CommandLineRunner {
 		this.csrRequestRepository.deleteAll();
 		this.loginFailureRepository.deleteAll();
 		this.facilityRepository.deleteAll();
+		this.revokedCertificateRepository.deleteAll();
 	}
 }
