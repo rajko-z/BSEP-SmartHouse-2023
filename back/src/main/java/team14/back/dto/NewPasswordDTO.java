@@ -19,6 +19,6 @@ public class NewPasswordDTO {
     private String email;
 
     private String currentPassword;
-
+    //nisam stavljao validaciju ovde, jer smeta Rajkovom kodu za proveru nove sifre
     private String newPassword;
 }

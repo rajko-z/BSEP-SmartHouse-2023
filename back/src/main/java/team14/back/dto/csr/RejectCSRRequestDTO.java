@@ -1,6 +1,7 @@
 package team14.back.dto.csr;
 
 import lombok.*;
+import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotBlank;
 
@@ -12,6 +13,8 @@ import javax.validation.constraints.NotBlank;
 public class RejectCSRRequestDTO {
 
     @NotBlank
+    @Length(max = 256)
     private String email;
+
     private String reason;
 }

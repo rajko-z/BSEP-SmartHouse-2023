@@ -20,7 +20,6 @@ public class LoginDTO {
     @Length(max=256)
     private String email;
 
-    @NotBlank
     @Length(min=8)
     @Length(max=256)
     private String password;
