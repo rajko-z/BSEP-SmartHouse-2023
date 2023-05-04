@@ -17,12 +17,14 @@ export class UserService {
 
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
-      return of(result as T);
+      console.error(`${operation} failed: ${error.message}`);
+      throw error; // or re-throw the error
     };
   }
+  
 
-  getAllUserEmails(): Observable<string[]> {
-    return this.http.get<string[]>(environment.backUrl + "/users/get-all-user-emails");
+  getAllNonAdminEmails(): Observable<string[]> {
+    return this.http.get<string[]>(environment.backUrl + "/users/get-all-non-admin-emails");
   }
 
   register(request: CSRRequest, file: any): Observable<any> {

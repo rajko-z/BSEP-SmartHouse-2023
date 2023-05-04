@@ -165,13 +165,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<String> getAllUserEmails() {
-        List<String> allUserEmails = new ArrayList<>();
+    public List<String> getAllNonAdminEmails() {
+        List<String> allNonAdminEmails = new ArrayList<>();
         List<User> allUsers = this.userRepository.findAll();
         for(User user: allUsers){
-            allUserEmails.add(user.getEmail());
+            if (!user.getRole().getName().equals("ROLE_ADMIN"))
+                allNonAdminEmails.add(user.getEmail());
         }
-        return allUserEmails;
+        return allNonAdminEmails;
     }
 
     private void addUserFacilities(AddUserDTO addUserDTO, User user) {

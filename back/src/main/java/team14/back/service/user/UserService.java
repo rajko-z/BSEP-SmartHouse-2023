@@ -29,5 +29,5 @@ public interface UserService extends UserDetailsService {
 
     void addUser(AddUserDTO addUserDTO);
 
-    List<String> getAllUserEmails();
+    List<String> getAllNonAdminEmails();
 }

@@ -11,6 +11,8 @@ import team14.back.dto.AddUserDTO;
 import team14.back.dto.NewPasswordDTO;
 import team14.back.dto.TextResponse;
 import team14.back.dto.csr.CSRRequestDTO;
+import team14.back.exception.BadRequestException;
+import team14.back.exception.NotFoundException;
 import team14.back.service.user.UserService;
 
 import javax.validation.Valid;
@@ -35,9 +37,9 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @GetMapping("get-all-user-emails")
-    public List<String> getAllUserEmails() {
-        return userService.getAllUserEmails();
+    @GetMapping("get-all-non-admin-emails")
+    public List<String> getAllNonAdminEmails() {
+        return userService.getAllNonAdminEmails();
     }
 
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER', 'ROLE_TENANT')")
@@ -50,7 +52,11 @@ public class UserController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping(path = "/add-user", consumes = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<?> addUser(@Valid @RequestBody AddUserDTO addUserDTO) {
-        userService.addUser(addUserDTO);
+        try{
+            userService.addUser(addUserDTO);
+        } catch (BadRequestException e){
+            return ResponseEntity.badRequest().build();
+        }
         return ResponseEntity.ok().build();
     }
 }
