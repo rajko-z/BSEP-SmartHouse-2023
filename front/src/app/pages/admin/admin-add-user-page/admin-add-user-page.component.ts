@@ -122,8 +122,15 @@ export class AdminAddUserPageComponent {
 
   deleteFacility(index: number) : void {
     this.facilities.splice(index, 1);
-    let facilityTypeAttribute = `facilityType${this.facilities.length}`;
+    
+    let nameAttribute = `name${this.facilities.length}`;
+    let facilityTypeAttribute = `facilityType${this.facilities.length}`
+    let addressAttribute = `address${this.facilities.length}`;
+
+    this.facilitiesForm.removeControl(nameAttribute);
     this.facilitiesForm.removeControl(facilityTypeAttribute);
+    this.facilitiesForm.removeControl(addressAttribute);  
+    this.selectedTenantEmails.delete(index);
   }
 
   public onSubmit(): void {
@@ -131,20 +138,20 @@ export class AdminAddUserPageComponent {
 
     let userData: AddUserDTO = this.userDataForm.value;
     userData.facilities = this.facilities;
-
-    this.userService.addUser(userData).subscribe({
-		next: (res) => {
-		  this.toastrService.success("Request successfully send.");
-		  this.router.navigateByUrl("anon/login");
-		},
-		error: (err) => {
-		  if (err.status === 400) {
-			this.toastrService.warning("User already exists!");
-		  } else {
-			this.toastrService.warning("Something went wrong, please try again!");
-		  }
-		}
-	  });
+    console.log(userData);
+    // this.userService.addUser(userData).subscribe({
+		// next: (res) => {
+		//   this.toastrService.success("Request successfully send.");
+		//   this.router.navigateByUrl("anon/login");
+		// },
+		// error: (err) => {
+		//   if (err.status === 400) {
+		// 	this.toastrService.warning("User already exists!");
+		//   } else {
+		// 	this.toastrService.warning("Something went wrong, please try again!");
+		//   }
+		// }
+	  // });
   }
 
   public fillFacilitiesData()
