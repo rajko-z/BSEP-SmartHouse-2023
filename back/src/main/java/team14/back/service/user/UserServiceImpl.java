@@ -6,10 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import team14.back.dto.AddUserDTO;
-import team14.back.dto.ChangeRoleDto;
-import team14.back.dto.FacilityDTO;
-import team14.back.dto.NewPasswordDTO;
+import team14.back.dto.*;
 import team14.back.dto.csr.CSRRequestDTO;
 import team14.back.dto.login.LoginDTO;
 import team14.back.enumerations.FacilityType;
@@ -184,6 +181,22 @@ public class UserServiceImpl implements UserService {
                 allNonAdminEmails.add(user.getEmail());
         }
         return allNonAdminEmails;
+    }
+
+    @Override
+    public void saveFacilities(UserFacilitiesDTO userFacilitiesDTO) {
+        User user = this.userRepository.findByEmail(userFacilitiesDTO.getEmail()).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + userFacilitiesDTO.getEmail()));
+
+//        List<Facility> facilities = new ArrayList<>();
+//        for (FacilityDTO facilityDTO:userFacilitiesDTO.getFacilities()) {
+//            Facility facility = new Facility();
+//            facility.setName(facilityDTO.getName());
+//            facility.set
+//
+//        }
+//        user.setBlocked(false);
+//        this.userRepository.save(user);
+
     }
 
     private void addUserFacilities(AddUserDTO addUserDTO, User user) {

@@ -7,10 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import team14.back.dto.AddUserDTO;
-import team14.back.dto.ChangeRoleDto;
-import team14.back.dto.NewPasswordDTO;
-import team14.back.dto.TextResponse;
+import team14.back.dto.*;
 import team14.back.dto.csr.CSRRequestDTO;
 import team14.back.model.User;
 import team14.back.exception.BadRequestException;
@@ -112,6 +109,13 @@ public class UserController {
     public ResponseEntity<?> getUser(@PathVariable @Email String email){
         User user = this.userService.getUserByEmail(email);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PutMapping("/save-facilities")
+    public ResponseEntity<?> saveFacilities(@RequestBody @Valid UserFacilitiesDTO userFacilitiesDTO){
+        this.userService.saveFacilities(userFacilitiesDTO);
+        return new ResponseEntity<>(new TextResponse("Successfully saved "), HttpStatus.OK);
     }
 
 }

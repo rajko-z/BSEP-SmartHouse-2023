@@ -13,6 +13,7 @@ import {catchError, Observable, of} from 'rxjs';
 export class UserService {
   
   
+  
 
   constructor(private http: HttpClient) {
   }
@@ -93,5 +94,14 @@ export class UserService {
 
   getUserByEmail(email:string) {
     return this.http.get(environment.backUrl + "/users/"+email);
+  }
+
+  saveFacilities(facilities: any, userEmail: string) {
+    let data = {
+      email: userEmail,
+      facilities: facilities
+    }
+
+    return this.http.put(environment.backUrl + "/users/save-facilities", data);
   }
 }
