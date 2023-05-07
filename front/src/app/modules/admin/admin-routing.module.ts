@@ -9,6 +9,8 @@ import {
   AdminCsrrequestPageComponent
 } from "../../pages/admin/admin-csrrequests-page/admin-csrrequest-page/admin-csrrequest-page.component";
 import { AdminAddUserPageComponent } from "src/app/pages/admin/admin-add-user-page/admin-add-user-page.component";
+import { AdminUserListPageComponent } from "src/app/pages/admin/admin-user-list-page/admin-user-list-page.component";
+import { AdminViewUserProfilePageComponent } from "src/app/pages/admin/admin-view-user-profile-page/admin-view-user-profile-page.component";
 
 const routes: Routes = [
   {
@@ -30,6 +32,14 @@ const routes: Routes = [
   {
     path: 'add_user',
     component: AdminAddUserPageComponent
+  },
+  {
+    path: 'all_users',
+    component: AdminUserListPageComponent
+  },
+  {
+    path: 'user/:email',
+    component: AdminViewUserProfilePageComponent
   }
 ];
 

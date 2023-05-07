@@ -1,0 +1,102 @@
+mat-card {
+    max-width: 700px;
+    margin: 5em auto;
+    text-align: center;
+    padding: 3em;
+  }
+  
+  mat-form-field {
+    display: block;
+  }
+
+.registerLink{
+  background: none!important;
+  border: none;
+  padding: 0!important;
+  /*optional*/
+  font-family: arial, sans-serif;
+  /*input has OS specific font-family*/
+  color: #069;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.buttonDiv{
+  display: block;
+}
+
+.fileDiv{
+  margin: 0 auto;
+  // background-color: aqua;
+}
+
+#file{
+  margin: 0 auto;
+  margin-bottom: 2rem;
+}
+
+.add-user-title{
+    font-size: 30px;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
+}
+
+.add-facility-button{
+    margin-right: 30em;
+}
+
+.facility-title-icon{
+    margin-right: 1rem;
+}
+
+.delete-facility-button{
+  margin-left: 12rem;
+}
+
+.facility-expansion-panel{
+  margin-bottom: 1rem;
+}
+
+.title-icon{
+  transform: scale(1.5);
+  padding-left: 10px;
+  margin-bottom: 20px;
+}
+
+.personal-info{
+  margin-top: 20px;
+  text-align: left;
+}
+
+.personal-info h1{
+  margin-bottom: 15px;
+}
+
+.personal-info h3{
+  margin-block: 5px;
+  padding-block: 0;
+  text-transform: lowercase;
+}
+
+.email-chip{
+  margin: 0.25rem;
+}
+
+.autocomplete
+{
+  margin: 1rem;
+}
+
+.example-headers-align{
+  text-align: center;
+}
+
+.delete-facility-button{
+  margin: 0;
+}
+
+.facility-info{
+  margin-top: 20px;
+  text-align: left;
+}

@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>Change role of {{data.firstName+" "+data.lastName}}</h1>
+<div mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Role</mat-label>
+    <mat-select [(value)]="selectedRole">
+      <mat-option value="ROLE_OWNER">Owner</mat-option>
+      <mat-option value="ROLE_TENANT">Tenant</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="selectedRole" cdkFocusInitial>Change</button>
+</div>

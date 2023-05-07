@@ -11,10 +11,16 @@ import {AngularMaterialModule} from "./modules/shared/angular-material.module";
 import {RouterModule} from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
 import {TokenInterceptor} from "./services/interceptor/TokenInterceptor";
+import { AdminUserListPageComponent } from './pages/admin/admin-user-list-page/admin-user-list-page.component';
+import { ChangeRoleDialogComponent } from './components/admin/change-role-dialog/change-role-dialog.component';
+import { AdminViewUserProfilePageComponent } from './pages/admin/admin-view-user-profile-page/admin-view-user-profile-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AdminUserListPageComponent,
+    ChangeRoleDialogComponent,
+    AdminViewUserProfilePageComponent
   ],
   imports: [
     AngularMaterialModule,

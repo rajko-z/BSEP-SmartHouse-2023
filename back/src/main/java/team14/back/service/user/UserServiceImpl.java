@@ -5,10 +5,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import team14.back.dto.AddUserDTO;
-import team14.back.dto.FacilityDTO;
-import team14.back.dto.NewPasswordDTO;
+import team14.back.dto.*;
 import team14.back.dto.csr.CSRRequestDTO;
 import team14.back.dto.login.LoginDTO;
 import team14.back.enumerations.FacilityType;
@@ -19,6 +18,7 @@ import team14.back.model.Facility;
 import team14.back.model.Role;
 import team14.back.model.User;
 import team14.back.repository.CSRRequestRepository;
+import team14.back.repository.RoleRepository;
 import team14.back.repository.FacilityRepository;
 import team14.back.repository.UserRepository;
 import team14.back.utils.CommonPasswords;
@@ -31,12 +31,14 @@ import java.security.SecureRandom;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final RoleRepository roleRepository;
     private final CSRRequestRepository csrRequestRepository;
     private final FacilityRepository facilityRepository;
 
@@ -96,6 +98,13 @@ public class UserServiceImpl implements UserService {
     public void blockUser(String email) {
         User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + email));
         user.setBlocked(true);
+        this.userRepository.save(user);
+    }
+
+    @Override
+    public void unblockUser(String email) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + email));
+        user.setBlocked(false);
         this.userRepository.save(user);
     }
 
@@ -175,6 +184,78 @@ public class UserServiceImpl implements UserService {
         return allNonAdminEmails;
     }
 
+    @Override
+    @Transactional
+    public void saveFacilities(UserFacilitiesDTO userFacilitiesDTO) {
+        User user = this.userRepository.findByEmail(userFacilitiesDTO.getEmail()).
+                orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + userFacilitiesDTO.getEmail()));
+
+        if(user.getFacilities() != null && user.getFacilities().size() > 0)
+        {
+            for (FacilityDTO facilityDTO:userFacilitiesDTO.getFacilities()) {
+                Facility foundFacility = user.getFacilities().stream().filter(facility -> facility.getName()
+                        .equals(facilityDTO.getName())).findFirst().orElse(null);
+                if(foundFacility != null)
+                    editCurrentFacility(facilityDTO, foundFacility);
+                else {
+                    Facility facility = new Facility(facilityDTO, user, getUsersFromEmails(facilityDTO));
+                    facilityRepository.save(facility);
+                    user.getFacilities().add(facility);
+                }
+            }
+            this.removeFacilitiesIfNotFound(user, userFacilitiesDTO.getFacilities());
+        }
+        else
+            createNewFacilities(userFacilitiesDTO, user);
+
+        this.userRepository.save(user);
+    }
+
+    private void createNewFacilities(UserFacilitiesDTO userFacilitiesDTO, User user) {
+        List<Facility> facilities = new ArrayList<>();
+        for (FacilityDTO facilityDTO: userFacilitiesDTO.getFacilities()) {
+            Facility facility = new Facility(facilityDTO, user, getUsersFromEmails(facilityDTO));
+            facilityRepository.save(facility);
+            facilities.add(facility);
+        }
+        user.setFacilities(facilities);
+    }
+
+    private void editCurrentFacility(FacilityDTO facilityDTO, Facility foundFacility) {
+        Facility existingFacility = facilityRepository.findByName(foundFacility.getName()).orElseThrow(() -> new NotFoundException("Can't find facility with name: " + foundFacility.getName()));
+        existingFacility.setFacilityType(FacilityType.valueOf(facilityDTO.getFacilityType().toUpperCase()));
+        existingFacility.setAddress(facilityDTO.getAddress());
+        existingFacility.setTenants(getUsersFromEmails(facilityDTO));
+        facilityRepository.save(existingFacility);
+    }
+
+    private List<User> getUsersFromEmails(FacilityDTO facilityDTO) {
+        List<User> users = new ArrayList<>();
+        for (String tenantEmail : facilityDTO.getTenantsEmails()) {
+            User tenant = this.userRepository.findByEmail(tenantEmail).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + tenantEmail));
+            users.add(tenant);
+        }
+        return users;
+    }
+
+    private void removeFacilitiesIfNotFound(User user, List<FacilityDTO> facilities) {
+        List<Facility> existingFacilities = user.getFacilities();
+        existingFacilities.removeIf(existingFacility -> facilities.stream().filter(facility -> facility.getName().equals(existingFacility.getName())).toList().size() == 0);
+    }
+
+    @Override
+    public List<FacilityDTO> getUserFacilities(String email) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + email));
+        List<FacilityDTO> facilityDTOS = new ArrayList<>();
+        if(user.getFacilities() != null) {
+            for (Facility facility : user.getFacilities()) {
+                FacilityDTO facilityDTO = new FacilityDTO(facility);
+                facilityDTOS.add(facilityDTO);
+            }
+        }
+        return facilityDTOS;
+    }
+
     private void addUserFacilities(AddUserDTO addUserDTO, User user) {
         for(FacilityDTO facilityDTO: addUserDTO.getFacilities())
         {
@@ -193,6 +274,43 @@ public class UserServiceImpl implements UserService {
             tenants.add(foundTenant);
         }
         return tenants;
+    }
+
+    @Override
+    public List<User> getAllUsers() {
+        List<User> allUsers = userRepository.findAll();
+        allUsers.forEach(user -> user.setFacilities(null));
+        return allUsers.stream().filter(user -> !user.getRole().getName().equals("ROLE_ADMIN")).collect(Collectors.toList());
+    }
+
+    @Override
+    public void changeUserRole(ChangeRoleDto changeRoleDto) {
+        User user = userRepository.findByEmail(changeRoleDto.getEmail()).orElseThrow(()-> new NotFoundException("Email "+changeRoleDto.getEmail()+" not found"));
+
+        Role role = roleRepository.findByName(changeRoleDto.getNewRole()).orElseThrow(()-> new NotFoundException("Role "+changeRoleDto.getNewRole()+" not found"));
+        user.setRole(role);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void deleteUser(String userEmail) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(()-> new NotFoundException("Email "+userEmail+" not found"));
+        user.setDeleted(true);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void undeleteUser(String userEmail) {
+        User user = userRepository.findByEmail(userEmail).orElseThrow(()-> new NotFoundException("Email "+userEmail+" not found"));
+        user.setDeleted(false);
+        userRepository.save(user);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        User user = this.userRepository.findByEmail(email).orElseThrow(()->new UsernameNotFoundException("User with "+email+" not found!"));
+        user.setFacilities(null);
+        return user;
     }
 
     private FacilityType facilityTypeConverter(String rawFacilityType)

@@ -139,19 +139,20 @@ export class AdminAddUserPageComponent {
     let userData: AddUserDTO = this.userDataForm.value;
     userData.facilities = this.facilities;
     console.log(userData);
-    // this.userService.addUser(userData).subscribe({
-		// next: (res) => {
-		//   this.toastrService.success("Request successfully send.");
-		//   this.router.navigateByUrl("anon/login");
-		// },
-		// error: (err) => {
-		//   if (err.status === 400) {
-		// 	this.toastrService.warning("User already exists!");
-		//   } else {
-		// 	this.toastrService.warning("Something went wrong, please try again!");
-		//   }
-		// }
-	  // });
+    
+    this.userService.addUser(userData).subscribe({
+      next: (res) => {
+        this.toastrService.success("Request successfully send.");
+        this.router.navigateByUrl("anon/login");
+      },
+      error: (err) => {
+        if(err.status === 400) {
+          this.toastrService.warning("User already exists!");
+        } else {
+          this.toastrService.warning("Something went wrong, please try again!");
+        }
+      }
+	  });
   }
 
   public fillFacilitiesData()

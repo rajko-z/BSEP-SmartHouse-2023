@@ -1,7 +1,6 @@
 package team14.back.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;
-import team14.back.model.Role;
 import team14.back.model.User;
 
 import java.util.Optional;

@@ -1,14 +1,14 @@
 package team14.back.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import team14.back.dto.FacilityDTO;
 import team14.back.enumerations.FacilityType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document("facilities")
@@ -16,6 +16,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Facility {
     @Id
     private String name;
@@ -28,4 +30,12 @@ public class Facility {
 
     @DBRef
     private List<User> tenants;
+
+    public Facility(FacilityDTO facilityDTO, User owner, List<User> tenants){
+        this.name = facilityDTO.getName();
+        this.facilityType = FacilityType.valueOf(facilityDTO.getFacilityType().toUpperCase());
+        this.address = facilityDTO.getAddress();
+        this.owner = owner;
+        this.tenants = tenants;
+    }
 }
