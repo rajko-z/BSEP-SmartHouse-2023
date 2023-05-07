@@ -9,7 +9,7 @@
         
 
 
-        <h2 class="facility-info">Facilities: {{user.facilities?user.facilities.lenght:"0"}}</h2>
+        <h2 class="facility-info">Facilities: {{facilities.length}}</h2>
         
         <mat-accordion class="example-headers-align" multi>
             <form [formGroup]="facilitiesForm">
@@ -17,9 +17,9 @@
                     
                     <mat-expansion-panel-header>
                         <mat-panel-title>
-                            <mat-icon *ngIf="facility.getFacilityType() === 'Apartment'" class="facility-title-icon">apartment</mat-icon>
-                            <mat-icon *ngIf="facility.getFacilityType() === 'Cottage'" class="facility-title-icon">cottage</mat-icon>
-                            <mat-icon *ngIf="facility.getFacilityType() !== 'Apartment' && facility.getFacilityType() !== 'Cottage'" class="facility-title-icon">house</mat-icon>
+                            <mat-icon *ngIf="facility?.getFacilityType() === 'Apartment'" class="facility-title-icon">apartment</mat-icon>
+                            <mat-icon *ngIf="facility?.getFacilityType() === 'Cottage'" class="facility-title-icon">cottage</mat-icon>
+                            <mat-icon *ngIf="facility?.getFacilityType() !== 'Apartment' && facility?.getFacilityType() !== 'Cottage'" class="facility-title-icon">house</mat-icon>
                             Facility {{ facilities.indexOf(facility) + 1 }}
                         </mat-panel-title>
                     </mat-expansion-panel-header>
@@ -35,7 +35,7 @@
                         </mat-form-field>
     
                         <mat-radio-group formControlName="facilityType{{i}}">
-                        <mat-radio-button class="example-radio-button" *ngFor="let facilityType of facilityTypes" [value]="facilityType" (change)="facility.setFacilityType(facilityType)">
+                        <mat-radio-button class="example-radio-button" *ngFor="let facilityType of facilityTypes" [value]="facilityType" (change)="facility?.setFacilityType(facilityType)">
                             {{facilityType}}
                         </mat-radio-button>
                         </mat-radio-group>

@@ -2,10 +2,7 @@ package team14.back.service.user;
 
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.multipart.MultipartFile;
-import team14.back.dto.AddUserDTO;
-import team14.back.dto.ChangeRoleDto;
-import team14.back.dto.NewPasswordDTO;
-import team14.back.dto.UserFacilitiesDTO;
+import team14.back.dto.*;
 import team14.back.dto.csr.CSRRequestDTO;
 import team14.back.dto.login.LoginDTO;
 import team14.back.model.User;
@@ -46,4 +43,6 @@ public interface UserService extends UserDetailsService {
     List<String> getAllNonAdminEmails();
 
     void saveFacilities(UserFacilitiesDTO userFacilitiesDTO);
+
+    List<FacilityDTO> getUserFacilities(String email);
 }

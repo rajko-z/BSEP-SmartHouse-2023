@@ -6,11 +6,13 @@ import {environment} from 'src/environments/environment';
 import {NewPassword} from "../../model/newPassword";
 import {TextResponse} from "../../model/textResponse";
 import {catchError, Observable, of} from 'rxjs';
+import { FacilityData } from 'src/app/model/facilityData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
+  
   
   
   
@@ -102,6 +104,10 @@ export class UserService {
       facilities: facilities
     }
 
-    return this.http.put(environment.backUrl + "/users/save-facilities", data);
+    return this.http.post(environment.backUrl + "/users/save-facilities", data);
+  }
+
+  getUserFacilities(email: string):Observable<FacilityData[]> {
+    return this.http.get<FacilityData[]>(environment.backUrl + "/users/facilities/"+email);
   }
 }

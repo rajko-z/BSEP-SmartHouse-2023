@@ -112,10 +112,17 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
-    @PutMapping("/save-facilities")
+    @PostMapping("/save-facilities")
     public ResponseEntity<?> saveFacilities(@RequestBody @Valid UserFacilitiesDTO userFacilitiesDTO){
         this.userService.saveFacilities(userFacilitiesDTO);
-        return new ResponseEntity<>(new TextResponse("Successfully saved "), HttpStatus.OK);
+        return new ResponseEntity<>(new TextResponse("Users facilities successfully saved"), HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @GetMapping("/facilities/{email}")
+    public ResponseEntity<?> getUserFacilities(@PathVariable @Email String email){
+        List<FacilityDTO> facilities = this.userService.getUserFacilities(email);
+        return new ResponseEntity<>(facilities, HttpStatus.OK);
     }
 
 }
