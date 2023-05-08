@@ -121,34 +121,34 @@ export class AdminAddUserPageComponent {
   }
 
   deleteFacility(index: number) : void {
-    this.facilities.splice(index, 1);
     
     let nameAttribute = `name${index}`;
     let facilityTypeAttribute = `facilityType${index}`
     let addressAttribute = `address${index}`;
-
+    
     this.facilitiesForm.removeControl(nameAttribute);
     this.facilitiesForm.removeControl(facilityTypeAttribute);
     this.facilitiesForm.removeControl(addressAttribute);  
     this.selectedTenantEmails.delete(index);
-
-    if(index < this.facilities.length)
-      this.shiftControlsToLeft(index);
-
+    
+    if(index < this.facilities.length-1)
+    this.shiftControlsToLeft(index);
+    
+    this.facilities.splice(index, 1);
     console.log(this.facilitiesForm);
   }
 
   private shiftControlsToLeft(index:number){
-    for (let i = index; i < this.facilities.length; i++) {
-      this.facilitiesForm.addControl(`name${i}`, new FormControl(this.facilitiesForm.get(`name${i+1}`)?.value, [Validators.required]));
-      this.facilitiesForm.addControl(`facilityType${i}`, new FormControl(this.facilitiesForm.get(`facilityType${i+1}`)?.value, [Validators.required]));
-      this.facilitiesForm.addControl(`address${i}`, new FormControl(this.facilitiesForm.get(`address${i+1}`)?.value, [Validators.required]));
+    for (let i = index; i < this.facilities.length-1; i++) {
+      this.facilitiesForm.addControl(`name${i}`, this.facilitiesForm.get(`name${i+1}`));
+      this.facilitiesForm.addControl(`facilityType${i}`, this.facilitiesForm.get(`facilityType${i+1}`));
+      this.facilitiesForm.addControl(`address${i}`, this.facilitiesForm.get(`address${i+1}`));
       this.selectedTenantEmails.set(i, (this.selectedTenantEmails.get(i+1) ?? []) as string[]);
     }
-    this.facilitiesForm.removeControl(`name${this.facilities.length}`);
-    this.facilitiesForm.removeControl(`facilityType${this.facilities.length}`);
-    this.facilitiesForm.removeControl(`address${this.facilities.length}`);  
-    this.selectedTenantEmails.delete(this.facilities.length);
+    this.facilitiesForm.removeControl(`name${this.facilities.length-1}`);
+    this.facilitiesForm.removeControl(`facilityType${this.facilities.length-1}`);
+    this.facilitiesForm.removeControl(`address${this.facilities.length-1}`);  
+    this.selectedTenantEmails.delete(this.facilities.length-1);
   }
 
   public onSubmit(): void {
