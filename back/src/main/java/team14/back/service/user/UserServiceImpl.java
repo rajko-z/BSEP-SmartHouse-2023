@@ -240,7 +240,19 @@ public class UserServiceImpl implements UserService {
 
     private void removeFacilitiesIfNotFound(User user, List<FacilityDTO> facilities) {
         List<Facility> existingFacilities = user.getFacilities();
-        existingFacilities.removeIf(existingFacility -> facilities.stream().filter(facility -> facility.getName().equals(existingFacility.getName())).toList().size() == 0);
+        List<Facility> newFacilities = new ArrayList<>();
+        for (Facility facility :existingFacilities) {
+            if (facilities.stream().filter(fac -> fac.getName().equals(facility.getName())).toList().size() == 0) {
+                Facility facility1 = this.facilityRepository.findByName(facility.getName()).orElseThrow(() -> new NotFoundException("Can't find facility with name: " + facility.getName()));
+                this.facilityRepository.delete(facility1);
+            }
+            else{
+                newFacilities.add(facility);
+            }
+        }
+        user.setFacilities(newFacilities);
+//        existingFacilities.removeIf(existingFacility -> facilities.stream().filter(facility -> facility.getName().equals(existingFacility.getName())).toList().size() > 0);
+
     }
 
     @Override
