@@ -62,15 +62,15 @@
     
                         <mat-form-field appearance="fill">
                             <mat-label>Name</mat-label>
-                            <input matInput formControlName="name{{i}}">
+                            <input matInput [formControl]="$any(facilitiesForm).get('name'+i)">
                         </mat-form-field>
 
                         <mat-form-field appearance="fill">
                             <mat-label>Address</mat-label>
-                            <input matInput formControlName="address{{i}}">
+                            <input matInput [formControl]="$any(facilitiesForm).get('address'+i)">
                         </mat-form-field>
     
-                        <mat-radio-group formControlName="facilityType{{i}}">
+                        <mat-radio-group [formControl]="$any(facilitiesForm).get('facilityType'+i)">
                         <mat-radio-button class="example-radio-button" *ngFor="let facilityType of facilityTypes" [value]="facilityType" (change)="facility.setFacilityType(facilityType)">
                             {{facilityType}}
                         </mat-radio-button>
