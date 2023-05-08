@@ -18,6 +18,6 @@ public class ChangeRoleDto {
     @Email
     private String email;
 
-    @Pattern(regexp = "ROLE_OWNER|ROLE_TENANT")
+    @Pattern(regexp = "ROLE_OWNER|ROLE_TENANT", message = "newRole invalid")
     private String newRole;
 }
