@@ -160,6 +160,7 @@ export class AdminAddUserPageComponent {
   for (let i = 0; i < this.facilities.length; i++) {
     this.facilities[i].setName(this.facilitiesForm.value[`name${i}`]);
     this.facilities[i].setAddress(this.facilitiesForm.value[`address${i}`]);
+    this.facilities[i].setFacilityType(this.facilitiesForm.value[`facilityType${i}`]);
     const tenantsEmails = this.selectedTenantEmails.get(i) ?? []; // use empty array as default value
     this.facilities[i].setTenantsEmails(tenantsEmails);
   }
