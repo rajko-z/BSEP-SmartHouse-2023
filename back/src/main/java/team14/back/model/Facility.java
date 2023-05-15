@@ -31,6 +31,8 @@ public class Facility {
     @DBRef
     private List<User> tenants;
 
+    private String configFilePath;
+
     public Facility(FacilityDTO facilityDTO, User owner, List<User> tenants){
         this.name = facilityDTO.getName();
         this.facilityType = FacilityType.valueOf(facilityDTO.getFacilityType().toUpperCase());

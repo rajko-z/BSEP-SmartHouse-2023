@@ -268,11 +268,45 @@ public class UserServiceImpl implements UserService {
         return facilityDTOS;
     }
 
+    @Override
+    public void generateFile(String configFilePath) throws IOException {
+        File configFile = new File(configFilePath);
+
+        if (configFile.exists()){
+            try {
+                deleteFile(configFilePath);
+                System.out.println("File content deleted successfully!");
+            } catch (IOException e) {
+                System.out.println("Failed to delete file content: " + e.getMessage());
+            }
+        }
+
+        File newConfigFile = new File(configFilePath);
+        if (newConfigFile.createNewFile()) {
+            System.out.println("File " + configFilePath + " created successfully!");
+        } else {
+            throw new IOException("File already exists or unable to create the file.");
+        }
+    }
+
+    @Override
+    public void deleteFile(String filePath) throws IOException {
+        File file = new File(filePath);
+        file.delete();
+    }
+
+
     private void addUserFacilities(AddUserDTO addUserDTO, User user) {
         for(FacilityDTO facilityDTO: addUserDTO.getFacilities())
         {
+            String configFilePath = "src/main/resources/data/facilityConfigFiles/" + facilityDTO.getName().replace(" ", "").concat("config.json");
+            try {
+                generateFile(configFilePath);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             Facility facility = new Facility(facilityDTO.getName(), facilityTypeConverter(facilityDTO.getFacilityType()),
-                    facilityDTO.getAddress(), user, getTenantsByEmail(facilityDTO));
+                    facilityDTO.getAddress(), user, getTenantsByEmail(facilityDTO), configFilePath);
             this.facilityRepository.save(facility);
             user.getFacilities().add(facility);
         }

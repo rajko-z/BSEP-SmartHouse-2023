@@ -1,0 +1,37 @@
+[
+  {
+    "id": 3859215643,
+    "deviceType": "THERMOMETER",
+    "messagesFilePath": "3859215643messages.json",
+    "readingFrequencyTime": 5,
+    "regexFilter": "\\\\d+"
+  },
+  {
+    "id": 3859215644,
+    "deviceType": "RADIATOR",
+    "messagesFilePath": "3859215644messages.json",
+    "readingFrequencyTime": 15,
+    "regexFilter": "\\\\d+"
+  },
+  {
+    "id": 3859215645,
+    "deviceType": "GATE",
+    "messagesFilePath": "3859215645messages.json",
+    "readingFrequencyTime": 7,
+    "regexFilter": "\\b\\w+\\b"
+  },
+  {
+    "id": 3859215646,
+    "deviceType": "COOKER",
+    "messagesFilePath": "3859215646messages.json",
+    "readingFrequencyTime": 8,
+    "regexFilter": "\\\\d+"
+  },
+  {
+    "id": 3859215647,
+    "deviceType": "WATER_HEATER",
+    "messagesFilePath": "3859215647messages.json",
+    "readingFrequencyTime": 3,
+    "regexFilter": "\\b\\w+\\b"
+  }
+]

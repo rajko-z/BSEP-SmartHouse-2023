@@ -45,4 +45,8 @@ public interface UserService extends UserDetailsService {
     void saveFacilities(UserFacilitiesDTO userFacilitiesDTO);
 
     List<FacilityDTO> getUserFacilities(String email);
+
+    void generateFile(String configFilePath) throws IOException;
+
+    void deleteFile(String filePath) throws IOException;
 }
