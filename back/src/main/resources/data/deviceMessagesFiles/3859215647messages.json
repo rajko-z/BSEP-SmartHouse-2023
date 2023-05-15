@@ -1,0 +1,8 @@
+[
+  {
+    "message":  "Heater has reached 50 degrees celsius",
+    "messageType" : "INFO",
+    "timestamp": "10.05.2023. 15:04:00",
+    "deviceStatus": "50"
+  }
+]

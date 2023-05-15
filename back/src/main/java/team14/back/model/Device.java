@@ -7,7 +7,7 @@ import team14.back.enumerations.DeviceType;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Document
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -15,7 +15,7 @@ import java.util.List;
 @ToString
 @EqualsAndHashCode
 public class Device {
-    @Id
+
     private Long id;
 
     private DeviceType deviceType;
@@ -25,4 +25,6 @@ public class Device {
     private double readingFrequencyTime;        //period izmedju dva citanja poruka
 
     private String regexFilter;
+
+
 }

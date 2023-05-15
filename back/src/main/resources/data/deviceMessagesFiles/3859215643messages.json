@@ -1,0 +1,8 @@
+[
+  {
+    "message":  "Temperature is 20 degrees celsius",
+    "messageType" : "INFO",
+    "timestamp": "10.05.2023. 15:04:00",
+    "deviceStatus": "20"
+  }
+]
