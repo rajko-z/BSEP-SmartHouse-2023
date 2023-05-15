@@ -6,12 +6,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
+import team14.back.enumerations.FacilityType;
 import team14.back.model.CSRRequest;
+import team14.back.model.Facility;
 import team14.back.model.Role;
 import team14.back.model.User;
 import team14.back.repository.*;
 
+import java.io.File;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @SpringBootApplication
 @EnableMongoRepositories
@@ -44,9 +49,22 @@ public class BackApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		deleteEverything();
+		List<Facility> initialFacilities = createFacilities();
 		createRoles();
-		createUsers();
+		createUsers(initialFacilities);
 		createCSRRequests();
+	}
+
+	private List<Facility> createFacilities() {
+		List<Facility> facilities = new ArrayList<>();
+
+		Facility facility = new Facility("kuca", FacilityType.HOUSE, "Rumenacki put 125", new User(),
+				new ArrayList<>(), "src/main/resources/data/facilityConfigFiles/kucaconfig.json");
+
+		facilityRepository.save(facility);
+		facilities.add(facility);
+
+		return facilities;
 	}
 
 	private void createRoles() {
@@ -64,9 +82,15 @@ public class BackApplication implements CommandLineRunner {
 	}
 
 	// sifra za sve korisnike je 12345678
-	private void createUsers() {
+	private void createUsers(List<Facility> initialFacilities) {
 		userRepository.save(new User("smarthouse2023tim14+admin@gmail.com", "Admin", "Admin", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(1L, "ROLE_ADMIN")));
-		userRepository.save(new User("smarthouse2023tim14+john@gmail.com", "John", "John", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(2L, "ROLE_OWNER")));
+		User owner = new User("smarthouse2023tim14+john@gmail.com", "John", "John", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(2L, "ROLE_OWNER"));
+		owner.setFacilities(initialFacilities);
+		for(Facility facility: initialFacilities){
+			facility.setOwner(owner);
+			facilityRepository.save(facility);
+		}
+		userRepository.save(owner);
 		userRepository.save(new User("smarthouse2023tim14+bob@gmail.com", "Bob", "Bobic", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(3L, "ROLE_TENANT")));
 	}
 
