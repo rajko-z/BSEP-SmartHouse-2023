@@ -7,13 +7,6 @@
     "regexFilter": "\\\\d+"
   },
   {
-    "id": 3859215644,
-    "deviceType": "RADIATOR",
-    "messagesFilePath": "3859215644messages.json",
-    "readingFrequencyTime": 15,
-    "regexFilter": "\\\\d+"
-  },
-  {
     "id": 3859215645,
     "deviceType": "GATE",
     "messagesFilePath": "3859215645messages.json",

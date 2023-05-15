@@ -1,5 +1,8 @@
 package team14.back;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -7,13 +10,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import team14.back.enumerations.FacilityType;
-import team14.back.model.CSRRequest;
-import team14.back.model.Facility;
-import team14.back.model.Role;
-import team14.back.model.User;
+import team14.back.model.*;
 import team14.back.repository.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,6 +54,34 @@ public class BackApplication implements CommandLineRunner {
 		createRoles();
 		createUsers(initialFacilities);
 		createCSRRequests();
+		readConfigFiles();
+		readDeviceMessageFiles();
+	}
+
+	private void readDeviceMessageFiles() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+		try {
+			File jsonFile = new File("src/main/resources/data/deviceMessagesFiles/3859215643messages.json");
+			List<DeviceMessage> deviceMessage = objectMapper.readValue(jsonFile, new TypeReference<>() {});
+
+			System.out.println("Device message: " + deviceMessage);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void readConfigFiles() {
+		ObjectMapper objectMapper = new ObjectMapper();
+		objectMapper.registerModule(new JavaTimeModule());
+		try {
+			File jsonFile = new File("src/main/resources/data/facilityConfigFiles/kucaconfig.json");
+			List<Device> devices = objectMapper.readValue(jsonFile, new TypeReference<>() {});
+
+			System.out.println("Device: " + devices);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 
 	private List<Facility> createFacilities() {
