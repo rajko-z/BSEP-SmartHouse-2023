@@ -29,7 +29,7 @@ export class AdminViewUserProfilePageComponent implements OnInit{
 
   filteredUserEmails: Observable<string[]>;
 
-  constructor(private route: ActivatedRoute, private userService:UserService, private toastrService:ToastrService){
+  constructor(private route: ActivatedRoute, private userService:UserService, private toastrService:ToastrService, private router: Router){
     this.userEmail = route.snapshot.paramMap.get('email') as string;
   }
 
@@ -206,6 +206,10 @@ export class AdminViewUserProfilePageComponent implements OnInit{
       const newEmailList = emailList.filter((value) => value !== email);
       this.selectedTenantEmails.set(index, newEmailList);
     }
+  }
+
+  public navigateToDetailsPage(facilityName: string){
+    this.router.navigate(['admin/facility-details', facilityName]);
   }
 
 }

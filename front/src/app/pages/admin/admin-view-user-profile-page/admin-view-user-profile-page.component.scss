@@ -92,11 +92,21 @@ mat-card {
   text-align: center;
 }
 
-.delete-facility-button{
-  margin: 0;
-}
-
 .facility-info{
   margin-top: 20px;
   text-align: left;
+}
+
+.facilitybuttonsDiv {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.delete-facility-button {
+  margin-left: auto;
+}
+
+.details-button {
+  margin-right: auto;
 }

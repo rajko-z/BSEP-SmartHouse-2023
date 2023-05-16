@@ -11,6 +11,7 @@ import {
 import { AdminAddUserPageComponent } from "src/app/pages/admin/admin-add-user-page/admin-add-user-page.component";
 import { AdminUserListPageComponent } from "src/app/pages/admin/admin-user-list-page/admin-user-list-page.component";
 import { AdminViewUserProfilePageComponent } from "src/app/pages/admin/admin-view-user-profile-page/admin-view-user-profile-page.component";
+import { FacilityDetailsPageComponent } from "src/app/pages/shared/facility-details-page/facility-details-page.component";
 
 const routes: Routes = [
   {
@@ -40,7 +41,11 @@ const routes: Routes = [
   {
     path: 'user/:email',
     component: AdminViewUserProfilePageComponent
-  }
+  },
+  {
+    path: 'facility-details/:facilityName',
+    component: FacilityDetailsPageComponent
+  },
 ];
 
 @NgModule({
