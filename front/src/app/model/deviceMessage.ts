@@ -1,6 +1,7 @@
 export class DeviceMessage{
     message: string
     messageType: string
-    timestamp: Date
+    timestamp: number[]
     deviceStatus: string
+    formattedTimestamp: string
 }

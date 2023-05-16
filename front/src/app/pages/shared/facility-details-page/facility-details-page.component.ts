@@ -6,6 +6,9 @@ import { FacilityService } from 'src/app/services/facility/facility.service';
 import { ToastrService } from 'ngx-toastr';
 import { DeviceMessage } from 'src/app/model/deviceMessage';
 import { DeviceService } from 'src/app/services/device/device.service';
+import { environment } from 'src/environments/environment';
+import * as SockJS from 'sockjs-client';
+import { Client, over, Message as StompMessage } from 'stompjs';
 
 @Component({
   selector: 'app-facility-details-page',
@@ -13,6 +16,7 @@ import { DeviceService } from 'src/app/services/device/device.service';
   styleUrls: ['./facility-details-page.component.scss']
 })
 export class FacilityDetailsPageComponent {
+  private stompClient : Client;
   facilityName: string
   facilityData: FacilityDetailsData;
   deviceMessagesPaths: string[];
@@ -24,6 +28,21 @@ export class FacilityDetailsPageComponent {
   ngOnInit() {
     this.facilityName = this.route.snapshot.paramMap.get('facilityName') as string;
     this.getFacilityByName();
+  }
+
+  initializeWebSocket(){
+    let Sock = new SockJS(environment.backUrl + "/ws");
+    this.stompClient = over(Sock);
+    this.stompClient.connect({}, this.onConnected, () => {});
+  }
+
+  onConnected = () => {
+    this.stompClient.subscribe("/get-device-messages", (message) => this.onDeviceMessageReceived(message));
+  }
+
+  onDeviceMessageReceived(payload: StompMessage)
+  {
+    // this.deviceMessages = payload.body;
   }
 
   getFacilityByName(){
@@ -48,6 +67,8 @@ export class FacilityDetailsPageComponent {
         next:(res)=>{
           this.deviceMessages = res;
           console.log(this.deviceMessages);
+          this.convertDateFormat();
+          this.initializeWebSocket();
         },
         error:(err)=>{
           this.toastrService.warning("Something went wrong, please try again!");
@@ -82,5 +103,19 @@ export class FacilityDetailsPageComponent {
       return '';
     }
     return word.charAt(0) + word.slice(1).toLowerCase();
+  }
+
+  convertDateFormat(){
+    for(let i = 0; i < this.deviceMessages.length; i++)
+    {
+      console.log(this.deviceMessages[i].timestamp[0])
+      let year = this.deviceMessages[i].timestamp[0];
+      let month = this.deviceMessages[i].timestamp[1].toString().padStart(2, '0');
+      let day = this.deviceMessages[i].timestamp[2].toString().padStart(2, '0');
+      let hours = this.deviceMessages[i].timestamp[3].toString().padStart(2, '0');
+      let minutes = this.deviceMessages[i].timestamp[4].toString().padStart(2, '0');
+      let seconds = this.deviceMessages[i].timestamp[5] ? this.deviceMessages[i].timestamp[5].toString().padStart(2, '0') : "00";
+      this.deviceMessages[i].formattedTimestamp = day + "/" + month + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
+    }
   }
 }

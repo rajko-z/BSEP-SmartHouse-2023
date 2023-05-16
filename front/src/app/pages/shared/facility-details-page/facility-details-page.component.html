@@ -46,7 +46,7 @@
 
         <ng-container matColumnDef="timestamp">
             <th mat-header-cell *matHeaderCellDef>Timestamp</th>
-            <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.timestamp }}</td>
+            <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.formattedTimestamp }}</td>
         </ng-container>
 
         <ng-container matColumnDef="deviceStatus">
