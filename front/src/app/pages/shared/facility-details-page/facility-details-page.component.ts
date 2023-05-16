@@ -37,12 +37,15 @@ export class FacilityDetailsPageComponent {
   }
 
   onConnected = () => {
-    this.stompClient.subscribe("/get-device-messages", (message) => this.onDeviceMessageReceived(message));
+    this.stompClient.subscribe(`/${this.facilityName}/get-device-messages`, (message) => this.onDeviceMessageReceived(message));
   }
 
   onDeviceMessageReceived(payload: StompMessage)
   {
-    // this.deviceMessages = payload.body;
+    let payloadData = JSON.parse(payload.body);
+    let deviceMessage: DeviceMessage;
+    deviceMessage = payloadData;
+    this.deviceMessages.push(deviceMessage);
   }
 
   getFacilityByName(){

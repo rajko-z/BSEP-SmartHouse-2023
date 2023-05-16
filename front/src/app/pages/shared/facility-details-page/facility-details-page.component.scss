@@ -45,4 +45,19 @@
     width: 100%;
     max-height: 500px;
     overflow: auto;
-  }
+}
+
+#info-button{
+    background-color: rgb(97, 167, 237);
+    border-radius: 30px;
+}
+
+#warning-button{
+    background-color: rgb(185, 192, 92);
+    border-radius: 30px;
+}
+
+#error-button{
+    background-color: rgb(235, 57, 57);
+    border-radius: 30px;
+}
