@@ -54,34 +54,6 @@ public class BackApplication implements CommandLineRunner {
 		createRoles();
 		createUsers(initialFacilities);
 		createCSRRequests();
-		readConfigFiles();
-		readDeviceMessageFiles();
-	}
-
-	private void readDeviceMessageFiles() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.registerModule(new JavaTimeModule());
-		try {
-			File jsonFile = new File("src/main/resources/data/deviceMessagesFiles/3859215643messages.json");
-			List<DeviceMessage> deviceMessage = objectMapper.readValue(jsonFile, new TypeReference<>() {});
-
-			System.out.println("Device message: " + deviceMessage);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
-	private void readConfigFiles() {
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.registerModule(new JavaTimeModule());
-		try {
-			File jsonFile = new File("src/main/resources/data/facilityConfigFiles/kucaconfig.json");
-			List<Device> devices = objectMapper.readValue(jsonFile, new TypeReference<>() {});
-
-			System.out.println("Device: " + devices);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 	}
 
 	private List<Facility> createFacilities() {
