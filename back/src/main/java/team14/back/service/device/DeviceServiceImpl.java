@@ -17,11 +17,13 @@ public class DeviceServiceImpl implements DeviceService{
     private final DeviceRepository deviceRepository;
 
     @Override
-    public void updateDeviceState(UpdateDeviceStateDTO newDeviceState) {
+    public DeviceMessage updateDeviceState(UpdateDeviceStateDTO newDeviceState) {
         String filename = newDeviceState.getId().toString().concat("messages.json");
         List<DeviceMessage> deviceMessages = deviceRepository.getDeviceMessages(newDeviceState.getId().toString());
-        deviceMessages.add(new DeviceMessage(newDeviceState));
+        DeviceMessage deviceMessage = new DeviceMessage(newDeviceState);
+        deviceMessages.add(deviceMessage);
         deviceRepository.saveDeviceMessages(filename, deviceMessages);
+        return deviceMessage;
     }
 
     public List<DeviceMessageDTO> getDeviceMessages(List<String> deviceMessagesPaths) {

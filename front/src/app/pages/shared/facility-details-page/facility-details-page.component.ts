@@ -28,21 +28,31 @@ export class FacilityDetailsPageComponent {
   ngOnInit() {
     this.facilityName = this.route.snapshot.paramMap.get('facilityName') as string;
     this.getFacilityByName();
+    this.initializeWebSocket();
   }
 
   initializeWebSocket(){
     let Sock = new SockJS(environment.backUrl + "/ws");
     this.stompClient = over(Sock);
-    this.stompClient.connect({}, this.onConnected, () => {});
+    this.stompClient.connect({}, this.onConnected, this.onError); 
   }
 
   onConnected = () => {
-    this.stompClient.subscribe("/get-device-messages", (message) => this.onDeviceMessageReceived(message));
+    this.stompClient.subscribe(`/facility/${this.facilityName}/get-device-messages`, (message) => this.onDeviceMessageReceived(message));
+  }
+
+  onError = () => {
+    console.log("Socket error.");    
   }
 
   onDeviceMessageReceived(payload: StompMessage)
   {
-    // this.deviceMessages = payload.body;
+    console.log(`payload${payload}`)
+    let payloadData = JSON.parse(payload.body);
+    let deviceMessage: DeviceMessage;
+    deviceMessage = payloadData;
+    this.deviceMessages.push(deviceMessage);
+    console.log(this.deviceMessages)
   }
 
   getFacilityByName(){
@@ -68,7 +78,6 @@ export class FacilityDetailsPageComponent {
           this.deviceMessages = res;
           console.log(this.deviceMessages);
           this.convertDateFormat();
-          this.initializeWebSocket();
         },
         error:(err)=>{
           this.toastrService.warning("Something went wrong, please try again!");
