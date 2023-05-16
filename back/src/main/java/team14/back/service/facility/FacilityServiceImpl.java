@@ -27,8 +27,10 @@ public class FacilityServiceImpl implements FacilityService {
         List<Device> allDevices = new ArrayList<>();
         List<User> users = userRepository.findAll().stream().filter(user -> !user.isDeleted() && user.isEnabled()).toList();
         for (User user :users) {
-            for (Facility facility :user.getFacilities()) {
-                allDevices.addAll(deviceRepository.getDevicesFromFacility(facility.getName()));
+            if(user.getFacilities() != null) {
+                for (Facility facility : user.getFacilities()) {
+                    allDevices.addAll(deviceRepository.getDevicesFromFacility(facility.getName()));
+                }
             }
         }
         return allDevices;
