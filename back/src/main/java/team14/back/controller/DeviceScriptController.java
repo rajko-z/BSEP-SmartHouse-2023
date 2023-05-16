@@ -7,8 +7,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import team14.back.dto.AddUserDTO;
+import team14.back.dto.UpdateDeviceStateDTO;
 import team14.back.exception.BadRequestException;
 import team14.back.model.Device;
+import team14.back.service.device.DeviceService;
 import team14.back.service.facility.FacilityService;
 
 import javax.validation.Valid;
@@ -20,7 +22,7 @@ import java.util.List;
 public class DeviceScriptController {
 
     private final FacilityService facilityService;
-
+    private final DeviceService deviceService;
 
     @GetMapping(path = "/get-all-devices", consumes = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<?> getAllDevices() {
@@ -33,6 +35,17 @@ public class DeviceScriptController {
         return ResponseEntity.ok(deviceList);
     }
 
+    @PutMapping(path = "/update-device-state", consumes = { MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<?> updateDeviceState(@RequestBody @Valid UpdateDeviceStateDTO deviceStateDTO){
+        try {
+            this.deviceService.updateDeviceState(deviceStateDTO);
+            //poslati web socket-u
+
+        }catch (BadRequestException e){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok().build();
+    }
 
 
 
