@@ -13,4 +13,6 @@ public interface FacilityService {
     public List<Device> getAllDevices();
 
     public FacilityDetailsDTO getFacilityByName(String facilityName);
+
+    String getFacilityNameByDeviceId(Long deviceId);
 }

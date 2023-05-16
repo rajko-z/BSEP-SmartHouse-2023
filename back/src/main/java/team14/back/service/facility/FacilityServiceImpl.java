@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @AllArgsConstructor
@@ -34,7 +35,7 @@ public class FacilityServiceImpl implements FacilityService {
     public List<Device> getAllDevices() {
         List<Device> allDevices = new ArrayList<>();
         List<User> users = userRepository.findAll().stream().filter(user -> !user.isDeleted() && user.isEnabled()).toList();
-        for (User user :users) {
+        for (User user: users) {
             if(user.getFacilities() != null) {
                 for (Facility facility : user.getFacilities()) {
                     allDevices.addAll(deviceRepository.getDevicesFromFacility(facility.getName()));
@@ -49,6 +50,21 @@ public class FacilityServiceImpl implements FacilityService {
         Facility facility = this.facilityRepository.findByName(facilityName).orElseThrow(()->new NotFoundException("Facility with name: " + facilityName + " not found!"));
         List<Device> devices = this.deviceRepository.getDevicesFromFacility(facilityName);
         return new FacilityDetailsDTO(facility, devices);
+    }
+
+    @Override
+    public String getFacilityNameByDeviceId(Long deviceId) {
+        List<User> users = userRepository.findAll().stream().filter(user -> !user.isDeleted() && user.isEnabled()).toList();
+        for (User user: users) {
+            if(user.getFacilities() != null) {
+                for (Facility facility : user.getFacilities()) {
+                    List<Device> devices = deviceRepository.getDevicesFromFacility(facility.getName());
+                    if (devices.stream().filter(device -> Objects.equals(device.getId(), deviceId)).count() == 1)
+                        return facility.getName();
+                }
+            }
+        }
+        return null;
     }
 
 }
