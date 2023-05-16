@@ -63,10 +63,13 @@
                             </mat-chip-row>
                         </div>
                         
-                        <button (click)="deleteFacility(i)" mat-mini-fab color="warn" class="delete-facility-button">
-                            <mat-icon>close</mat-icon>
-                        </button>
-                    
+                        <div class="facilitybuttonsDiv">
+                            <button (click)="navigateToDetailsPage(facility.getName())" mat-raised-button color="accent" class="details-button">Details</button>
+                            <button (click)="deleteFacility(i)" mat-mini-fab color="warn" class="delete-facility-button">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </div>
+                          
                     </mat-expansion-panel>
             </form>
         </mat-accordion>

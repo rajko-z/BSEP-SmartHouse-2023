@@ -12,6 +12,7 @@ import team14.back.model.DeviceMessage;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -38,9 +39,8 @@ public class DeviceRepository {
         return devices;
     }
 
-    public List<DeviceMessage> getDeviceMessages(String deviceId){
-        List<DeviceMessage> deviceMessages = null;
-        String filename = deviceId.concat("messages.json");
+    public List<DeviceMessage> getDeviceMessages(String filename){
+        List<DeviceMessage> deviceMessages = new ArrayList<>();
         try {
             File jsonFile = new File(deviceMessagesFilePath+filename);
             deviceMessages = objectMapper.readValue(jsonFile, new TypeReference<>() {});
