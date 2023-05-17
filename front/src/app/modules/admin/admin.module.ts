@@ -17,6 +17,8 @@ import {
   AdminRejectCsrCheckComponent
 } from "../../components/admin/admin-reject-csr-check/admin-reject-csr-check.component";
 import {AdminAddUserPageComponent} from "../../pages/admin/admin-add-user-page/admin-add-user-page.component";
+import { ChangeRoleDialogComponent } from "src/app/components/admin/change-role-dialog/change-role-dialog.component";
+import { AdminUserListPageComponent } from "src/app/pages/admin/admin-user-list-page/admin-user-list-page.component";
 
 const declaredModules = [
   AdminCSRRequestsPageComponent,
@@ -25,7 +27,9 @@ const declaredModules = [
   AdminCsrrequestPageComponent,
   RevokeDialogComponent,
   AdminRejectCsrCheckComponent,
-  AdminAddUserPageComponent
+  AdminAddUserPageComponent,
+  AdminUserListPageComponent,
+  ChangeRoleDialogComponent,
 ];
 
 @NgModule({

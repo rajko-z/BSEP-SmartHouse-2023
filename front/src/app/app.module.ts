@@ -13,16 +13,12 @@ import {MatTableModule} from '@angular/material/table';
 import {TokenInterceptor} from "./services/interceptor/TokenInterceptor";
 import { AdminUserListPageComponent } from './pages/admin/admin-user-list-page/admin-user-list-page.component';
 import { ChangeRoleDialogComponent } from './components/admin/change-role-dialog/change-role-dialog.component';
-import { AdminViewUserProfilePageComponent } from './pages/admin/admin-view-user-profile-page/admin-view-user-profile-page.component';
+import { ViewUserProfilePageComponent } from './pages/shared/view-user-profile-page/view-user-profile-page.component';
 import { FacilityDetailsPageComponent } from './pages/shared/facility-details-page/facility-details-page.component';
 
 @NgModule({
   declarations: [
-    AppComponent,
-    AdminUserListPageComponent,
-    ChangeRoleDialogComponent,
-    AdminViewUserProfilePageComponent,
-    FacilityDetailsPageComponent
+    AppComponent
   ],
   imports: [
     AngularMaterialModule,

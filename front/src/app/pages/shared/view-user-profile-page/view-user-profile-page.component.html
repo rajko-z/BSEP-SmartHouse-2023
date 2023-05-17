@@ -26,28 +26,29 @@
     
                         <mat-form-field appearance="fill">
                             <mat-label>Name</mat-label>
-                            <input matInput  [formControl]="$any(facilitiesForm).get('name'+i)">
+                            <input matInput  [formControl]="$any(facilitiesForm).get('name'+i)" [disabled]="loggedOwner">
                         </mat-form-field>
 
                         <mat-form-field appearance="fill">
                             <mat-label>Address</mat-label>
-                            <input matInput [formControl]="$any(facilitiesForm).get('address'+i)">
+                            <input matInput [formControl]="$any(facilitiesForm).get('address'+i)" [disabled]="loggedOwner">
                         </mat-form-field>
     
-                        <mat-radio-group [formControl]="$any(facilitiesForm).get('facilityType'+i)">
+                        <mat-radio-group [formControl]="$any(facilitiesForm).get('facilityType'+i)" [disabled]="loggedOwner">
                         <mat-radio-button class="example-radio-button" *ngFor="let facilityType of facilityTypes" [value]="facilityType" (change)="facility?.setFacilityType(facilityType)">
                             {{facilityType}}
                         </mat-radio-button>
                         </mat-radio-group>
 
-                        <mat-form-field class="example-full-width" appearance="fill" class="autocomplete">
+                        <mat-form-field class="example-full-width" appearance="fill" class="autocomplete" >
                             <mat-label>Add Tenants...</mat-label>
                             <input type="text"
                                    aria-label="Add Tenants..."
                                    matInput
                                    [formControl]="tenantEmailsControl"
-                                   [matAutocomplete]="auto">
-                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete">
+                                   [matAutocomplete]="auto"
+                                   [disabled]="loggedOwner">
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"> 
                               <mat-option *ngFor="let userEmail of filteredUserEmails | async" [value]="userEmail" (click)="addTenant(i, userEmail)">
                                 {{userEmail}}
                               </mat-option>
@@ -55,7 +56,7 @@
                         </mat-form-field>
                         
                         <div>
-                            <mat-chip-row *ngFor="let email of selectedTenantEmails.get(i)" (removed)="removeTenant(i, email)" class="email-chip">
+                            <mat-chip-row *ngFor="let email of selectedTenantEmails.get(i)" (removed)="removeTenant(i, email)" class="email-chip" [disabled]="loggedOwner">
                                 {{email}}
                                 <button matChipRemove aria-label="'remove ' + keyword">
                                     <mat-icon>cancel</mat-icon>
@@ -65,7 +66,7 @@
                         
                         <div class="facilitybuttonsDiv">
                             <button (click)="navigateToDetailsPage(facility.getName())" mat-raised-button color="accent" class="details-button">Details</button>
-                            <button (click)="deleteFacility(i)" mat-mini-fab color="warn" class="delete-facility-button">
+                            <button (click)="deleteFacility(i)" mat-mini-fab color="warn" class="delete-facility-button" [disabled]="loggedOwner">
                                 <mat-icon>close</mat-icon>
                             </button>
                         </div>
@@ -74,10 +75,10 @@
             </form>
         </mat-accordion>
 
-        <button mat-icon-button (click)="addFacility()" class="add-facility-button">
+        <button mat-icon-button (click)="addFacility()" class="add-facility-button" [disabled]="loggedOwner">
             <mat-icon>add_circle</mat-icon>
         </button>
           
-        <button mat-raised-button color="primary" type="button" [disabled]="!facilitiesForm.valid" (click)="onSubmit()">Submit</button><br/>
+        <button mat-raised-button color="primary" type="button" [disabled]="!facilitiesForm.valid || loggedOwner" (click)="onSubmit()">Submit</button><br/>
     </mat-card-content>
   </mat-card>

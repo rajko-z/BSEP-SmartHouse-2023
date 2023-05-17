@@ -104,7 +104,7 @@ public class UserController {
         return new ResponseEntity<>(new TextResponse("User successfully unblocked"), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER')")
     @GetMapping("/{email}")
     public ResponseEntity<?> getUser(@PathVariable @Email String email){
         User user = this.userService.getUserByEmail(email);
@@ -118,7 +118,7 @@ public class UserController {
         return new ResponseEntity<>(new TextResponse("Users facilities successfully saved"), HttpStatus.OK);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER')")
     @GetMapping("/facilities/{email}")
     public ResponseEntity<?> getUserFacilities(@PathVariable @Email String email){
         List<FacilityDTO> facilities = this.userService.getUserFacilities(email);

@@ -1,3 +1,4 @@
+import { AuthService } from './../../../services/auth/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,11 +8,11 @@ import { FacilityData } from 'src/app/model/facilityData';
 import { UserService } from 'src/app/services/user/user.service';
 
 @Component({
-  selector: 'app-admin-view-user-profile-page',
-  templateUrl: './admin-view-user-profile-page.component.html',
-  styleUrls: ['./admin-view-user-profile-page.component.scss']
+  selector: 'app-view-user-profile-page',
+  templateUrl: './view-user-profile-page.component.html',
+  styleUrls: ['./view-user-profile-page.component.scss']
 })
-export class AdminViewUserProfilePageComponent implements OnInit{
+export class ViewUserProfilePageComponent implements OnInit{
 
   facilitiesForm: FormGroup;
   tenantEmailsControl = new FormControl('');
@@ -19,6 +20,7 @@ export class AdminViewUserProfilePageComponent implements OnInit{
 
   userEmail:string = "";
   user:any = "";
+  loggedOwner = false;
 
   facilities: FacilityData[] = []
 
@@ -29,8 +31,13 @@ export class AdminViewUserProfilePageComponent implements OnInit{
 
   filteredUserEmails: Observable<string[]>;
 
-  constructor(private route: ActivatedRoute, private userService:UserService, private toastrService:ToastrService, private router: Router){
-    this.userEmail = route.snapshot.paramMap.get('email') as string;
+  constructor(private route: ActivatedRoute, private userService:UserService, private authService:AuthService, private toastrService:ToastrService, private router: Router){
+    if(route.snapshot.paramMap.get('email'))
+      this.userEmail = route.snapshot.paramMap.get('email') as string;
+    else{
+      this.userEmail = authService.getCurrentUserEmail() as string;
+      this.loggedOwner = true;
+    }
   }
 
 
@@ -39,19 +46,21 @@ export class AdminViewUserProfilePageComponent implements OnInit{
 
     this.facilitiesForm = new FormGroup({});
     
-    this.userService.getAllNonAdminEmails()
-    .subscribe({
-      next: (data) => {
-        this.allUserEmails = data;
-        this.filteredUserEmails = this.tenantEmailsControl.valueChanges.pipe(
-          startWith(''),
-          map(value => this._filter(value || '')),
-        );
-      },
-      error: (err) => {
-        console.log(err);
-      },
-    });
+    if(!this.loggedOwner){
+      this.userService.getAllNonAdminEmails()
+      .subscribe({
+        next: (data) => {
+          this.allUserEmails = data;
+          this.filteredUserEmails = this.tenantEmailsControl.valueChanges.pipe(
+            startWith(''),
+            map(value => this._filter(value || '')),
+          );
+        },
+        error: (err) => {
+          console.log(err);
+        },
+      });
+    }
     this.getUser();
     this.getUserFacilities();
   }
@@ -107,6 +116,11 @@ export class AdminViewUserProfilePageComponent implements OnInit{
       this.facilitiesForm.get("address" + index)?.setValue(element.address);
       this.facilitiesForm.get("facilityType" + index)?.setValue(this.capitalizeFirstLetter(element.facilityType));
       this.selectedTenantEmails.set(index, element.tenantsEmails);
+      if(this.loggedOwner){
+        this.facilitiesForm.get("address" + index)?.disable();
+        this.facilitiesForm.get("facilityType" + index)?.disable();
+        this.tenantEmailsControl.disable();
+      }
     }
   }
 
@@ -209,7 +223,11 @@ export class AdminViewUserProfilePageComponent implements OnInit{
   }
 
   public navigateToDetailsPage(facilityName: string){
-    this.router.navigate(['admin/facility-details', facilityName]);
+    if(this.loggedOwner)
+      this.router.navigate(['owner/facility-details', facilityName]);
+    else{
+      this.router.navigate(['admin/facility-details', facilityName]);
+    }
   }
 
 }
