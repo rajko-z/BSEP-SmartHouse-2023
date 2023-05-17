@@ -8,7 +8,9 @@ import { DeviceMessage } from 'src/app/model/deviceMessage';
 import { DeviceService } from 'src/app/services/device/device.service';
 import { environment } from 'src/environments/environment';
 import * as SockJS from 'sockjs-client';
+import * as Stomp from 'stompjs';
 import { Client, over, Message as StompMessage } from 'stompjs';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-facility-details-page',
@@ -16,11 +18,12 @@ import { Client, over, Message as StompMessage } from 'stompjs';
   styleUrls: ['./facility-details-page.component.scss']
 })
 export class FacilityDetailsPageComponent {
-  private stompClient : Client;
+  private stompClient : any;
   facilityName: string
   facilityData: FacilityDetailsData;
   deviceMessagesPaths: string[];
-  deviceMessages: DeviceMessage[];
+  deviceMessages: DeviceMessage[] = [];
+  dataSource = new MatTableDataSource(this.deviceMessages);
   tableColumns = ['message', 'messageType', 'timestamp', 'deviceStatus'];
 
   constructor(private route: ActivatedRoute, private location: Location, private facilityService: FacilityService, private toastrService: ToastrService, private deviceService: DeviceService) {}
@@ -33,26 +36,29 @@ export class FacilityDetailsPageComponent {
 
   initializeWebSocket(){
     let Sock = new SockJS(environment.backUrl + "/ws");
-    this.stompClient = over(Sock);
-    this.stompClient.connect({}, this.onConnected, this.onError); 
+    this.stompClient = Stomp.over(Sock);
+
+    let that = this;
+
+    this.stompClient.connect({}, that.onConnected, that.onError); 
   }
 
   onConnected = () => {
-    this.stompClient.subscribe(`/facility/${this.facilityName}/get-device-messages`, (message) => this.onDeviceMessageReceived(message));
+    this.stompClient.subscribe(`/device-messages/new-message/${this.facilityName}`, (message:any) => this.onDeviceMessageReceived(message));
   }
 
   onError = () => {
     console.log("Socket error.");    
   }
 
-  onDeviceMessageReceived(payload: StompMessage)
+  onDeviceMessageReceived(payload: any)
   {
-    console.log(`payload${payload}`)
     let payloadData = JSON.parse(payload.body);
     let deviceMessage: DeviceMessage;
     deviceMessage = payloadData;
     this.deviceMessages.push(deviceMessage);
-    console.log(this.deviceMessages)
+    this.convertDateFormat();
+    this.dataSource = new MatTableDataSource(this.deviceMessages);
   }
 
   getFacilityByName(){
@@ -76,8 +82,8 @@ export class FacilityDetailsPageComponent {
       {
         next:(res)=>{
           this.deviceMessages = res;
-          console.log(this.deviceMessages);
           this.convertDateFormat();
+          this.dataSource = new MatTableDataSource(this.deviceMessages);
         },
         error:(err)=>{
           this.toastrService.warning("Something went wrong, please try again!");
@@ -117,7 +123,6 @@ export class FacilityDetailsPageComponent {
   convertDateFormat(){
     for(let i = 0; i < this.deviceMessages.length; i++)
     {
-      console.log(this.deviceMessages[i].timestamp[0])
       let year = this.deviceMessages[i].timestamp[0];
       let month = this.deviceMessages[i].timestamp[1].toString().padStart(2, '0');
       let day = this.deviceMessages[i].timestamp[2].toString().padStart(2, '0');

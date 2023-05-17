@@ -9,5 +9,5 @@ import java.util.List;
 public interface DeviceService {
     List<DeviceMessageDTO> getDeviceMessages(List<String> deviceMessagesPaths);
 
-    DeviceMessage updateDeviceState(UpdateDeviceStateDTO newDeviceState);
+    void updateDeviceState(UpdateDeviceStateDTO newDeviceState);
 }

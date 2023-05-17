@@ -61,3 +61,9 @@
     background-color: rgb(235, 57, 57);
     border-radius: 30px;
 }
+
+.table-container{
+    width: 100%;
+    max-height: 500px;
+    overflow: auto;
+}

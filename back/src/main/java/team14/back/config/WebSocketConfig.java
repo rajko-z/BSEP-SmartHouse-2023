@@ -14,9 +14,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry registry) {
-        registry.enableSimpleBroker("/verify-certificate-response", "/get-device-messages");
-        registry.setUserDestinationPrefix("/facility");
         registry.setApplicationDestinationPrefixes("/app");
+        registry.enableSimpleBroker("/verify-certificate-response", "/device-messages");
+        registry.setUserDestinationPrefix("/user");
     }
 
     @Override

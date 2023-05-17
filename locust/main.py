@@ -5,7 +5,7 @@ import time
 
 device_ids = []
 lock = Semaphore()
-normal_mode = False
+normal_mode = True
 
 
 class QuickstartUser(HttpUser):
