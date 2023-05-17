@@ -1,8 +1,46 @@
-[
-  {
-    "message":  "Heater has reached 50 degrees celsius",
-    "messageType" : "INFO",
-    "timestamp": "10.05.2023. 15:04:00",
-    "deviceStatus": "50"
-  }
-]
+[ {
+  "message" : "Heater has reached 50 degrees celsius",
+  "messageType" : "INFO",
+  "timestamp" : "10.05.2023. 15:04:00",
+  "deviceStatus" : "50"
+}, {
+  "message" : "Water heater at HIGH VOLTAGE",
+  "messageType" : "WARNING",
+  "timestamp" : "17.05.2023. 15:16:13",
+  "deviceStatus" : "HIGH VOLTAGE"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "17.05.2023. 15:16:16",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at LOW VOLTAGE",
+  "messageType" : "WARNING",
+  "timestamp" : "17.05.2023. 15:16:19",
+  "deviceStatus" : "LOW VOLTAGE"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "17.05.2023. 15:16:22",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at LOW WATER",
+  "messageType" : "WARNING",
+  "timestamp" : "17.05.2023. 15:16:25",
+  "deviceStatus" : "LOW WATER"
+}, {
+  "message" : "Water heater at 30℃",
+  "messageType" : "INFO",
+  "timestamp" : "17.05.2023. 15:16:50",
+  "deviceStatus" : "30℃"
+}, {
+  "message" : "Water heater at 40℃",
+  "messageType" : "INFO",
+  "timestamp" : "17.05.2023. 15:16:53",
+  "deviceStatus" : "40℃"
+}, {
+  "message" : "Water heater at 40℃",
+  "messageType" : "INFO",
+  "timestamp" : "17.05.2023. 15:16:56",
+  "deviceStatus" : "40℃"
+} ]

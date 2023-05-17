@@ -1,14 +1,46 @@
-[
-  {
-    "message":  "Temperature is 20 degrees celsius",
-    "messageType" : "INFO",
-    "timestamp": "10.05.2023. 15:04:00",
-    "deviceStatus": "20"
-  },
-  {
-    "message":  "Temperature is 65340 degrees celsius",
-    "messageType" : "INFO",
-    "timestamp": "10.05.2023. 15:04:00",
-    "deviceStatus": "20"
-  }
-]
+[ {
+  "message" : "Temperature is 20 degrees celsius",
+  "messageType" : "INFO",
+  "timestamp" : "10.05.2023. 15:04:00",
+  "deviceStatus" : "20"
+}, {
+  "message" : "Temperature is 65340 degrees celsius",
+  "messageType" : "INFO",
+  "timestamp" : "10.05.2023. 15:04:00",
+  "deviceStatus" : "20"
+}, {
+  "message" : "Thermometer at 15℃",
+  "messageType" : "WARNING",
+  "timestamp" : "17.05.2023. 15:16:10",
+  "deviceStatus" : "15℃"
+}, {
+  "message" : "Thermometer at 14℃",
+  "messageType" : "WARNING",
+  "timestamp" : "17.05.2023. 15:16:15",
+  "deviceStatus" : "14℃"
+}, {
+  "message" : "Thermometer at 32℃",
+  "messageType" : "WARNING",
+  "timestamp" : "17.05.2023. 15:16:20",
+  "deviceStatus" : "32℃"
+}, {
+  "message" : "Thermometer at 32℃",
+  "messageType" : "WARNING",
+  "timestamp" : "17.05.2023. 15:16:25",
+  "deviceStatus" : "32℃"
+}, {
+  "message" : "Thermometer at 24℃",
+  "messageType" : "INFO",
+  "timestamp" : "17.05.2023. 15:16:47",
+  "deviceStatus" : "24℃"
+}, {
+  "message" : "Thermometer at 21℃",
+  "messageType" : "INFO",
+  "timestamp" : "17.05.2023. 15:16:52",
+  "deviceStatus" : "21℃"
+}, {
+  "message" : "Thermometer at 21℃",
+  "messageType" : "INFO",
+  "timestamp" : "17.05.2023. 15:16:57",
+  "deviceStatus" : "21℃"
+} ]

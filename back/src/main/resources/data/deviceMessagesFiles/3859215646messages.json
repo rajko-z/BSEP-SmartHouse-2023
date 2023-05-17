@@ -1,8 +1,26 @@
-[
-  {
-    "message":  "Cooker has reached 180 degrees celsius",
-    "messageType" : "INFO",
-    "timestamp": "10.05.2023. 15:04:00",
-    "deviceStatus": "180"
-  }
-]
+[ {
+  "message" : "Cooker has reached 180 degrees celsius",
+  "messageType" : "INFO",
+  "timestamp" : "10.05.2023. 15:04:00",
+  "deviceStatus" : "180"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "17.05.2023. 15:16:12",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "17.05.2023. 15:16:20",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 220℃",
+  "messageType" : "INFO",
+  "timestamp" : "17.05.2023. 15:16:49",
+  "deviceStatus" : "220℃"
+}, {
+  "message" : "Cooker at 200℃",
+  "messageType" : "INFO",
+  "timestamp" : "17.05.2023. 15:16:57",
+  "deviceStatus" : "200℃"
+} ]

@@ -33,7 +33,8 @@
     </div>
   
     <div class="row">
-      <table mat-table [dataSource]="deviceMessages" class="mat-mdc-table">
+      <div class="table-container">
+      <table mat-table [dataSource]="dataSource" >
         <ng-container matColumnDef="message">
           <th mat-header-cell *matHeaderCellDef>Message</th>
           <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.message }}</td>
@@ -62,5 +63,6 @@
         <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
       </table>
     </div>
+  </div>
   </mat-card>
   

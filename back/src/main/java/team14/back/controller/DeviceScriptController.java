@@ -26,7 +26,7 @@ public class DeviceScriptController {
 
     private final FacilityService facilityService;
     private final DeviceService deviceService;
-    private final SimpMessagingTemplate simpMessagingTemplate;
+
 
     @GetMapping(path = "/get-all-devices", consumes = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<?> getAllDevices() {
@@ -42,12 +42,7 @@ public class DeviceScriptController {
     @PutMapping(path = "/update-device-state", consumes = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<?> updateDeviceState(@RequestBody @Valid UpdateDeviceStateDTO deviceStateDTO){
         try {
-            DeviceMessage deviceMessage = this.deviceService.updateDeviceState(deviceStateDTO);
-            //poslati web socket-u
-            DeviceMessageDTO deviceMessageDTO = new DeviceMessageDTO(deviceMessage);
-//            this.simpMessagingTemplate.convertAndSendToUser(this.facilityService.getFacilityNameByDeviceId(deviceStateDTO.getId()), "/get-device-messages" , deviceMessageDTO);
-            this.simpMessagingTemplate.convertAndSend("/facility/" + this.facilityService.getFacilityNameByDeviceId(deviceStateDTO.getId()) + "/get-device-messages" , deviceMessageDTO);
-
+            this.deviceService.updateDeviceState(deviceStateDTO);
         }catch (BadRequestException e){
             return ResponseEntity.badRequest().build();
         }
