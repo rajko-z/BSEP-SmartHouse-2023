@@ -17,7 +17,7 @@ public class FacilityController {
 
     private final FacilityService facilityService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER')")
     @GetMapping("/{facilityName}")
     public ResponseEntity<?> getFacilityByName(@PathVariable String facilityName){
         FacilityDetailsDTO facilityDetailsDTO = this.facilityService.getFacilityByName(facilityName);

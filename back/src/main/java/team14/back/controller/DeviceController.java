@@ -18,7 +18,7 @@ import java.util.List;
 public class DeviceController {
     private final DeviceService deviceService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER')")
     @GetMapping()
     public ResponseEntity<List<DeviceMessageDTO>> getDeviceMessages(
             @RequestParam("deviceMessagesPaths") List<String> deviceMessagesPaths

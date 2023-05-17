@@ -3,29 +3,4 @@
   "messageType" : "INFO",
   "timestamp" : "10.05.2023. 15:04:00",
   "deviceStatus" : "OPEN"
-}, {
-  "message" : "Gate is STUCK",
-  "messageType" : "WARNING",
-  "timestamp" : "17.05.2023. 15:16:11",
-  "deviceStatus" : "STUCK"
-}, {
-  "message" : "Gate is OUT OF POWER",
-  "messageType" : "WARNING",
-  "timestamp" : "17.05.2023. 15:16:18",
-  "deviceStatus" : "OUT OF POWER"
-}, {
-  "message" : "Gate is STUCK",
-  "messageType" : "WARNING",
-  "timestamp" : "17.05.2023. 15:16:25",
-  "deviceStatus" : "STUCK"
-}, {
-  "message" : "Gate is OPEN",
-  "messageType" : "INFO",
-  "timestamp" : "17.05.2023. 15:16:48",
-  "deviceStatus" : "OPEN"
-}, {
-  "message" : "Gate is CLOSED",
-  "messageType" : "INFO",
-  "timestamp" : "17.05.2023. 15:16:55",
-  "deviceStatus" : "CLOSED"
 } ]
