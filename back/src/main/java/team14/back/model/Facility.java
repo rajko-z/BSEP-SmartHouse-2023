@@ -4,11 +4,9 @@ import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import team14.back.dto.FacilityDTO;
 import team14.back.enumerations.FacilityType;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Document("facilities")

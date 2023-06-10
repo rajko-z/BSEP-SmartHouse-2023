@@ -3,4 +3,9 @@
   "messageType" : "INFO",
   "timestamp" : "10.05.2023. 15:04:00",
   "deviceStatus" : "180"
+}, {
+  "message" : "Cooker at 200℃",
+  "messageType" : "INFO",
+  "timestamp" : "10.06.2023. 15:14:19",
+  "deviceStatus" : "200℃"
 } ]

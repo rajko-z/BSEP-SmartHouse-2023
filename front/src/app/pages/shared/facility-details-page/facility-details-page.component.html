@@ -11,28 +11,38 @@
     </div>
   
     <div class="row">
-      <mat-expansion-panel class="expansion-panel">
-        <mat-expansion-panel-header>
-          <mat-panel-title>Tenants</mat-panel-title>
-        </mat-expansion-panel-header>
-        <div *ngFor="let tenant of facilityData?.tenantsEmails">
-            <mat-icon>person</mat-icon>
-            <label>{{ tenant }}</label>
-        </div>
-      </mat-expansion-panel>
+      <div class="left-exp">
+        <mat-expansion-panel class="expansion-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>Tenants</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let tenant of facilityData?.tenantsEmails">
+              <mat-icon>person</mat-icon>
+              <label>{{ tenant }}</label>
+          </div>
+        </mat-expansion-panel>
+      </div>
   
-      <mat-expansion-panel class="expansion-panel">
-        <mat-expansion-panel-header>
-          <mat-panel-title>Devices</mat-panel-title>
-        </mat-expansion-panel-header>
-        <div *ngFor="let deviceDTO of facilityData?.deviceDTOs; let i = index">
-            <label>{{deviceDTO.id}} - </label>
-            <label><b>{{ deviceDTO.deviceType }}</b></label>
-        </div>
-      </mat-expansion-panel>
+      <div class="right-exp">
+        <mat-expansion-panel class="expansion-panel">
+          <mat-expansion-panel-header>
+            <mat-panel-title>Devices</mat-panel-title>
+          </mat-expansion-panel-header>
+          <div *ngFor="let deviceDTO of facilityData?.deviceDTOs; let i = index">
+              <label>{{deviceDTO.id}} - </label>
+              <label><b>{{ deviceDTO.deviceType }}</b></label>
+          </div>
+        </mat-expansion-panel>
+      </div>
+    </div>
+    <div class="search-container">
+      <mat-form-field>
+        <input matInput placeholder="Search" [(ngModel)]="searchString" name="searchString" type="text" (keyup)="applyFilter($event)" #input>
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
     </div>
   
-    <div class="row">
+    <div class="table-row">
       <div class="table-container">
       <table mat-table [dataSource]="dataSource" >
         <ng-container matColumnDef="message">
@@ -61,6 +71,10 @@
   
         <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
       </table>
     </div>
   </div>

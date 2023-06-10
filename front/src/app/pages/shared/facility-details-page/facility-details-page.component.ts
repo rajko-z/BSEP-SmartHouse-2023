@@ -19,12 +19,14 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class FacilityDetailsPageComponent {
   private stompClient : any;
+  searchString = "";
   facilityName: string
   facilityData: FacilityDetailsData;
   deviceMessagesPaths: string[];
   deviceMessages: DeviceMessage[] = [];
   dataSource = new MatTableDataSource(this.deviceMessages);
   tableColumns = ['message', 'messageType', 'timestamp', 'deviceStatus'];
+  regExpr:any;
 
   constructor(private route: ActivatedRoute, private location: Location, private facilityService: FacilityService, private toastrService: ToastrService, private deviceService: DeviceService) {}
 
@@ -59,6 +61,7 @@ export class FacilityDetailsPageComponent {
     this.deviceMessages.push(deviceMessage);
     this.convertDateFormat();
     this.dataSource = new MatTableDataSource(this.deviceMessages);
+
   }
 
   getFacilityByName(){
@@ -131,5 +134,24 @@ export class FacilityDetailsPageComponent {
       let seconds = this.deviceMessages[i].timestamp[5] ? this.deviceMessages[i].timestamp[5].toString().padStart(2, '0') : "00";
       this.deviceMessages[i].formattedTimestamp = day + "/" + month + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
     }
+  }
+
+  applyFilter(event: Event) {
+    try{
+    // this.dataSource.filter = filterValue.trim().toLowerCase();
+    const filterValue = (event.target as HTMLInputElement).value;
+    console.log(filterValue);
+    const regex = new RegExp(filterValue);
+    // const regex = new RegExp('\\d');
+    console.log(regex);
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource.filterPredicate = (data: any, filter: string) => {
+      return regex.test(data.message); // Replace 'columnName' with the actual column name you want to filter
+    };
+    }catch(error){
+      return;
+    }
+    
+
   }
 }
