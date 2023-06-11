@@ -25,6 +25,8 @@ export class AdminLogPageComponent  {
 
   regexActive = false;
 
+  defaultFilterPredicate: (data: any, filter: string) => boolean;
+
   constructor(
     private logService: LogServiceService,
   ) {}
@@ -52,13 +54,19 @@ export class AdminLogPageComponent  {
           next: (response) => {
             this.logs = response;
             this.dataSource = new MatTableDataSource(this.logs);
+            this.defaultFilterPredicate = this.dataSource.filterPredicate;
           }
         }
       );
   }
 
+  resetFilterPredicateToDefault() {
+    this.dataSource.filterPredicate = this.defaultFilterPredicate;
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
+    this.resetFilterPredicateToDefault();
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
@@ -68,11 +76,11 @@ export class AdminLogPageComponent  {
       const regex = new RegExp(filterValue);
 
       this.dataSource.filter = filterValue.trim().toLowerCase();
+
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         return regex.test(data.message);
       };
 
-      this.dataSource.filter = '';
       this.dataSource.filter = filterValue.trim().toLowerCase();
     } catch (error) {
       return;
@@ -81,7 +89,5 @@ export class AdminLogPageComponent  {
 
   onRegexActiveChange($event: MatSlideToggleChange) {
     this.regexActive = $event.checked;
-    this.searchString = "";
-    this.dataSource.filter = this.searchString.trim().toLowerCase();
   }
 }
