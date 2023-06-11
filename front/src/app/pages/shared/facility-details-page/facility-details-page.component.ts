@@ -11,6 +11,7 @@ import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { Client, over, Message as StompMessage } from 'stompjs';
 import { MatTableDataSource } from '@angular/material/table';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-facility-details-page',
@@ -25,13 +26,31 @@ export class FacilityDetailsPageComponent {
   deviceMessages: DeviceMessage[] = [];
   dataSource = new MatTableDataSource(this.deviceMessages);
   tableColumns = ['message', 'messageType', 'timestamp', 'deviceStatus'];
+  form: FormGroup;
+  maxDate: Date = new Date();
 
-  constructor(private route: ActivatedRoute, private location: Location, private facilityService: FacilityService, private toastrService: ToastrService, private deviceService: DeviceService) {}
+  constructor(private route: ActivatedRoute, private location: Location, private facilityService: FacilityService, private toastrService: ToastrService, private deviceService: DeviceService, private formBuilder: FormBuilder) {
+    this.form = this.formBuilder.group({
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+    }, { validator: this.dateRangeValidator });
+  }
 
   ngOnInit() {
     this.facilityName = this.route.snapshot.paramMap.get('facilityName') as string;
     this.getFacilityByName();
     this.initializeWebSocket();
+  }
+
+  dateRangeValidator(formGroup: FormGroup) {
+    let startDate = formGroup.value['startDate'];
+    let endDate = formGroup.value['endDate'];
+
+    if (startDate && endDate && startDate > endDate) {
+      return { dateRangeError: true };
+    }
+
+    return null;
   }
 
   initializeWebSocket(){
