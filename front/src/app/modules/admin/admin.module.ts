@@ -19,6 +19,7 @@ import {
 import {AdminAddUserPageComponent} from "../../pages/admin/admin-add-user-page/admin-add-user-page.component";
 import { ChangeRoleDialogComponent } from "src/app/components/admin/change-role-dialog/change-role-dialog.component";
 import { AdminUserListPageComponent } from "src/app/pages/admin/admin-user-list-page/admin-user-list-page.component";
+import {AdminLogPageComponent} from "../../pages/admin/admin-log-page/admin-log-page.component";
 
 const declaredModules = [
   AdminCSRRequestsPageComponent,
@@ -30,6 +31,7 @@ const declaredModules = [
   AdminAddUserPageComponent,
   AdminUserListPageComponent,
   ChangeRoleDialogComponent,
+  AdminLogPageComponent
 ];
 
 @NgModule({

@@ -12,9 +12,11 @@ import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.bouncycastle.pkcs.PKCSException;
 import org.springframework.stereotype.Service;
 import team14.back.converters.CSRRequestConverter;
+import team14.back.dto.LogDTO;
 import team14.back.dto.csr.CSRRequestData;
 import team14.back.dto.csr.RejectCSRRequestDTO;
 import team14.back.dto.csr.SimpleCSRRequestDTO;
+import team14.back.enumerations.LogAction;
 import team14.back.exception.InternalServerException;
 import team14.back.exception.NotFoundException;
 import team14.back.model.CSRRequest;
@@ -22,6 +24,7 @@ import team14.back.repository.CSRRequestRepository;
 import team14.back.service.csr.CSRRequestReader;
 import team14.back.service.csr.CSRRequestService;
 import team14.back.service.email.EmailService;
+import team14.back.service.log.LogService;
 import team14.back.utils.Constants;
 
 import java.util.Comparator;
@@ -32,11 +35,15 @@ import java.util.Optional;
 @AllArgsConstructor
 public class CSRRequestServiceImpl implements CSRRequestService {
 
+    private static final String CLS_NAME = CSRRequestServiceImpl.class.getName();
+
     private final CSRRequestRepository csrRequestRepository;
 
     private final CSRRequestReader csrRequestReader;
 
     private final EmailService emailService;
+
+    private final LogService logService;
 
     @Override
     public List<SimpleCSRRequestDTO> getSimpleCSRRequestsData() {
@@ -82,7 +89,9 @@ public class CSRRequestServiceImpl implements CSRRequestService {
                     .build();
 
         } catch (OperatorCreationException | PKCSException ex) {
-            throw new InternalServerException("Error happened while validating signature for csr request of email: " + email);
+            String errorMessage = "Error happened while validating signature for csr request of email: " + email;
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_GENERATING_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new InternalServerException(errorMessage);
         }
     }
 
