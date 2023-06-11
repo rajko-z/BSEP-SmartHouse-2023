@@ -138,16 +138,18 @@ export class FacilityDetailsPageComponent {
 
   applyFilter(event: Event) {
     try{
-    // this.dataSource.filter = filterValue.trim().toLowerCase();
-    const filterValue = (event.target as HTMLInputElement).value;
-    console.log(filterValue);
-    const regex = new RegExp(filterValue);
-    // const regex = new RegExp('\\d');
-    console.log(regex);
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.dataSource.filterPredicate = (data: any, filter: string) => {
-      return regex.test(data.message); // Replace 'columnName' with the actual column name you want to filter
-    };
+      const filterValue = (event.target as HTMLInputElement).value;
+      console.log(filterValue);
+      const regex = new RegExp(filterValue);
+      console.log(regex);
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      this.dataSource.filterPredicate = (data: any, filter: string) => {
+        return regex.test(data.message); // Replace 'columnName' with the actual column name you want to filter
+      };
+
+      // Manually trigger the filtering
+      this.dataSource.filter = '';
+      this.dataSource.filter = filterValue.trim().toLowerCase();
     }catch(error){
       return;
     }
