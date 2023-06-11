@@ -1,12 +1,28 @@
 <div class="containerDiv">
-  <h1 class="table-title">LOGS</h1>
+  <h1><strong>LOGS</strong></h1>
   <hr/>
   <br/>
-  <mat-form-field>
-    <input matInput placeholder="Search" [(ngModel)]="searchString" name="searchString" type="text" (keyup)="applyFilter($event)" #input>
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
-  <br/>
+
+  <div>
+    <mat-slide-toggle (change)="onRegexActiveChange($event)" [checked]="regexActive">
+      Regex search on messages
+    </mat-slide-toggle>
+
+    <div *ngIf="regexActive === false" class="searchContainer">
+      <mat-form-field>
+        <input matInput placeholder="Search" [(ngModel)]="searchString" name="searchString" type="text" (keyup)="applyFilter($event)" #input>
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="regexActive === true" class="regexContainer">
+      <mat-form-field>
+        <input matInput placeholder="Regex search" [(ngModel)]="searchString" name="searchString" type="text" (keyup)="applyFilterWithRegex($event)" #input>
+        <mat-icon matSuffix>search</mat-icon>
+      </mat-form-field>
+    </div>
+  </div>
+
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="status">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>Status</th>

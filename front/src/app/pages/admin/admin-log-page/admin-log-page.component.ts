@@ -5,6 +5,7 @@ import {Client, Message as StompMessage, over} from "stompjs";
 import * as SockJS from "sockjs-client";
 import {environment} from "../../../../environments/environment";
 import {MatTableDataSource} from "@angular/material/table";
+import {MatSlideToggleChange} from "@angular/material/slide-toggle";
 
 @Component({
   selector: 'app-admin-log-page',
@@ -22,6 +23,7 @@ export class AdminLogPageComponent  {
 
   searchString = "";
 
+  regexActive = false;
 
   constructor(
     private logService: LogServiceService,
@@ -60,4 +62,26 @@ export class AdminLogPageComponent  {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
+  applyFilterWithRegex(event: Event) {
+    try {
+      const filterValue = (event.target as HTMLInputElement).value;
+      const regex = new RegExp(filterValue);
+
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      this.dataSource.filterPredicate = (data: any, filter: string) => {
+        return regex.test(data.message);
+      };
+
+      this.dataSource.filter = '';
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    } catch (error) {
+      return;
+    }
+  }
+
+  onRegexActiveChange($event: MatSlideToggleChange) {
+    this.regexActive = $event.checked;
+    this.searchString = "";
+    this.dataSource.filter = this.searchString.trim().toLowerCase();
+  }
 }
