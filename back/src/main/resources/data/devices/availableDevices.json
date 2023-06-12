@@ -1,0 +1,52 @@
+[
+  {
+    "deviceType": "THERMOMETER",
+    "hasState": false,
+    "invalidStates": []
+  },
+  {
+    "deviceType": "GATE",
+    "hasState": true,
+    "invalidStates": ["STUCK", "BLOCKED", "OUT OF POWER"]
+  },
+  {
+    "deviceType": "COOKER",
+    "hasState": false,
+    "invalidStates": []
+  },
+  {
+    "deviceType": "WATER_HEATER",
+    "hasState": false,
+    "invalidStates": []
+  },
+  {
+    "deviceType": "DOOR",
+    "hasState": true,
+    "invalidStates": ["STUCK", "BROKEN"]
+  },
+  {
+    "deviceType": "LIGHT",
+    "hasState": true,
+    "invalidStates": ["BROKEN"]
+  },
+  {
+    "deviceType": "VACUUM_CLEANER",
+    "hasState": true,
+    "invalidStates": ["OVERHEATING", "FULL BAG"]
+  },
+  {
+    "deviceType": "AIR_CONDITIONING",
+    "hasState": true,
+    "invalidStates": ["HIGH VOLTAGE", "STUCK"]
+  },
+  {
+    "deviceType": "CAMERA",
+    "hasState": true,
+    "invalidStates": ["BLACK SCREEN", "WHITE SCREEN", "BROKEN"]
+  },
+  {
+    "deviceType": "ALARM",
+    "hasState": true,
+    "invalidStates": ["ACTIVATED", "OFF"]
+  }
+]

@@ -1,4 +1,4 @@
-enum DeviceType {
+export enum DeviceType {
   THERMOMETER= 'THERMOMETER',
   GATE= 'GATE',
   COOKER = 'COOKER',
@@ -18,4 +18,12 @@ export class DeviceAlarmTrigger {
   higherThan: number;
   invalidState: string;
   ruleName: string;
+}
+export interface NewAlarmDeviceTrigger {
+  alarmName: string;
+  selectedDevice: DeviceType;
+  hasState: boolean;
+  state: string;
+  greater: boolean;
+  value: number;
 }

@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.stereotype.Repository;
+import team14.back.dto.DeviceInfoDTO;
 import team14.back.exception.BadRequestException;
 import team14.back.model.Device;
 import team14.back.model.DeviceMessage;
@@ -20,12 +21,12 @@ public class DeviceRepository {
 
     private final String facilityConfigFilePath = "src/main/resources/data/facilityConfigFiles/";
     private final String deviceMessagesFilePath = "src/main/resources/data/deviceMessagesFiles/";
+    private final String deviceInfosFilePath = "src/main/resources/data/devices/availableDevices.json";
     private ObjectMapper objectMapper = new ObjectMapper();
 
     public DeviceRepository(){
         objectMapper.registerModule(new JavaTimeModule());
     }
-
 
     public List<Device> getDevicesFromFacility(String facilityName){
         List<Device> devices = null;
@@ -59,6 +60,16 @@ public class DeviceRepository {
         } catch (IOException e) {
             throw new BadRequestException("Problem with writing file: "+filename);
         }
+    }
 
+    public List<DeviceInfoDTO> getDevicesInfo(){
+        List<DeviceInfoDTO> deviceInfos;
+        try {
+            File jsonFile = new File(deviceInfosFilePath);
+            deviceInfos = objectMapper.readValue(jsonFile, new TypeReference<>() {});
+        } catch (IOException e) {
+            throw new BadRequestException("Problem with reading file: "+ deviceInfosFilePath);
+        }
+        return deviceInfos;
     }
 }

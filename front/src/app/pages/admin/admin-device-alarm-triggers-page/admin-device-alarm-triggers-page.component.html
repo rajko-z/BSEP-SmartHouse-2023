@@ -1,6 +1,11 @@
 <div class="containerDiv">
   <h1><strong>Device Alarm Triggers</strong></h1>
   <hr/>
+  <button mat-raised-button color="primary" type="submit" (click)="addAlarmTrigger()">
+    Add alarm trigger
+  </button>
+  <br/>
+  <br/>
   <table mat-table [dataSource]="dataSource">
     <ng-container matColumnDef="alarmName">
       <th mat-header-cell *matHeaderCellDef>Alarm Name</th>

@@ -1,0 +1,62 @@
+<div>
+  <div class="container" [formGroup]="this.triggerForm">
+    <br/>
+    <h1>Add Device Trigger</h1>
+    <hr/>
+    <br/>
+    <div>
+      <mat-form-field appearance="outline">
+        <mat-label>Alarm Name</mat-label>
+        <input matInput
+               required
+               [type]="'text'"
+               formControlName="alarmName"
+        >
+        <mat-error>Alarm name is required</mat-error>
+      </mat-form-field>
+    </div>
+    <br/>
+    <div>
+      <mat-form-field appearance="outline" *ngIf="devicesLoaded===true">
+        <mat-label>Device type</mat-label>
+        <mat-select formControlName="selectedDevice" (selectionChange)="onDeviceChange($event)">
+          <mat-option *ngFor="let device of deviceInfos" [value]="device">
+            {{device.deviceType}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div *ngIf="devicesLoaded===true && selectedDevice !== null">
+      <mat-form-field appearance="outline" *ngIf="selectedDevice.hasState === true">
+        <mat-label>Select state</mat-label>
+        <mat-select formControlName="invalidState">
+          <mat-option *ngFor="let state of selectedDevice.invalidStates" [value]="state">
+            {{state}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <div *ngIf="selectedDevice.hasState === false">
+        <p>Activate this alarm when temperature is:</p>
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-select formControlName="sign">
+              <mat-option value="G">greater than</mat-option>
+              <mat-option value="L">lesser than</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <input matInput
+                   required
+                   type="number"
+                   formControlName="numberValue">
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <br/>
+    <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+      Save
+    </button>
+  </div>
+</div>
+

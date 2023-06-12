@@ -1,15 +1,17 @@
 package team14.back.controller;
+
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+import team14.back.dto.DeviceInfoDTO;
 import team14.back.dto.DeviceMessageDTO;
-import team14.back.dto.FacilityDetailsDTO;
 import team14.back.service.device.DeviceService;
-import team14.back.service.facility.FacilityService;
 
-import javax.validation.constraints.Email;
 import java.util.List;
 
 @RestController
@@ -25,5 +27,12 @@ public class DeviceController {
     ) {
         List<DeviceMessageDTO> deviceMessageDTO = this.deviceService.getDeviceMessages(deviceMessagesPaths);
         return ResponseEntity.ok(deviceMessageDTO);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping("/infos")
+    public ResponseEntity<List<DeviceInfoDTO>> getAllDeviceTypes() {
+        List<DeviceInfoDTO> retVal = this.deviceService.getAllDeviceInfos();
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 }

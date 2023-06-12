@@ -3,7 +3,9 @@ package team14.back.service.device;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import team14.back.dto.DeviceInfoDTO;
 import team14.back.dto.UpdateDeviceStateDTO;
+import team14.back.enumerations.DeviceType;
 import team14.back.model.DeviceMessage;
 import team14.back.repository.DeviceRepository;
 
@@ -41,5 +43,21 @@ public class DeviceServiceImpl implements DeviceService{
                 .map(DeviceMessageDTO::new)
                 .sorted(Comparator.comparing(DeviceMessageDTO::getTimestamp))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<DeviceInfoDTO> getAllDeviceInfos() {
+        return deviceRepository.getDevicesInfo();
+    }
+
+    @Override
+    public DeviceInfoDTO getDeviceInfoByType(DeviceType type) {
+        List<DeviceInfoDTO> devices = deviceRepository.getDevicesInfo();
+        for (DeviceInfoDTO device : devices) {
+            if (device.getDeviceType().equals(type)) {
+                return device;
+            }
+        }
+        return null;
     }
 }
