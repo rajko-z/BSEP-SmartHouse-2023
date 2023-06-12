@@ -8,8 +8,12 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import team14.back.dto.LogDTO;
 import team14.back.dto.login.LoginDTO;
+import team14.back.enumerations.LogAction;
+import team14.back.enumerations.LogStatus;
 import team14.back.exception.InternalServerException;
+import team14.back.service.log.LogService;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
@@ -20,9 +24,13 @@ import java.util.Objects;
 @AllArgsConstructor
 public class EmailServiceImpl implements EmailService {
 
+    private static final String CLS_NAME = EmailServiceImpl.class.getName();
+
     private final JavaMailSender javaMailSender;
 
     private final Environment env;
+
+    private final LogService logService;
 
     @Override
     @Async
@@ -39,6 +47,7 @@ public class EmailServiceImpl implements EmailService {
         }
         message.setText(sb.toString());
 
+        logService.addInfo(new LogDTO(LogAction.REJECT_CERTIFICATE, CLS_NAME, "Sending certificate rejection email to user: " + toEmail));
         javaMailSender.send(message);
     }
 
@@ -59,8 +68,11 @@ public class EmailServiceImpl implements EmailService {
             helper.addAttachment(fileName, file);
 
             javaMailSender.send(message);
+            logService.addInfo(new LogDTO(LogAction.SENDING_CERTIFICATE_TO_USER, CLS_NAME, "Sending certificate to user: " + createdCredentials.getEmail()));
         } catch (MessagingException e) {
-            throw new InternalServerException("Error happened while sending email to user: " + createdCredentials.getEmail());
+            String errorMessage = "Error happened while sending email to user: " + createdCredentials.getEmail();
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_SENDING_CERTIFICATE_TO_USER, CLS_NAME, errorMessage));
+            throw new InternalServerException(errorMessage);
         }
     }
 

@@ -1,12 +1,10 @@
 package team14.back.service.facility;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import team14.back.dto.FacilityDetailsDTO;
+import team14.back.dto.LogDTO;
+import team14.back.enumerations.LogAction;
 import team14.back.exception.NotFoundException;
 import team14.back.model.Device;
 import team14.back.model.Facility;
@@ -14,9 +12,8 @@ import team14.back.model.User;
 import team14.back.repository.DeviceRepository;
 import team14.back.repository.FacilityRepository;
 import team14.back.repository.UserRepository;
+import team14.back.service.log.LogService;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -25,11 +22,15 @@ import java.util.Objects;
 @AllArgsConstructor
 public class FacilityServiceImpl implements FacilityService {
 
+    private static final String CLS_NAME = FacilityServiceImpl.class.getName();
+
     private final DeviceRepository deviceRepository;
 
     private final UserRepository userRepository;
 
     private final FacilityRepository facilityRepository;
+
+    private final LogService logService;
 
     @Override
     public List<Device> getAllDevices() {
@@ -42,6 +43,7 @@ public class FacilityServiceImpl implements FacilityService {
                 }
             }
         }
+        logService.addInfo(new LogDTO(LogAction.GET_ALL_DEVICES, CLS_NAME, "Fetching all devices..."));
         return allDevices;
     }
 

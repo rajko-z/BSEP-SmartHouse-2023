@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { FacilityDetailsData } from 'src/app/model/facilityDetailsData';
-import { FacilityService } from 'src/app/services/facility/facility.service';
-import { ToastrService } from 'ngx-toastr';
-import { DeviceMessage } from 'src/app/model/deviceMessage';
-import { DeviceService } from 'src/app/services/device/device.service';
-import { environment } from 'src/environments/environment';
+import {Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
+import {FacilityDetailsData} from 'src/app/model/facilityDetailsData';
+import {FacilityService} from 'src/app/services/facility/facility.service';
+import {ToastrService} from 'ngx-toastr';
+import {DeviceMessage} from 'src/app/model/deviceMessage';
+import {DeviceService} from 'src/app/services/device/device.service';
+import {environment} from 'src/environments/environment';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { Client, over, Message as StompMessage } from 'stompjs';
@@ -25,6 +25,7 @@ import { ReportDataDTO } from 'src/app/model/reportDataDTO';
 })
 export class FacilityDetailsPageComponent {
   private stompClient : any;
+  searchString = "";
   facilityName: string
   facilityData: FacilityDetailsData;
   deviceMessagesPaths: string[];
@@ -33,6 +34,7 @@ export class FacilityDetailsPageComponent {
   tableColumns = ['message', 'messageType', 'timestamp', 'deviceStatus'];
   form: FormGroup;
   maxDate: Date = new Date();
+  regExpr:any;
 
   constructor(private route: ActivatedRoute, private location: Location, private facilityService: FacilityService, private toastrService: ToastrService, private deviceService: DeviceService, private formBuilder: FormBuilder, private reportDialog: MatDialog) {
     this.form = this.formBuilder.group({
@@ -64,7 +66,7 @@ export class FacilityDetailsPageComponent {
 
     let that = this;
 
-    this.stompClient.connect({}, that.onConnected, that.onError); 
+    this.stompClient.connect({}, that.onConnected, that.onError);
   }
 
   onConnected = () => {
@@ -72,7 +74,7 @@ export class FacilityDetailsPageComponent {
   }
 
   onError = () => {
-    console.log("Socket error.");    
+    console.log("Socket error.");
   }
 
   public onGenerateReport(): void {
@@ -180,5 +182,24 @@ export class FacilityDetailsPageComponent {
     const dialogRef = this.reportDialog.open(ReportDialogComponent, {
       data: deviceMessages,
     });
+  }
+
+  applyFilter(event: Event) {
+    try{
+      const filterValue = (event.target as HTMLInputElement).value;
+      console.log(filterValue);
+      const regex = new RegExp(filterValue);
+      console.log(regex);
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+      this.dataSource.filterPredicate = (data: any, filter: string) => {
+        return regex.test(data.message); // Replace 'columnName' with the actual column name you want to filter
+      };
+
+      // Manually trigger the filtering
+      this.dataSource.filter = '';
+      this.dataSource.filter = filterValue.trim().toLowerCase();
+    }catch(error){
+      return;
+    }
   }
 }

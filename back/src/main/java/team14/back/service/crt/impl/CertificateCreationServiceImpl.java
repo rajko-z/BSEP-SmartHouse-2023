@@ -18,10 +18,12 @@ import org.bouncycastle.operator.OperatorCreationException;
 import org.bouncycastle.operator.jcajce.JcaContentSignerBuilder;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.springframework.stereotype.Service;
+import team14.back.dto.LogDTO;
 import team14.back.dto.crt.KeyUsageDTO;
 import team14.back.dto.login.LoginDTO;
 import team14.back.dto.crt.NewCertificateDTO;
 import team14.back.enumerations.IntermediateCA;
+import team14.back.enumerations.LogAction;
 import team14.back.enumerations.TemplateType;
 import team14.back.exception.InternalServerException;
 import team14.back.model.IssuerData;
@@ -31,6 +33,7 @@ import team14.back.service.csr.CSRRequestReader;
 import team14.back.service.csr.CSRRequestService;
 import team14.back.service.email.EmailService;
 import team14.back.service.keystore.KeyStoreService;
+import team14.back.service.log.LogService;
 import team14.back.service.user.UserService;
 import team14.back.utils.Constants;
 
@@ -55,6 +58,8 @@ import java.util.Date;
 @AllArgsConstructor
 public class CertificateCreationServiceImpl implements CertificateCreationService {
 
+    private static final String CLS_NAME = CertificateCreationServiceImpl.class.getName();
+
     private final CertDataValidationService certDataValidationService;
 
     private final KeyStoreService keyStoreService;
@@ -66,6 +71,8 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
     private final UserService userService;
 
     private final EmailService emailService;
+
+    private final LogService logService;
 
     @Override
     public void issueNewCertificate(NewCertificateDTO certificateDTO) {
@@ -84,8 +91,6 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
         keyStoreService.saveCertificate(certificate, email);
 
         csrRequestService.deleteCSRRequest(email);
-
-        System.out.println(certificate.toString());
     }
 
     private void saveCertificateAsCertFile(X509Certificate certificate, String email) {
@@ -100,7 +105,9 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
             try (PrintWriter out = new PrintWriter(new FileOutputStream(path))) {
                 out.print(encodedCert);
             }
+            logService.addInfo(new LogDTO(LogAction.STORING_CERTIFICATE, CLS_NAME, "Storing certificate for user: " + email));
         } catch (CertificateEncodingException | IOException e) {
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_STORING_CERTIFICATE, CLS_NAME, "Error on storing certificate for user: " + email));
             throw new InternalServerException("Error happened while saving generated certificate");
         }
     }
@@ -137,6 +144,7 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
             JcaX509CertificateConverter certConverter = new JcaX509CertificateConverter();
             certConverter = certConverter.setProvider("BC");
 
+            logService.addInfo(new LogDTO(LogAction.GENERATE_CERTIFICATE, CLS_NAME, "Generate certificate for user: " + certificateDTO.getSubjectData().getEmail()));
             return certConverter.getCertificate(certHolder);
 
         } catch (IllegalArgumentException |
@@ -147,7 +155,7 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
                  InvalidKeySpecException |
                  CertificateException e) {
 
-            e.printStackTrace();
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_GENERATING_CERTIFICATE, CLS_NAME, "Error while generating certificate for user: " + certificateDTO.getSubjectData().getEmail()));
             throw new InternalServerException("Error happened while generating certificate");
         }
     }

@@ -10,6 +10,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
 import team14.back.enumerations.FacilityType;
+import team14.back.enumerations.LogAction;
+import team14.back.enumerations.LogStatus;
 import team14.back.model.*;
 import team14.back.repository.*;
 
@@ -42,6 +44,8 @@ public class BackApplication implements CommandLineRunner {
 	@Autowired
 	private FacilityRepository facilityRepository;
 
+	@Autowired
+	private LogRepository logRepository;
 
 	public static void main(String[] args) {
 		SpringApplication.run(BackApplication.class, args);
@@ -54,6 +58,16 @@ public class BackApplication implements CommandLineRunner {
 		createRoles();
 		createUsers(initialFacilities);
 		createCSRRequests();
+		createLogs();
+	}
+
+	private void createLogs() {
+		logRepository.save(new Log(LogStatus.INFO, LogAction.LOG_IN_SUCCESS, LocalDateTime.now().minusDays(1).minusHours(2), "AuthController", "user smarthouse2023tim14+john@gmail.com successfully logged in"));
+		logRepository.save(new Log(LogStatus.ERROR, LogAction.INVALID_CREDENTIALS, LocalDateTime.now().minusDays(2).minusHours(1), "AuthController", "invalid credentials for smarthouse2023tim14+john@gmail.com"));
+		logRepository.save(new Log(LogStatus.INFO, LogAction.INVALID_2FA, LocalDateTime.now().minusDays(2), "AuthController", "invalid 2FA for smarthouse2023tim14+john@gmail.com"));
+		logRepository.save(new Log(LogStatus.INFO, LogAction.GET_ALL_USERS, LocalDateTime.now().minusDays(3), "UsersService", "Fetching all users"));
+		logRepository.save(new Log(LogStatus.INFO, LogAction.GET_ALL_CSR_REQUESTS, LocalDateTime.now().minusDays(4), "CSRRequestsService", "Fetching all csr requests"));
+		logRepository.save(new Log(LogStatus.INFO, LogAction.REVOKE_CERTIFICATE, LocalDateTime.now().minusDays(2), "CertificateService", "Revoking certificate"));
 	}
 
 	private List<Facility> createFacilities() {
@@ -102,5 +116,6 @@ public class BackApplication implements CommandLineRunner {
 		this.loginFailureRepository.deleteAll();
 		this.facilityRepository.deleteAll();
 		this.revokedCertificateRepository.deleteAll();
+		this.logRepository.deleteAll();
 	}
 }

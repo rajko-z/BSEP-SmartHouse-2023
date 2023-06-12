@@ -12,6 +12,7 @@ import { AdminAddUserPageComponent } from "src/app/pages/admin/admin-add-user-pa
 import { AdminUserListPageComponent } from "src/app/pages/admin/admin-user-list-page/admin-user-list-page.component";
 import { ViewUserProfilePageComponent } from "src/app/pages/shared/view-user-profile-page/view-user-profile-page.component";
 import { FacilityDetailsPageComponent } from "src/app/pages/shared/facility-details-page/facility-details-page.component";
+import {AdminLogPageComponent} from "../../pages/admin/admin-log-page/admin-log-page.component";
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
     path: 'facility-details/:facilityName',
     component: FacilityDetailsPageComponent
   },
+  {
+    path: 'logs',
+    component: AdminLogPageComponent
+  }
 ];
 
 @NgModule({

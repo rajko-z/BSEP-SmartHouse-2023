@@ -1,11 +1,15 @@
 package team14.back.service.csr.impl;
 
+import lombok.AllArgsConstructor;
 import org.apache.commons.io.FileUtils;
 import org.bouncycastle.openssl.PEMParser;
 import org.bouncycastle.pkcs.PKCS10CertificationRequest;
 import org.springframework.stereotype.Service;
+import team14.back.dto.LogDTO;
+import team14.back.enumerations.LogAction;
 import team14.back.exception.InternalServerException;
 import team14.back.service.csr.CSRRequestReader;
+import team14.back.service.log.LogService;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -16,7 +20,12 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Service
+@AllArgsConstructor
 public class CSRRequestReaderImpl implements CSRRequestReader {
+
+    private static final String CLS_NAME = CSRRequestReaderImpl.class.getName();
+
+    private final LogService logService;
 
     @Override
     public PKCS10CertificationRequest readCSRForEmail(String email) {
@@ -32,7 +41,9 @@ public class CSRRequestReaderImpl implements CSRRequestReader {
         ) {
             return (PKCS10CertificationRequest) pem.readObject();
         } catch (IOException e) {
-            throw new InternalServerException("Error happened while reading csr file for user: " + email);
+            String errorMessage = "Error happened while reading csr file for user: " + email;
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_GENERATING_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new InternalServerException(errorMessage);
         }
     }
 }

@@ -17,10 +17,11 @@ import { ViewUserProfilePageComponent } from './pages/shared/view-user-profile-p
 import { FacilityDetailsPageComponent } from './pages/shared/facility-details-page/facility-details-page.component';
 import { ReportDialogComponent } from './components/admin/report-dialog/report-dialog.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
-    ReportDialogComponent
+    ReportDialogComponent,
   ],
   imports: [
     AngularMaterialModule,

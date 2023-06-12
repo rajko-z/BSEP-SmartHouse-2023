@@ -1,0 +1,24 @@
+enum LogStatus {
+  INFO = "INFO",
+  ERROR = "ERROR"
+}
+enum LogAction {
+  LOG_IN_SUCCESS= "LOG_IN_SUCCESS",
+  INVALID_CREDENTIALS = "INVALID_CREDENTIALS",
+  INVALID_2FA = "INVALID_2FA",
+  LOG_OUT = "LOG_OUT",
+  GET_ALL_USERS = "GET_ALL_USERS",
+  GET_ALL_CSR_REQUESTS = "GET_ALL_CSR_REQUESTS",
+  GET_ALL_CERTIFICATES = "GET_ALL_CERTIFICATES",
+  REVOKE_CERTIFICATE = "GET_ALL_CERTIFICATES",
+  REJECT_CERTIFICATE = "GET_ALL_CERTIFICATES",
+  ISSUE_CERTIFICATE = "GET_ALL_CERTIFICATES"
+}
+
+export interface Log {
+  status: LogStatus;
+  action: LogAction;
+  timestamp: string;
+  trace: string;
+  message: string;
+}

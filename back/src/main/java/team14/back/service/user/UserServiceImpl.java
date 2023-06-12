@@ -11,6 +11,7 @@ import team14.back.dto.*;
 import team14.back.dto.csr.CSRRequestDTO;
 import team14.back.dto.login.LoginDTO;
 import team14.back.enumerations.FacilityType;
+import team14.back.enumerations.LogAction;
 import team14.back.exception.BadRequestException;
 import team14.back.exception.NotFoundException;
 import team14.back.model.CSRRequest;
@@ -18,9 +19,10 @@ import team14.back.model.Facility;
 import team14.back.model.Role;
 import team14.back.model.User;
 import team14.back.repository.CSRRequestRepository;
-import team14.back.repository.RoleRepository;
 import team14.back.repository.FacilityRepository;
+import team14.back.repository.RoleRepository;
 import team14.back.repository.UserRepository;
+import team14.back.service.log.LogService;
 import team14.back.utils.CommonPasswords;
 import team14.back.utils.ExceptionMessageConstants;
 
@@ -37,6 +39,7 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class UserServiceImpl implements UserService {
 
+    private static final String CLS_NAME = UserServiceImpl.class.getName();
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
     private final CSRRequestRepository csrRequestRepository;
@@ -44,13 +47,17 @@ public class UserServiceImpl implements UserService {
 
     private final PasswordEncoder passwordEncoder;
 
+    private final LogService logService;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<User> user = userRepository.findByEmail(username);
         if (user.isPresent())
             return user.get();
-        throw new UsernameNotFoundException("User with username: " + username + " not found");
+
+        String errorMessage = "User with username: " + username + " not found";
+        logService.addErr(new LogDTO(LogAction.UNKNOWN_USER, CLS_NAME, errorMessage));
+        throw new UsernameNotFoundException(errorMessage);
     }
 
     @Override
@@ -68,16 +75,24 @@ public class UserServiceImpl implements UserService {
         output.write(document.getBytes());
         output.close();
 
+        logService.addInfo(new LogDTO(LogAction.CREATING_NEW_CSR_REQUEST, CLS_NAME, "Creating new csr request for user: " + requestDTO.getEmail()));
         csrRequestRepository.save(csrRequest);
     }
 
     @Override
     public LoginDTO createNewUser(String email) {
         if (this.userRepository.findByEmail(email).isPresent()) {
-            throw new BadRequestException("Can't create user with email: " + email + " because user already exist");
+            String errorMessage = "Can't create user with email: " + email + " because user already exist";
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CREATING_USER, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
         }
-        CSRRequest csrRequest = csrRequestRepository.findByEmail(email)
-                .orElseThrow(() -> new BadRequestException("Can't find csr request for user with email: " + email));
+        Optional<CSRRequest> optCsrRequest = csrRequestRepository.findByEmail(email);
+        if (optCsrRequest.isEmpty()) {
+            String errorMessage = "Can't find csr request for user with email: " + email;
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CREATING_USER, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
+        }
+        CSRRequest csrRequest = optCsrRequest.get();
 
         String password = generatePassword();
         String encodedPassword = passwordEncoder.encode(password);
@@ -91,6 +106,7 @@ public class UserServiceImpl implements UserService {
                 new Role(2L, "ROLE_OWNER"));
 
         this.userRepository.save(user);
+        logService.addInfo(new LogDTO(LogAction.CREATING_USER, CLS_NAME, "User: " + email + " created."));
         return new LoginDTO(email, password);
     }
 
@@ -98,6 +114,7 @@ public class UserServiceImpl implements UserService {
     public void blockUser(String email) {
         User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + email));
         user.setBlocked(true);
+        logService.addInfo(new LogDTO(LogAction.BLOCKING_USER, CLS_NAME, "Blocking user: " + email));
         this.userRepository.save(user);
     }
 
@@ -105,6 +122,7 @@ public class UserServiceImpl implements UserService {
     public void unblockUser(String email) {
         User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + email));
         user.setBlocked(false);
+        logService.addInfo(new LogDTO(LogAction.UNBLOCKING_USER, CLS_NAME, "Unblocking user: " + email));
         this.userRepository.save(user);
     }
 
@@ -120,23 +138,37 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changePassword(NewPasswordDTO newPasswordDTO) {
-        User user = userRepository.findByEmail(newPasswordDTO.getEmail())
-                .orElseThrow(() -> new UsernameNotFoundException("Can't find username with: " + newPasswordDTO.getEmail()));
+        Optional<User> optUser = userRepository.findByEmail(newPasswordDTO.getEmail());
+        if (optUser.isEmpty()) {
+            String errorMessage = "Can't find user: " + newPasswordDTO.getEmail();
+            logService.addErr(new LogDTO(LogAction.UNKNOWN_USER, CLS_NAME, errorMessage));
+            throw new UsernameNotFoundException(errorMessage);
+        }
+        User user = optUser.get();
 
         if (passwordsMatch(newPasswordDTO.getNewPassword(), user.getPassword())) {
+            String errorMessage = newPasswordDTO.getEmail() + " : " +  ExceptionMessageConstants.NEW_PASSWORD_SAME_AS_PREVIOUS;
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage));
             throw new BadRequestException(ExceptionMessageConstants.NEW_PASSWORD_SAME_AS_PREVIOUS);
         }
         if (!passwordsMatch(newPasswordDTO.getCurrentPassword(), user.getPassword())) {
+            String errorMessage = newPasswordDTO.getEmail() + " : " +  ExceptionMessageConstants.INVALID_CURRENT_PASSWORD;
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage));
             throw new BadRequestException(ExceptionMessageConstants.INVALID_CURRENT_PASSWORD);
         }
         if (!isNewPasswordInValidFormat(newPasswordDTO.getNewPassword())) {
+            String errorMessage = newPasswordDTO.getEmail() + " : " +  ExceptionMessageConstants.FORMAT_FOR_PASSWORD_NOT_VALID;
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage));
             throw new BadRequestException(ExceptionMessageConstants.FORMAT_FOR_PASSWORD_NOT_VALID);
         }
         if (isPasswordOnListOfMostCommonPasswords(newPasswordDTO.getNewPassword())) {
+            String errorMessage = newPasswordDTO.getEmail() + " : " +  ExceptionMessageConstants.PASSWORD_ON_LIST_OF_MOST_COMMON_PASSWORDS;
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage));
             throw new BadRequestException(ExceptionMessageConstants.PASSWORD_ON_LIST_OF_MOST_COMMON_PASSWORDS);
         }
         user.setPassword(passwordEncoder.encode(newPasswordDTO.getNewPassword()));
         user.setLastPasswordResetDate(new Date());
+        logService.addInfo(new LogDTO(LogAction.CHANGING_PASSWORD, CLS_NAME, "Changing password for user: " + newPasswordDTO.getEmail()));
         userRepository.save(user);
     }
 
@@ -208,6 +240,7 @@ public class UserServiceImpl implements UserService {
         else
             createNewFacilities(userFacilitiesDTO, user);
 
+        this.logService.addInfo(new LogDTO(LogAction.SAVING_FACILITIES, CLS_NAME, "Saving facilities for user: " + userFacilitiesDTO.getEmail()));
         this.userRepository.save(user);
     }
 
@@ -265,6 +298,7 @@ public class UserServiceImpl implements UserService {
                 facilityDTOS.add(facilityDTO);
             }
         }
+        logService.addInfo(new LogDTO(LogAction.GET_ALL_FACILITIES, CLS_NAME, "Fetching all facilities for user: " + email));
         return facilityDTOS;
     }
 
@@ -326,6 +360,7 @@ public class UserServiceImpl implements UserService {
     public List<User> getAllUsers() {
         List<User> allUsers = userRepository.findAll();
         allUsers.forEach(user -> user.setFacilities(null));
+        logService.addInfo(new LogDTO(LogAction.GET_ALL_USERS, CLS_NAME, "Fetching all users..."));
         return allUsers.stream().filter(user -> !user.getRole().getName().equals("ROLE_ADMIN")).collect(Collectors.toList());
     }
 
@@ -335,6 +370,7 @@ public class UserServiceImpl implements UserService {
 
         Role role = roleRepository.findByName(changeRoleDto.getNewRole()).orElseThrow(()-> new NotFoundException("Role "+changeRoleDto.getNewRole()+" not found"));
         user.setRole(role);
+        logService.addInfo(new LogDTO(LogAction.CHANGING_USER_ROLE, CLS_NAME, "Changing role for user: " + changeRoleDto.getEmail() + ". New role: " + changeRoleDto.getNewRole()));
         userRepository.save(user);
     }
 
@@ -342,6 +378,7 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(String userEmail) {
         User user = userRepository.findByEmail(userEmail).orElseThrow(()-> new NotFoundException("Email "+userEmail+" not found"));
         user.setDeleted(true);
+        logService.addInfo(new LogDTO(LogAction.DELETING_USER, CLS_NAME, "Deleting user with email: " + userEmail));
         userRepository.save(user);
     }
 
