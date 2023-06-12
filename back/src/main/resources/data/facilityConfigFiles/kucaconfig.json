@@ -4,7 +4,7 @@
     "deviceType": "THERMOMETER",
     "messagesFilePath": "3859215643messages.json",
     "readingFrequencyTime": 5,
-    "regexFilter": "\\\\d+"
+    "regexFilter": "\\d"
   },
   {
     "id": 3859215645,
@@ -18,7 +18,7 @@
     "deviceType": "COOKER",
     "messagesFilePath": "3859215646messages.json",
     "readingFrequencyTime": 8,
-    "regexFilter": "\\\\d+"
+    "regexFilter": "\\d+"
   },
   {
     "id": 3859215647,

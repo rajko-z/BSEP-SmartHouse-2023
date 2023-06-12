@@ -8,9 +8,4 @@
   "messageType" : "INFO",
   "timestamp" : "10.06.2023. 15:14:17",
   "deviceStatus" : "21℃"
-}, {
-  "message" : "Thermometer at 21℃",
-  "messageType" : "INFO",
-  "timestamp" : "10.06.2023. 15:14:22",
-  "deviceStatus" : "21℃"
-} ]
+}]

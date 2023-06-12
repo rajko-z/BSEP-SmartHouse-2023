@@ -8,9 +8,4 @@
   "messageType" : "INFO",
   "timestamp" : "10.06.2023. 15:14:18",
   "deviceStatus" : "CLOSED"
-}, {
-  "message" : "Gate is CLOSED",
-  "messageType" : "INFO",
-  "timestamp" : "10.06.2023. 15:14:25",
-  "deviceStatus" : "CLOSED"
-} ]
+}]

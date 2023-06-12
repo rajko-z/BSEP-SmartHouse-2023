@@ -56,10 +56,9 @@ export class FacilityDetailsPageComponent {
   onDeviceMessageReceived(payload: any)
   {
     let payloadData = JSON.parse(payload.body);
-    let deviceMessage: DeviceMessage;
-    deviceMessage = payloadData;
+    payloadData = this.convertDateFormatFromTimestamp(payloadData);
+    let deviceMessage: DeviceMessage = payloadData;
     this.deviceMessages.push(deviceMessage);
-    this.convertDateFormat();
     this.dataSource = new MatTableDataSource(this.deviceMessages);
 
   }
@@ -136,12 +135,24 @@ export class FacilityDetailsPageComponent {
     }
   }
 
+  convertDateFormatFromTimestamp(deviceMessage:any){
+      //2023-06-12T23:00:09.120998
+      let date = deviceMessage['timestamp'].split("T")[0];
+      let time = deviceMessage['timestamp'].split("T")[1];
+      let day = date.split("-")[2];
+      let month = date.split("-")[1];
+      let year = date.split("-")[0];
+      let hours = time.split(":")[0];
+      let minutes = time.split(":")[1];
+      let seconds = time.split(":")[2].split(".")[0];
+      deviceMessage['formattedTimestamp'] = day + "/" + month + "/" + year + " " + hours + ":" + minutes + ":" + seconds;
+      return deviceMessage;
+  }
+
   applyFilter(event: Event) {
     try{
       const filterValue = (event.target as HTMLInputElement).value;
-      console.log(filterValue);
       const regex = new RegExp(filterValue);
-      console.log(regex);
       this.dataSource.filter = filterValue.trim().toLowerCase();
       this.dataSource.filterPredicate = (data: any, filter: string) => {
         return regex.test(data.message); // Replace 'columnName' with the actual column name you want to filter
