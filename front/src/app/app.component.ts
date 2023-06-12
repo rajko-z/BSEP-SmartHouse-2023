@@ -40,6 +40,11 @@ export class AppComponent {
       label: 'Logs',
       icon: 'list',
       route: 'admin/logs'
+    },
+    {
+      label: 'Device Alarm Triggers',
+      icon: 'alarm',
+      route: 'admin/device_alarm_triggers'
     }
   ];
 

@@ -1,22 +1,18 @@
 package team14.back;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
+import team14.back.enumerations.DeviceType;
 import team14.back.enumerations.FacilityType;
 import team14.back.enumerations.LogAction;
 import team14.back.enumerations.LogStatus;
 import team14.back.model.*;
 import team14.back.repository.*;
 
-import java.io.File;
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,6 +43,9 @@ public class BackApplication implements CommandLineRunner {
 	@Autowired
 	private LogRepository logRepository;
 
+	@Autowired
+	private DeviceAlarmTriggerRepository deviceAlarmTriggerRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(BackApplication.class, args);
 	}
@@ -59,6 +58,7 @@ public class BackApplication implements CommandLineRunner {
 		createUsers(initialFacilities);
 		createCSRRequests();
 		createLogs();
+		createDeviceAlarmTriggers();
 	}
 
 	private void createLogs() {
@@ -68,6 +68,12 @@ public class BackApplication implements CommandLineRunner {
 		logRepository.save(new Log(LogStatus.INFO, LogAction.GET_ALL_USERS, LocalDateTime.now().minusDays(3), "UsersService", "Fetching all users"));
 		logRepository.save(new Log(LogStatus.INFO, LogAction.GET_ALL_CSR_REQUESTS, LocalDateTime.now().minusDays(4), "CSRRequestsService", "Fetching all csr requests"));
 		logRepository.save(new Log(LogStatus.INFO, LogAction.REVOKE_CERTIFICATE, LocalDateTime.now().minusDays(2), "CertificateService", "Revoking certificate"));
+	}
+
+	private void createDeviceAlarmTriggers() {
+		deviceAlarmTriggerRepository.save(new DeviceAlarmTrigger("HIGH_TEMP_THERMOMETER", DeviceType.THERMOMETER, 0.0, 30.0, "", "Thermometar temperature higher than 30"));
+		deviceAlarmTriggerRepository.save(new DeviceAlarmTrigger("GATE_BLOCKED", DeviceType.GATE, 0.0, 0.0, "BLOCKED", "Door blocked"));
+		deviceAlarmTriggerRepository.save(new DeviceAlarmTrigger("AIR_CONDITIONING_HIGH_VOLTAGE", DeviceType.AIR_CONDITIONING, 0.0, 0.0, "HIGH VOLTAGE", "Air conditioning is at high voltage"));
 	}
 
 	private List<Facility> createFacilities() {
@@ -117,5 +123,6 @@ public class BackApplication implements CommandLineRunner {
 		this.facilityRepository.deleteAll();
 		this.revokedCertificateRepository.deleteAll();
 		this.logRepository.deleteAll();
+		this.deviceAlarmTriggerRepository.deleteAll();
 	}
 }
