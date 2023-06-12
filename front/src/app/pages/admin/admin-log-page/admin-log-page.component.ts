@@ -44,7 +44,7 @@ export class AdminLogPageComponent  {
 
   addNewLog(payload: StompMessage) {
     let newLog = JSON.parse(payload.body) as Log;
-    this.logs.push(newLog);
+    this.logs.unshift(newLog);
     this.dataSource = new MatTableDataSource(this.logs);
   }
 

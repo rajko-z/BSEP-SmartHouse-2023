@@ -24,6 +24,7 @@ public class LogServiceImpl implements LogService {
     public List<LogDTO> getAllLogs() {
         return logRepository.findAll().stream()
                 .map(l -> new LogDTO(l.getStatus(),l.getAction(),l.getTimestamp(),l.getTrace(),l.getMessage()))
+                .sorted((l1, l2) -> l2.getTimestamp().compareTo(l1.getTimestamp()))
                 .collect(Collectors.toList());
     }
 
