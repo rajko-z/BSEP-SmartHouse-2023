@@ -1,16 +1,11 @@
 package team14.back.controller;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import team14.back.dto.DeviceMessageDTO;
-import team14.back.dto.FacilityDetailsDTO;
 import team14.back.dto.ReportDataDTO;
 import team14.back.service.device.DeviceService;
-import team14.back.service.facility.FacilityService;
-
-import javax.validation.constraints.Email;
 import java.util.List;
 
 @RestController
