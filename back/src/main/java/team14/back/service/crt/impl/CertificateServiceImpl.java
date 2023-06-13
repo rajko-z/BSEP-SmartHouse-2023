@@ -6,13 +6,16 @@ import org.bouncycastle.asn1.x500.RDN;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import team14.back.dto.LogDTO;
 import team14.back.dto.crt.CertificateDataDTO;
 import team14.back.dto.crt.VerifyCertificateResponseDTO;
+import team14.back.enumerations.LogAction;
 import team14.back.model.RevokedCertificate;
 import team14.back.repository.RevokedCertificateRepository;
 import team14.back.service.crt.CertificateService;
 import team14.back.service.keystore.KeyStoreService;
 import team14.back.service.keystore.KeyStoreServiceImpl;
+import team14.back.service.log.LogService;
 import team14.back.utils.Constants;
 
 import javax.security.auth.x500.X500Principal;
@@ -29,11 +32,16 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 public class CertificateServiceImpl implements CertificateService {
+
+    private final static String CLS_NAME = CertificateServiceImpl.class.getName();
+
     private final RevokedCertificateRepository revokedCertificateRepository;
 
     private final SimpMessagingTemplate simpMessagingTemplate;
 
     private final KeyStoreService keyStoreService;
+
+    private final LogService logService;
 
     @Override
     public List<String> getRevokedCertificatesSerialNumbers() {
@@ -43,6 +51,7 @@ public class CertificateServiceImpl implements CertificateService {
         {
             revokedCertificateSerialNumbers.add(String.valueOf(revokedCertificate.getSerialNumber()));
         }
+        logService.addInfo(new LogDTO(LogAction.GET_ALL_REVOKED_CERTIFICATES, CLS_NAME, "Getting all revoked certificate serial numbers"));
         return revokedCertificateSerialNumbers;
     }
 
@@ -54,6 +63,7 @@ public class CertificateServiceImpl implements CertificateService {
             X509Certificate certificate = entry.getValue();
             certificateDataDTOS.add(new CertificateDataDTO(entry.getKey(), certificate, isCertificateValid(certificate)));
         }
+        logService.addInfo(new LogDTO(LogAction.GET_ALL_CERTIFICATES, CLS_NAME, "Getting all certificates"));
         return certificateDataDTOS;
     }
 
@@ -63,11 +73,13 @@ public class CertificateServiceImpl implements CertificateService {
 
         if (isCertificateValid(certificateToCheck))
         {
+            logService.addInfo(new LogDTO(LogAction.VERIFY_CERTIFICATE, CLS_NAME, "Certificate verified."));
             simpMessagingTemplate.convertAndSend("/verify-certificate-response", new VerifyCertificateResponseDTO("success", "Certificate is valid"));
         }
 
         else
         {
+            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, "Certificate invalid."));
             simpMessagingTemplate.convertAndSend("/verify-certificate-response", new VerifyCertificateResponseDTO("error", "Certificate is not valid"));
         }
     }
@@ -75,6 +87,7 @@ public class CertificateServiceImpl implements CertificateService {
     @Override
     public void revokeCertificate(BigInteger certificateSerialNumber, String reasonForRevoking) throws KeyStoreException, CertificateException, IOException, CRLException {
         RevokedCertificate revokedCertificate = new RevokedCertificate(certificateSerialNumber, reasonForRevoking);
+        logService.addInfo(new LogDTO(LogAction.REVOKE_CERTIFICATE, CLS_NAME, "Revoking certificate"));
         revokedCertificateRepository.save(revokedCertificate);
     }
 

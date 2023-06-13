@@ -15,10 +15,13 @@ import { AdminUserListPageComponent } from './pages/admin/admin-user-list-page/a
 import { ChangeRoleDialogComponent } from './components/admin/change-role-dialog/change-role-dialog.component';
 import { ViewUserProfilePageComponent } from './pages/shared/view-user-profile-page/view-user-profile-page.component';
 import { FacilityDetailsPageComponent } from './pages/shared/facility-details-page/facility-details-page.component';
+import { ReportDialogComponent } from './components/admin/report-dialog/report-dialog.component';
+
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    ReportDialogComponent,
   ],
   imports: [
     AngularMaterialModule,

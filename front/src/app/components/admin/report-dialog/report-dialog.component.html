@@ -1,0 +1,56 @@
+<mat-card>
+    <div class="row">
+        <div class="table-container">
+        <table mat-table [dataSource]="deviceMessages" >
+          <ng-container matColumnDef="message">
+            <th mat-header-cell *matHeaderCellDef>Message</th>
+            <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.message }}</td>
+          </ng-container>
+    
+          <ng-container matColumnDef="messageType">
+            <th mat-header-cell *matHeaderCellDef>Message Type</th>
+            <td mat-cell *matCellDef="let deviceMessage">
+              <button id="info-button" *ngIf="deviceMessage.messageType === 'INFO'" mat-raised-button disabled>{{deviceMessage.messageType}}</button>
+              <button id="warning-button" *ngIf="deviceMessage.messageType === 'WARNING'" mat-raised-button disabled>{{deviceMessage.messageType}}</button>
+              <button id="error-button" *ngIf="deviceMessage.messageType === 'ERROR'" mat-raised-button disabled>{{deviceMessage.messageType}}</button>
+            </td>
+          </ng-container>
+    
+          <ng-container matColumnDef="timestamp">
+              <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+              <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.formattedTimestamp }}</td>
+          </ng-container>
+    
+          <ng-container matColumnDef="deviceStatus">
+              <th mat-header-cell *matHeaderCellDef>Device Status</th>
+              <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.deviceStatus }}</td>
+          </ng-container>
+    
+          <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+        <div>
+            INFO: <b>{{sumInfoMessages}}</b>
+        </div>
+
+        <div>
+            WARNING: <b>{{sumWarningMessages}}</b>
+        </div>
+
+        <div>
+            ERROR: <b>{{sumErrorMessages}}</b>
+        </div>
+    </div>
+
+    <div class="button-row">
+        <div class="button-container">
+            <button class="confirm-button" mat-raised-button color="primary" (click)="onConfirm()">Confirm</button>
+        </div>
+    </div>
+    
+</mat-card>
+

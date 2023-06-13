@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import team14.back.dto.DeviceMessageDTO;
+import team14.back.dto.ReportDataDTO;
 import team14.back.service.device.DeviceService;
 import java.util.List;
 
@@ -20,5 +21,16 @@ public class DeviceController {
     ) {
         List<DeviceMessageDTO> deviceMessageDTO = this.deviceService.getDeviceMessages(deviceMessagesPaths);
         return ResponseEntity.ok(deviceMessageDTO);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER')")
+    @GetMapping("get-report-data")
+    public ResponseEntity<ReportDataDTO> getReportData(
+            @RequestParam("startDate") String startDate,
+            @RequestParam("endDate") String endDate,
+            @RequestParam("deviceMessagesPaths") List<String> deviceMessagesPaths
+    ) {
+        ReportDataDTO reportDataDTO = this.deviceService.getReportData(startDate, endDate, deviceMessagesPaths);
+        return ResponseEntity.ok(reportDataDTO);
     }
 }

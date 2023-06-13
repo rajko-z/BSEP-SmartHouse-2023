@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Location } from '@angular/common';
-import { FacilityDetailsData } from 'src/app/model/facilityDetailsData';
-import { FacilityService } from 'src/app/services/facility/facility.service';
-import { ToastrService } from 'ngx-toastr';
-import { DeviceMessage } from 'src/app/model/deviceMessage';
-import { DeviceService } from 'src/app/services/device/device.service';
-import { environment } from 'src/environments/environment';
+import {Component} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {Location} from '@angular/common';
+import {FacilityDetailsData} from 'src/app/model/facilityDetailsData';
+import {FacilityService} from 'src/app/services/facility/facility.service';
+import {ToastrService} from 'ngx-toastr';
+import {DeviceMessage} from 'src/app/model/deviceMessage';
+import {DeviceService} from 'src/app/services/device/device.service';
+import {environment} from 'src/environments/environment';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
 import { Client, over, Message as StompMessage } from 'stompjs';
 import { MatTableDataSource } from '@angular/material/table';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { DateInterval } from 'src/app/model/dateInterval';
+import { InputForReportDTO } from 'src/app/model/inputForReportDTO';
+import { MatDialog } from '@angular/material/dialog';
+import { ReportDialogComponent } from 'src/app/components/admin/report-dialog/report-dialog.component';
+import { ReportDataDTO } from 'src/app/model/reportDataDTO';
 
 @Component({
   selector: 'app-facility-details-page',
@@ -26,14 +32,32 @@ export class FacilityDetailsPageComponent {
   deviceMessages: DeviceMessage[] = [];
   dataSource = new MatTableDataSource(this.deviceMessages);
   tableColumns = ['message', 'messageType', 'timestamp', 'deviceStatus'];
+  form: FormGroup;
+  maxDate: Date = new Date();
   regExpr:any;
 
-  constructor(private route: ActivatedRoute, private location: Location, private facilityService: FacilityService, private toastrService: ToastrService, private deviceService: DeviceService) {}
+  constructor(private route: ActivatedRoute, private location: Location, private facilityService: FacilityService, private toastrService: ToastrService, private deviceService: DeviceService, private formBuilder: FormBuilder, private reportDialog: MatDialog) {
+    this.form = this.formBuilder.group({
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required],
+    }, { validator: this.dateRangeValidator });
+  }
 
   ngOnInit() {
     this.facilityName = this.route.snapshot.paramMap.get('facilityName') as string;
     this.getFacilityByName();
     this.initializeWebSocket();
+  }
+
+  dateRangeValidator(formGroup: FormGroup) {
+    let startDate = formGroup.value['startDate'];
+    let endDate = formGroup.value['endDate'];
+
+    if (startDate && endDate && startDate > endDate) {
+      return { dateRangeError: true };
+    }
+
+    return null;
   }
 
   initializeWebSocket(){
@@ -42,7 +66,7 @@ export class FacilityDetailsPageComponent {
 
     let that = this;
 
-    this.stompClient.connect({}, that.onConnected, that.onError); 
+    this.stompClient.connect({}, that.onConnected, that.onError);
   }
 
   onConnected = () => {
@@ -50,7 +74,26 @@ export class FacilityDetailsPageComponent {
   }
 
   onError = () => {
-    console.log("Socket error.");    
+    console.log("Socket error.");
+  }
+
+  public onGenerateReport(): void {
+    let dateInterval: DateInterval = this.form.value;
+    let InputForReportDTO: InputForReportDTO = {
+      dateInterval: dateInterval,
+      deviceMessagePaths: this.deviceMessagesPaths
+    };
+
+    this.deviceService.getReportData(InputForReportDTO).subscribe(
+      {
+        next:(res: ReportDataDTO)=>{
+          this.openReportDialog(res);
+        },
+        error:(err)=>{
+          this.toastrService.warning("Something went wrong, please try again!");  
+        }
+      }
+    )
   }
 
   onDeviceMessageReceived(payload: any)
@@ -60,7 +103,6 @@ export class FacilityDetailsPageComponent {
     let deviceMessage: DeviceMessage = payloadData;
     this.deviceMessages.push(deviceMessage);
     this.dataSource = new MatTableDataSource(this.deviceMessages);
-
   }
 
   getFacilityByName(){
@@ -149,6 +191,13 @@ export class FacilityDetailsPageComponent {
       return deviceMessage;
   }
 
+  
+  openReportDialog(deviceMessages: ReportDataDTO) {
+    const dialogRef = this.reportDialog.open(ReportDialogComponent, {
+      data: deviceMessages,
+    });
+  }
+
   applyFilter(event: Event) {
     try{
       const filterValue = (event.target as HTMLInputElement).value;
@@ -164,7 +213,5 @@ export class FacilityDetailsPageComponent {
     }catch(error){
       return;
     }
-    
-
   }
 }

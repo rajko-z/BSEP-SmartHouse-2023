@@ -3,13 +3,19 @@ package team14.back.service.keystore;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.cert.jcajce.JcaX509CertificateHolder;
 import org.springframework.stereotype.Service;
+import team14.back.dto.LogDTO;
+import team14.back.enumerations.LogAction;
 import team14.back.exception.BadRequestException;
 import team14.back.exception.InternalServerException;
 import team14.back.model.IssuerData;
 import team14.back.service.csr.CSRRequestService;
+import team14.back.service.log.LogService;
 import team14.back.utils.Constants;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.security.*;
 import java.security.cert.Certificate;
 import java.security.cert.CertificateException;
@@ -20,14 +26,18 @@ import java.util.Iterator;
 @Service
 public class KeyStoreServiceImpl implements KeyStoreService {
 
+    private static final String CLS_NAME = KeyStoreServiceImpl.class.getName();
     private static final String SMARTHOUSE_CERT_STORE = "src/main/resources/data/p12/smarthouse_certstore.p12";
 
     private final CSRRequestService csrRequestService;
 
+    private final LogService logService;
+
     private KeyStore keyStore;
 
-    public KeyStoreServiceImpl(CSRRequestService csrRequestService) {
+    public KeyStoreServiceImpl(CSRRequestService csrRequestService, LogService logService) {
         this.csrRequestService = csrRequestService;
+        this.logService = logService;
 
         try {
             keyStore = KeyStore.getInstance("JKS", "SUN");
@@ -99,7 +109,9 @@ public class KeyStoreServiceImpl implements KeyStoreService {
     @Override
     public void saveCertificate(Certificate certificate, String email) {
         if (!csrRequestService.csrRequestForEmailExist(email)) {
-            throw new BadRequestException("Can't save certificate because csr request is not present for email: " + email);
+            String errorMessage = "Can't save certificate because csr request is not present for email: " + email;
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_STORING_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
         }
 
         try {
@@ -108,7 +120,9 @@ public class KeyStoreServiceImpl implements KeyStoreService {
         } catch (KeyStoreException e) {
             e.printStackTrace();
         } catch (CertificateException | IOException | NoSuchAlgorithmException e) {
-            throw new InternalServerException("Error happened while saving certificate");
+            String errorMessage = "Error happened while saving certificate for user: " + email;
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_STORING_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new InternalServerException(errorMessage);
         }
     }
 }

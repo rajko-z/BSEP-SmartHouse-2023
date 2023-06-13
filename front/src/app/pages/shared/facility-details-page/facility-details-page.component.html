@@ -1,50 +1,71 @@
 <mat-card>
-    <button mat-icon-button (click)="goBack()">
-        <mat-icon>arrow_back</mat-icon>
-    </button>
+  <button mat-icon-button (click)="goBack()">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
 
-    <div class="center-row">
-      <h1><b>{{facilityData?.name}}</b></h1>
-      <h2>Owner: {{facilityData?.owner}}</h2>
-      <h2>Facility type: {{facilityData?.facilityType}}</h2>
-      <h2>Address: {{facilityData?.address}}</h2>
+  <div class="center-row">
+    <h1><b>{{facilityData?.name}}</b></h1>
+    <h2>Owner: {{facilityData?.owner}}</h2>
+    <h2>Facility type: {{facilityData?.facilityType}}</h2>
+    <h2>Address: {{facilityData?.address}}</h2>
+  </div>
+
+  <div class="row">
+    <div class="left-exp">
+      <mat-expansion-panel class="expansion-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Tenants</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngFor="let tenant of facilityData?.tenantsEmails">
+          <mat-icon>person</mat-icon>
+          <label>{{ tenant }}</label>
+        </div>
+      </mat-expansion-panel>
     </div>
   
-    <div class="row">
-      <div class="left-exp">
-        <mat-expansion-panel class="expansion-panel">
-          <mat-expansion-panel-header>
-            <mat-panel-title>Tenants</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div *ngFor="let tenant of facilityData?.tenantsEmails">
-              <mat-icon>person</mat-icon>
-              <label>{{ tenant }}</label>
-          </div>
-        </mat-expansion-panel>
-      </div>
-  
-      <div class="right-exp">
-        <mat-expansion-panel class="expansion-panel">
-          <mat-expansion-panel-header>
-            <mat-panel-title>Devices</mat-panel-title>
-          </mat-expansion-panel-header>
-          <div *ngFor="let deviceDTO of facilityData?.deviceDTOs; let i = index">
-              <label>{{deviceDTO.id}} - </label>
-              <label><b>{{ deviceDTO.deviceType }}</b></label>
-          </div>
-        </mat-expansion-panel>
-      </div>
+    <div class="right-exp">
+      <mat-expansion-panel class="expansion-panel">
+        <mat-expansion-panel-header>
+          <mat-panel-title>Devices</mat-panel-title>
+        </mat-expansion-panel-header>
+        <div *ngFor="let deviceDTO of facilityData?.deviceDTOs; let i = index">
+          <label>{{deviceDTO.id}} - </label>
+          <label><b>{{ deviceDTO.deviceType }}</b></label>
+        </div>
+      </mat-expansion-panel>
     </div>
-    <div class="search-container">
-      <mat-form-field>
-        <input matInput placeholder="Search" [(ngModel)]="searchString" name="searchString" type="text" (keyup)="applyFilter($event)" #input>
-        <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
-    </div>
+  </div>
+
+  <form [formGroup]="form" class="form-center">
+    <mat-form-field class="date-picker-div">
+      <mat-label>Enter a date range</mat-label>
+      <mat-date-range-input [rangePicker]="picker">
+        <input matStartDate placeholder="Start date" formControlName="startDate">
+        <input matEndDate placeholder="End date" formControlName="endDate">
+      </mat-date-range-input>
+      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-date-range-picker #picker></mat-date-range-picker>
+    </mat-form-field>
   
-    <div class="table-row">
-      <div class="table-container">
-      <table mat-table [dataSource]="dataSource" >
+    <div class="button-container">
+      <button mat-raised-button color="primary" class="report-button" [disabled]="!form.valid" (click)="onGenerateReport()">
+        Generate report
+      </button>
+    </div>
+  </form>
+
+  <div class="search-container">
+    <mat-form-field>
+      <input matInput placeholder="Search" [(ngModel)]="searchString" name="searchString" type="text"
+             (keyup)="applyFilter($event)" #input>
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="row">
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource">
         <ng-container matColumnDef="message">
           <th mat-header-cell *matHeaderCellDef>Message</th>
           <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.message }}</td>
@@ -53,30 +74,32 @@
         <ng-container matColumnDef="messageType">
           <th mat-header-cell *matHeaderCellDef>Message Type</th>
           <td mat-cell *matCellDef="let deviceMessage">
-            <button id="info-button" *ngIf="deviceMessage.messageType === 'INFO'" mat-raised-button disabled>{{deviceMessage.messageType}}</button>
-            <button id="warning-button" *ngIf="deviceMessage.messageType === 'WARNING'" mat-raised-button disabled>{{deviceMessage.messageType}}</button>
-            <button id="error-button" *ngIf="deviceMessage.messageType === 'ERROR'" mat-raised-button disabled>{{deviceMessage.messageType}}</button>
+            <button id="info-button" *ngIf="deviceMessage.messageType === 'INFO'" mat-raised-button
+                    disabled>{{deviceMessage.messageType}}</button>
+            <button id="warning-button" *ngIf="deviceMessage.messageType === 'WARNING'" mat-raised-button
+                    disabled>{{deviceMessage.messageType}}</button>
+            <button id="error-button" *ngIf="deviceMessage.messageType === 'ERROR'" mat-raised-button
+                    disabled>{{deviceMessage.messageType}}</button>
           </td>
         </ng-container>
-
+  
         <ng-container matColumnDef="timestamp">
-            <th mat-header-cell *matHeaderCellDef>Timestamp</th>
-            <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.formattedTimestamp }}</td>
+          <th mat-header-cell *matHeaderCellDef>Timestamp</th>
+          <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.formattedTimestamp }}</td>
         </ng-container>
-
+  
         <ng-container matColumnDef="deviceStatus">
-            <th mat-header-cell *matHeaderCellDef>Device Status</th>
-            <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.deviceStatus }}</td>
+          <th mat-header-cell *matHeaderCellDef>Device Status</th>
+          <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.deviceStatus }}</td>
         </ng-container>
   
         <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
-
+  
         <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
         </tr>
       </table>
     </div>
   </div>
-  </mat-card>
-  
+</mat-card>

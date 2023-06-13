@@ -2,11 +2,14 @@ package team14.back.service.crt.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import team14.back.dto.LogDTO;
 import team14.back.dto.crt.NewCertificateDTO;
 import team14.back.dto.crt.SubjectDataDTO;
+import team14.back.enumerations.LogAction;
 import team14.back.exception.BadRequestException;
 import team14.back.service.csr.CSRRequestService;
 import team14.back.service.crt.CertDataValidationService;
+import team14.back.service.log.LogService;
 
 import java.time.LocalDateTime;
 import java.util.regex.Pattern;
@@ -15,6 +18,8 @@ import java.util.regex.Pattern;
 @AllArgsConstructor
 public class CertDataValidationServiceImpl implements CertDataValidationService {
 
+    private static final String CLS_NAME = CertDataValidationServiceImpl.class.getName();
+
     private static final int MAX_FIELD_SIZE = 64;
 
     private static final int MIN_MOUNTS_VALIDITY = 3;
@@ -22,6 +27,8 @@ public class CertDataValidationServiceImpl implements CertDataValidationService 
     private static final int MAX_MOUNTS_VALIDITY = 13;
 
     private final CSRRequestService csrRequestService;
+
+    private final LogService logService;
 
     @Override
     public void validateNewCertificateData(NewCertificateDTO certificate) {
@@ -32,7 +39,9 @@ public class CertDataValidationServiceImpl implements CertDataValidationService 
 
     private void validateEmail(String email) {
         if (!csrRequestService.csrRequestForEmailExist(email)) {
-            throw new BadRequestException("Can't issue certificate because there is no csr request for email: " + email);
+            String errorMessage = "Can't issue certificate because there is no csr request for email: " + email;
+            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
         }
     }
 
@@ -50,7 +59,9 @@ public class CertDataValidationServiceImpl implements CertDataValidationService 
         validateFieldLength(cn);
         String regex = "^[\\w-]+(?:\\.[\\w-]+)*$";
         if (!Pattern.compile(regex).matcher(cn).matches()) {
-            throw new BadRequestException("Common name: " + cn + " invalid format.");
+            String errorMessage = "Common name: " + cn + " invalid format.";
+            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
         }
     }
     private void validateOrganizationUnit(String ou) {
@@ -58,7 +69,9 @@ public class CertDataValidationServiceImpl implements CertDataValidationService 
         validateFieldLength(ou);
         String regex = "^[\\w-]+(?:\\s+[\\w-]+)*$";
         if (!Pattern.compile(regex).matcher(ou).matches()) {
-            throw new BadRequestException("Organization unit: " + ou + " invalid format.");
+            String errorMessage = "Organization unit: " + ou + " invalid format.";
+            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
         }
     }
     private void validateOrganizationName(String o) {
@@ -66,7 +79,9 @@ public class CertDataValidationServiceImpl implements CertDataValidationService 
         validateFieldLength(o);
         String regex = "^[\\w\\s]+\\.?$";
         if (!Pattern.compile(regex).matcher(o).matches()) {
-            throw new BadRequestException("Organization name: " + o + " invalid format.");
+            String errorMessage = "Organization name: " + o + " invalid format.";
+            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
         }
     }
     private void validateLocalityName(String l) {
@@ -74,7 +89,9 @@ public class CertDataValidationServiceImpl implements CertDataValidationService 
         validateFieldLength(l);
         String regex = "^[\\w\\s]+$";
         if (!Pattern.compile(regex).matcher(l).matches()) {
-            throw new BadRequestException("Locality name: " + l + " invalid format.");
+            String errorMessage = "Locality name: " + l + " invalid format.";
+            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
         }
     }
     private void validateStateName(String st) {
@@ -82,7 +99,9 @@ public class CertDataValidationServiceImpl implements CertDataValidationService 
         validateFieldLength(st);
         String regex = "^[\\w\\s]+$";
         if (!Pattern.compile(regex).matcher(st).matches()) {
-            throw new BadRequestException("State name: " + st + " invalid format.");
+            String errorMessage = "State name: " + st + " invalid format.";
+            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
         }
     }
     private void validateCountry(String c) {
@@ -90,20 +109,26 @@ public class CertDataValidationServiceImpl implements CertDataValidationService 
         validateFieldLength(c);
         String regex = "^[A-Z]{2}$";
         if (!Pattern.compile(regex).matcher(c).matches()) {
-            throw new BadRequestException("Country: " + c + " invalid format.");
+            String errorMessage = "Country: " + c + " invalid format.";
+            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
         }
     }
 
     private void validateValidityPeriod(LocalDateTime validityPeriod) {
         if (validityPeriod.isBefore(LocalDateTime.now().plusMonths(MIN_MOUNTS_VALIDITY)) ||
                 validityPeriod.isAfter(LocalDateTime.now().plusMonths(MAX_MOUNTS_VALIDITY))) {
-            throw new BadRequestException("Invalid validity time for certificate. Minimum is 3 months, and maximum 13");
+            String errorMessage = "Invalid validity time for certificate. Minimum is 3 months, and maximum 13";
+            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
         }
     }
 
     private void validateFieldLength(String field) {
         if (field != null && !field.isBlank() && field.length() > MAX_FIELD_SIZE) {
-            throw new BadRequestException("Field: " + field + " is longer than 64 chars");
+            String errorMessage = "Field: " + field + " is longer than 64 chars";
+            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, errorMessage));
+            throw new BadRequestException(errorMessage);
         }
     }
 }

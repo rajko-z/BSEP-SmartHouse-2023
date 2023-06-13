@@ -10,14 +10,17 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import team14.back.converters.UserDTOConverter;
+import team14.back.dto.LogDTO;
 import team14.back.dto.UserWithTokenDTO;
 import team14.back.dto.login.LoginDTO;
 import team14.back.dto.login.LoginWith2FACodeDto;
+import team14.back.enumerations.LogAction;
 import team14.back.exception.InvalidCredentialsException;
 import team14.back.model.User;
 import team14.back.service.auth.loginfailure.LoginFailureService;
 import team14.back.service.auth.mfa.MfaService;
 import team14.back.service.email.EmailService;
+import team14.back.service.log.LogService;
 import team14.back.service.user.UserService;
 import team14.back.utils.ExceptionMessageConstants;
 import team14.back.utils.TokenUtils;
@@ -27,6 +30,8 @@ import java.util.Optional;
 @Service
 @AllArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
+
+    private static final String CLS_NAME = AuthenticationServiceImpl.class.getName();
 
     private final TokenUtils tokenUtils;
 
@@ -39,6 +44,8 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final MfaService mfaService;
 
     private final EmailService emailService;
+
+    private final LogService logService;
 
     @Transactional
     public UserWithTokenDTO createAuthenticationToken(LoginWith2FACodeDto loginDTO) {
@@ -58,6 +65,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             return UserDTOConverter.convertToUserWithToken(user, jwt, fingerprint);
         }
         catch (BadCredentialsException ex) {
+            logService.addErr(new LogDTO(LogAction.INVALID_CREDENTIALS, CLS_NAME, "Invalid login for user: " + loginDTO.getEmail()));
             throw new InvalidCredentialsException(ExceptionMessageConstants.INVALID_LOGIN);
         }
     }
@@ -69,11 +77,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             boolean blocked = increaseLoginFailureAndBlockUserIfNeeded(email);
             if (blocked) {
                 emailService.sendBlockingUserEmail(email);
+                logService.addInfo(new LogDTO(LogAction.SENDING_BLOCKING_USER_EMAIL, CLS_NAME, "3 times login failure. Blocking user: " + email));
             }
             user.setMfaCode(null);
             user.setMfaCodeTimestamp(null);
             userService.save(user);
-
+            logService.addErr(new LogDTO(LogAction.INVALID_2FA, CLS_NAME, "Invalid 2fa for user: " + email));
             throw new InvalidCredentialsException(ExceptionMessageConstants.INVALID_TWO_FACTOR);
         }
     }
@@ -94,7 +103,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             boolean blocked = increaseLoginFailureAndBlockUserIfNeeded(loginDTO.getEmail());
             if (blocked) {
                 emailService.sendBlockingUserEmail(loginDTO.getEmail());
+                logService.addInfo(new LogDTO(LogAction.SENDING_BLOCKING_USER_EMAIL, CLS_NAME, "3 times login failure. Blocking user: " + loginDTO.getEmail()));
             }
+            logService.addErr(new LogDTO(LogAction.INVALID_CREDENTIALS, CLS_NAME, "Invalid credentials for: " + loginDTO.getEmail()));
             return false;
         }
     }
