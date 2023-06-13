@@ -37,18 +37,19 @@
   </div>
 
   <form [formGroup]="form" class="form-center">
-    <mat-form-field class="date-picker-div">
-      <mat-label>Enter a date range</mat-label>
-      <mat-date-range-input [rangePicker]="picker">
-        <input matStartDate placeholder="Start date" formControlName="startDate">
-        <input matEndDate placeholder="End date" formControlName="endDate">
-      </mat-date-range-input>
-      <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
-      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-date-range-picker #picker></mat-date-range-picker>
-    </mat-form-field>
-  
-    <div class="button-container">
+    <div class="date-picker-div">
+      <mat-form-field>
+        <mat-label>Enter a date range</mat-label>
+        <mat-date-range-input [rangePicker]="picker">
+          <input matStartDate placeholder="Start date" formControlName="startDate">
+          <input matEndDate placeholder="End date" formControlName="endDate">
+        </mat-date-range-input>
+        <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+      </mat-form-field>
+
+      
       <button mat-raised-button color="primary" class="report-button" [disabled]="!form.valid" (click)="onGenerateReport()">
         Generate report
       </button>

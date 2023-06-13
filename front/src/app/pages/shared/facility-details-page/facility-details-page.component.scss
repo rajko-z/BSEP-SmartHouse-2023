@@ -89,13 +89,19 @@
 
 .form-center {
   display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .button-container {
-  display: flex;
   justify-content: center;
+  margin-left: 0;
+}
+
+.date-picker-div{
+  width: 450px;
+}
+
+.date-picker-div button{
+  margin-top: 20px;
 }
 
 .left-exp {
