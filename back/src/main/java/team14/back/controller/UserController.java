@@ -12,6 +12,7 @@ import team14.back.dto.csr.CSRRequestDTO;
 import team14.back.model.User;
 import team14.back.exception.BadRequestException;
 import team14.back.exception.NotFoundException;
+import team14.back.service.alarm.AlarmService;
 import team14.back.service.user.UserService;
 
 import javax.validation.Valid;
@@ -26,11 +27,13 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final AlarmService alarmService;
 
     @PostMapping(path = "/register", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE })
     public ResponseEntity<?> register(@RequestPart("request") CSRRequestDTO requestDTO, @RequestPart("file") MultipartFile document) {
         try {
             userService.register(requestDTO, document);
+            alarmService.checkForRedundantCSRRequest();
         } catch (IOException e) {
             return ResponseEntity.badRequest().build();
         }

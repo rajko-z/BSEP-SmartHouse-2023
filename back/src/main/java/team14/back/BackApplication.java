@@ -63,7 +63,6 @@ public class BackApplication implements CommandLineRunner {
 
 	private void createLogs() {
 		logRepository.save(new Log(LogStatus.INFO, LogAction.LOG_IN_SUCCESS, LocalDateTime.now().minusDays(1).minusHours(2), "AuthController", "user smarthouse2023tim14+john@gmail.com successfully logged in"));
-		logRepository.save(new Log(LogStatus.ERROR, LogAction.INVALID_CREDENTIALS, LocalDateTime.now().minusDays(2).minusHours(1), "AuthController", "invalid credentials for smarthouse2023tim14+john@gmail.com"));
 		logRepository.save(new Log(LogStatus.INFO, LogAction.INVALID_2FA, LocalDateTime.now().minusDays(2), "AuthController", "invalid 2FA for smarthouse2023tim14+john@gmail.com"));
 		logRepository.save(new Log(LogStatus.INFO, LogAction.GET_ALL_USERS, LocalDateTime.now().minusDays(3), "UsersService", "Fetching all users"));
 		logRepository.save(new Log(LogStatus.INFO, LogAction.GET_ALL_CSR_REQUESTS, LocalDateTime.now().minusDays(4), "CSRRequestsService", "Fetching all csr requests"));

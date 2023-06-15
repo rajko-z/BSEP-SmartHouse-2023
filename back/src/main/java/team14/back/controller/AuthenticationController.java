@@ -13,6 +13,7 @@ import team14.back.dto.UserWithTokenDTO;
 import team14.back.dto.login.LoginDTO;
 import team14.back.dto.login.LoginWith2FACodeDto;
 import team14.back.enumerations.LogAction;
+import team14.back.service.alarm.AlarmService;
 import team14.back.service.auth.AuthenticationService;
 import team14.back.service.log.LogService;
 
@@ -30,6 +31,8 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     private final LogService logService;
+
+    private final AlarmService alarmService;
 
     @PostMapping("/login-final-step")
     public ResponseEntity<UserWithTokenDTO> createAuthenticationToken(@RequestBody @Valid LoginWith2FACodeDto loginDTO) {

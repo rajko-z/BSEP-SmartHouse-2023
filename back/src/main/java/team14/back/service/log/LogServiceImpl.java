@@ -3,8 +3,8 @@ package team14.back.service.log;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import team14.back.dto.AlarmDTO;
 import team14.back.dto.LogDTO;
-import team14.back.dto.crt.VerifyCertificateResponseDTO;
 import team14.back.enumerations.LogStatus;
 import team14.back.model.Log;
 import team14.back.repository.LogRepository;
@@ -23,7 +23,7 @@ public class LogServiceImpl implements LogService {
     @Override
     public List<LogDTO> getAllLogs() {
         return logRepository.findAll().stream()
-                .map(l -> new LogDTO(l.getStatus(),l.getAction(),l.getTimestamp(),l.getTrace(),l.getMessage()))
+                .map(l -> new LogDTO(l.getStatus(),l.getLogAction(),l.getTimestamp(),l.getTrace(),l.getMessage()))
                 .sorted((l1, l2) -> l2.getTimestamp().compareTo(l1.getTimestamp()))
                 .collect(Collectors.toList());
     }
@@ -46,5 +46,6 @@ public class LogServiceImpl implements LogService {
         logDTO.setStatus(LogStatus.ERROR);
         logRepository.save(new Log(LogStatus.ERROR, logDTO.getAction(), logDTO.getTimestamp(), logDTO.getTrace(), logDTO.getMessage()));
         simpMessagingTemplate.convertAndSend("/new-log", logDTO);
+        simpMessagingTemplate.convertAndSend("/alarm", new AlarmDTO(logDTO.getStatus(), logDTO.getAction(), logDTO.getMessage()));
     }
 }
