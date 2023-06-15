@@ -13,7 +13,7 @@ import {MatSlideToggleChange} from "@angular/material/slide-toggle";
   styleUrls: ['./admin-log-page.component.scss']
 })
 export class AdminLogPageComponent  {
-  displayedColumns = ['status', 'timestamp', 'trace', 'action', 'message'];
+  displayedColumns = ['status', 'timestamp', 'trace', 'action', 'message', 'ip address'];
 
   private stompClient : Client;
 
@@ -53,6 +53,7 @@ export class AdminLogPageComponent  {
       .subscribe({
           next: (response) => {
             this.logs = response;
+            console.log(this.logs)
             this.dataSource = new MatTableDataSource(this.logs);
             this.defaultFilterPredicate = this.dataSource.filterPredicate;
           }

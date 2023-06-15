@@ -11,7 +11,7 @@ declare RedundantCSRRequestEvent
     message: String
 end
 
-rule "2 Failed login trials with same email"
+rule "2 redundant registration trials with same email"
     no-loop
     when
         $log1: Log($message: message, $timestamp: timestamp, logAction == logActionType, $logStatus: status)

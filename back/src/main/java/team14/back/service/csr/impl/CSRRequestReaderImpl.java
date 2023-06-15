@@ -10,7 +10,9 @@ import team14.back.enumerations.LogAction;
 import team14.back.exception.InternalServerException;
 import team14.back.service.csr.CSRRequestReader;
 import team14.back.service.log.LogService;
+import team14.back.utils.HttpUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
@@ -28,7 +30,7 @@ public class CSRRequestReaderImpl implements CSRRequestReader {
     private final LogService logService;
 
     @Override
-    public PKCS10CertificationRequest readCSRForEmail(String email) {
+    public PKCS10CertificationRequest readCSRForEmail(String email, HttpServletRequest request) {
         String pathFile = "./src/main/resources/data/csr/" + email + ".csr";
         Path path = Paths.get(pathFile);
         File f = path.toFile();
@@ -42,7 +44,7 @@ public class CSRRequestReaderImpl implements CSRRequestReader {
             return (PKCS10CertificationRequest) pem.readObject();
         } catch (IOException e) {
             String errorMessage = "Error happened while reading csr file for user: " + email;
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_GENERATING_CERTIFICATE, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_GENERATING_CERTIFICATE, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new InternalServerException(errorMessage);
         }
     }

@@ -16,6 +16,7 @@ import team14.back.model.DeviceMessage;
 import team14.back.service.device.DeviceService;
 import team14.back.service.facility.FacilityService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -29,10 +30,10 @@ public class DeviceScriptController {
 
 
     @GetMapping(path = "/get-all-devices", consumes = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<?> getAllDevices() {
+    public ResponseEntity<?> getAllDevices(HttpServletRequest request) {
         List<Device> deviceList = null;
         try{
-            deviceList = facilityService.getAllDevices();
+            deviceList = facilityService.getAllDevices(request);
         } catch (BadRequestException e){
             return ResponseEntity.badRequest().build();
         }

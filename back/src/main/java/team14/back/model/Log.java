@@ -27,4 +27,5 @@ public class Log {
 
     private String message;
 
+    private String ipAddress;
 }

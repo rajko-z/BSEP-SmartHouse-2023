@@ -14,9 +14,11 @@ import team14.back.enumerations.LogAction;
 import team14.back.enumerations.LogStatus;
 import team14.back.exception.InternalServerException;
 import team14.back.service.log.LogService;
+import team14.back.utils.HttpUtils;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.Objects;
 
@@ -34,7 +36,7 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     @Async
-    public void sendCSRRejectionEmail(String toEmail, String reason) {
+    public void sendCSRRejectionEmail(String toEmail, String reason, HttpServletRequest request) {
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(toEmail);
         message.setFrom(Objects.requireNonNull(env.getProperty("spring.mail.username")));
@@ -47,13 +49,13 @@ public class EmailServiceImpl implements EmailService {
         }
         message.setText(sb.toString());
 
-        logService.addInfo(new LogDTO(LogAction.REJECT_CERTIFICATE, CLS_NAME, "Sending certificate rejection email to user: " + toEmail));
+        logService.addInfo(new LogDTO(LogAction.REJECT_CERTIFICATE, CLS_NAME, "Sending certificate rejection email to user: " + toEmail, HttpUtils.getRequestIP(request)));
         javaMailSender.send(message);
     }
 
     @Async
     @Override
-    public void sendCreatedCertificateAndPasswordToUser(LoginDTO createdCredentials) {
+    public void sendCreatedCertificateAndPasswordToUser(LoginDTO createdCredentials, HttpServletRequest request) {
         try {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -68,10 +70,10 @@ public class EmailServiceImpl implements EmailService {
             helper.addAttachment(fileName, file);
 
             javaMailSender.send(message);
-            logService.addInfo(new LogDTO(LogAction.SENDING_CERTIFICATE_TO_USER, CLS_NAME, "Sending certificate to user: " + createdCredentials.getEmail()));
+            logService.addInfo(new LogDTO(LogAction.SENDING_CERTIFICATE_TO_USER, CLS_NAME, "Sending certificate to user: " + createdCredentials.getEmail(), HttpUtils.getRequestIP(request)));
         } catch (MessagingException e) {
             String errorMessage = "Error happened while sending email to user: " + createdCredentials.getEmail();
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_SENDING_CERTIFICATE_TO_USER, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_SENDING_CERTIFICATE_TO_USER, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new InternalServerException(errorMessage);
         }
     }

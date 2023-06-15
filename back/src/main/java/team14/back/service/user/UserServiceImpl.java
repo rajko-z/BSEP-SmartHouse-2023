@@ -25,7 +25,9 @@ import team14.back.repository.UserRepository;
 import team14.back.service.log.LogService;
 import team14.back.utils.CommonPasswords;
 import team14.back.utils.ExceptionMessageConstants;
+import team14.back.utils.HttpUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -54,14 +56,12 @@ public class UserServiceImpl implements UserService {
         Optional<User> user = userRepository.findByEmail(username);
         if (user.isPresent())
             return user.get();
-
         String errorMessage = "User with username: " + username + " not found";
-        logService.addErr(new LogDTO(LogAction.UNKNOWN_USER, CLS_NAME, errorMessage));
         throw new UsernameNotFoundException(errorMessage);
     }
 
     @Override
-    public void register(CSRRequestDTO requestDTO, MultipartFile document) throws IOException {
+    public void register(CSRRequestDTO requestDTO, MultipartFile document, HttpServletRequest request) throws IOException {
         CSRRequest csrRequest = new CSRRequest();
         csrRequest.setEmail(requestDTO.getEmail());
         csrRequest.setFirstName(requestDTO.getFirstName());
@@ -75,21 +75,21 @@ public class UserServiceImpl implements UserService {
         output.write(document.getBytes());
         output.close();
 
-        logService.addInfo(new LogDTO(LogAction.CREATING_NEW_CSR_REQUEST, CLS_NAME, "Creating new csr request for user: " + requestDTO.getEmail()));
+        logService.addInfo(new LogDTO(LogAction.CREATING_NEW_CSR_REQUEST, CLS_NAME, "Creating new csr request for user: " + requestDTO.getEmail(), HttpUtils.getRequestIP(request)));
         csrRequestRepository.save(csrRequest);
     }
 
     @Override
-    public LoginDTO createNewUser(String email) {
+    public LoginDTO createNewUser(String email, HttpServletRequest request) {
         if (this.userRepository.findByEmail(email).isPresent()) {
             String errorMessage = "Can't create user with email: " + email + " because user already exist";
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_CREATING_USER, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CREATING_USER, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new BadRequestException(errorMessage);
         }
         Optional<CSRRequest> optCsrRequest = csrRequestRepository.findByEmail(email);
         if (optCsrRequest.isEmpty()) {
             String errorMessage = "Can't find csr request for user with email: " + email;
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_CREATING_USER, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CREATING_USER, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new BadRequestException(errorMessage);
         }
         CSRRequest csrRequest = optCsrRequest.get();
@@ -106,23 +106,23 @@ public class UserServiceImpl implements UserService {
                 new Role(2L, "ROLE_OWNER"));
 
         this.userRepository.save(user);
-        logService.addInfo(new LogDTO(LogAction.CREATING_USER, CLS_NAME, "User: " + email + " created."));
+        logService.addInfo(new LogDTO(LogAction.CREATING_USER, CLS_NAME, "User: " + email + " created.", HttpUtils.getRequestIP(request)));
         return new LoginDTO(email, password);
     }
 
     @Override
-    public void blockUser(String email) {
+    public void blockUser(String email, HttpServletRequest request) {
         User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + email));
         user.setBlocked(true);
-        logService.addInfo(new LogDTO(LogAction.BLOCKING_USER, CLS_NAME, "Blocking user: " + email));
+        logService.addInfo(new LogDTO(LogAction.BLOCKING_USER, CLS_NAME, "Blocking user: " + email, HttpUtils.getRequestIP(request)));
         this.userRepository.save(user);
     }
 
     @Override
-    public void unblockUser(String email) {
+    public void unblockUser(String email, HttpServletRequest request) {
         User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + email));
         user.setBlocked(false);
-        logService.addInfo(new LogDTO(LogAction.UNBLOCKING_USER, CLS_NAME, "Unblocking user: " + email));
+        logService.addInfo(new LogDTO(LogAction.UNBLOCKING_USER, CLS_NAME, "Unblocking user: " + email, HttpUtils.getRequestIP(request)));
         this.userRepository.save(user);
     }
 
@@ -137,38 +137,38 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void changePassword(NewPasswordDTO newPasswordDTO) {
+    public void changePassword(NewPasswordDTO newPasswordDTO, HttpServletRequest request) {
         Optional<User> optUser = userRepository.findByEmail(newPasswordDTO.getEmail());
         if (optUser.isEmpty()) {
             String errorMessage = "Can't find user: " + newPasswordDTO.getEmail();
-            logService.addErr(new LogDTO(LogAction.UNKNOWN_USER, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.UNKNOWN_USER, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new UsernameNotFoundException(errorMessage);
         }
         User user = optUser.get();
 
         if (passwordsMatch(newPasswordDTO.getNewPassword(), user.getPassword())) {
             String errorMessage = newPasswordDTO.getEmail() + " : " +  ExceptionMessageConstants.NEW_PASSWORD_SAME_AS_PREVIOUS;
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new BadRequestException(ExceptionMessageConstants.NEW_PASSWORD_SAME_AS_PREVIOUS);
         }
         if (!passwordsMatch(newPasswordDTO.getCurrentPassword(), user.getPassword())) {
             String errorMessage = newPasswordDTO.getEmail() + " : " +  ExceptionMessageConstants.INVALID_CURRENT_PASSWORD;
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new BadRequestException(ExceptionMessageConstants.INVALID_CURRENT_PASSWORD);
         }
         if (!isNewPasswordInValidFormat(newPasswordDTO.getNewPassword())) {
             String errorMessage = newPasswordDTO.getEmail() + " : " +  ExceptionMessageConstants.FORMAT_FOR_PASSWORD_NOT_VALID;
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new BadRequestException(ExceptionMessageConstants.FORMAT_FOR_PASSWORD_NOT_VALID);
         }
         if (isPasswordOnListOfMostCommonPasswords(newPasswordDTO.getNewPassword())) {
             String errorMessage = newPasswordDTO.getEmail() + " : " +  ExceptionMessageConstants.PASSWORD_ON_LIST_OF_MOST_COMMON_PASSWORDS;
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_CHANGING_PASSWORD, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new BadRequestException(ExceptionMessageConstants.PASSWORD_ON_LIST_OF_MOST_COMMON_PASSWORDS);
         }
         user.setPassword(passwordEncoder.encode(newPasswordDTO.getNewPassword()));
         user.setLastPasswordResetDate(new Date());
-        logService.addInfo(new LogDTO(LogAction.CHANGING_PASSWORD, CLS_NAME, "Changing password for user: " + newPasswordDTO.getEmail()));
+        logService.addInfo(new LogDTO(LogAction.CHANGING_PASSWORD, CLS_NAME, "Changing password for user: " + newPasswordDTO.getEmail(), HttpUtils.getRequestIP(request)));
         userRepository.save(user);
     }
 
@@ -218,7 +218,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void saveFacilities(UserFacilitiesDTO userFacilitiesDTO) {
+    public void saveFacilities(UserFacilitiesDTO userFacilitiesDTO, HttpServletRequest request) {
         User user = this.userRepository.findByEmail(userFacilitiesDTO.getEmail()).
                 orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + userFacilitiesDTO.getEmail()));
 
@@ -240,7 +240,7 @@ public class UserServiceImpl implements UserService {
         else
             createNewFacilities(userFacilitiesDTO, user);
 
-        this.logService.addInfo(new LogDTO(LogAction.SAVING_FACILITIES, CLS_NAME, "Saving facilities for user: " + userFacilitiesDTO.getEmail()));
+        this.logService.addInfo(new LogDTO(LogAction.SAVING_FACILITIES, CLS_NAME, "Saving facilities for user: " + userFacilitiesDTO.getEmail(), HttpUtils.getRequestIP(request)));
         this.userRepository.save(user);
     }
 
@@ -289,7 +289,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<FacilityDTO> getUserFacilities(String email) {
+    public List<FacilityDTO> getUserFacilities(String email, HttpServletRequest request) {
         User user = this.userRepository.findByEmail(email).orElseThrow(() -> new UsernameNotFoundException("Can't find user with email: " + email));
         List<FacilityDTO> facilityDTOS = new ArrayList<>();
         if(user.getFacilities() != null) {
@@ -298,7 +298,7 @@ public class UserServiceImpl implements UserService {
                 facilityDTOS.add(facilityDTO);
             }
         }
-        logService.addInfo(new LogDTO(LogAction.GET_ALL_FACILITIES, CLS_NAME, "Fetching all facilities for user: " + email));
+        logService.addInfo(new LogDTO(LogAction.GET_ALL_FACILITIES, CLS_NAME, "Fetching all facilities for user: " + email, HttpUtils.getRequestIP(request)));
         return facilityDTOS;
     }
 
@@ -357,33 +357,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> getAllUsers() {
+    public List<User> getAllUsers(HttpServletRequest request) {
         List<User> allUsers = userRepository.findAll();
         allUsers.forEach(user -> user.setFacilities(null));
-        logService.addInfo(new LogDTO(LogAction.GET_ALL_USERS, CLS_NAME, "Fetching all users..."));
+        logService.addInfo(new LogDTO(LogAction.GET_ALL_USERS, CLS_NAME, "Fetching all users...", HttpUtils.getRequestIP(request)));
         return allUsers.stream().filter(user -> !user.getRole().getName().equals("ROLE_ADMIN")).collect(Collectors.toList());
     }
 
     @Override
-    public void changeUserRole(ChangeRoleDto changeRoleDto) {
+    public void changeUserRole(ChangeRoleDto changeRoleDto, HttpServletRequest request) {
         User user = userRepository.findByEmail(changeRoleDto.getEmail()).orElseThrow(()-> new NotFoundException("Email "+changeRoleDto.getEmail()+" not found"));
 
         Role role = roleRepository.findByName(changeRoleDto.getNewRole()).orElseThrow(()-> new NotFoundException("Role "+changeRoleDto.getNewRole()+" not found"));
         user.setRole(role);
-        logService.addInfo(new LogDTO(LogAction.CHANGING_USER_ROLE, CLS_NAME, "Changing role for user: " + changeRoleDto.getEmail() + ". New role: " + changeRoleDto.getNewRole()));
+        logService.addInfo(new LogDTO(LogAction.CHANGING_USER_ROLE, CLS_NAME, "Changing role for user: " + changeRoleDto.getEmail() + ". New role: " + changeRoleDto.getNewRole(), HttpUtils.getRequestIP(request)));
         userRepository.save(user);
     }
 
     @Override
-    public void deleteUser(String userEmail) {
+    public void deleteUser(String userEmail, HttpServletRequest request) {
         User user = userRepository.findByEmail(userEmail).orElseThrow(()-> new NotFoundException("Email "+userEmail+" not found"));
         user.setDeleted(true);
-        logService.addInfo(new LogDTO(LogAction.DELETING_USER, CLS_NAME, "Deleting user with email: " + userEmail));
+        logService.addInfo(new LogDTO(LogAction.DELETING_USER, CLS_NAME, "Deleting user with email: " + userEmail, HttpUtils.getRequestIP(request)));
         userRepository.save(user);
     }
 
     @Override
-    public void undeleteUser(String userEmail) {
+    public void undeleteUser(String userEmail, HttpServletRequest request) {
         User user = userRepository.findByEmail(userEmail).orElseThrow(()-> new NotFoundException("Email "+userEmail+" not found"));
         user.setDeleted(false);
         userRepository.save(user);

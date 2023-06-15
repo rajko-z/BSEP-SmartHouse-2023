@@ -2,6 +2,7 @@ package team14.back.service.keystore;
 
 import team14.back.model.IssuerData;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.security.KeyStoreException;
@@ -22,5 +23,5 @@ public interface KeyStoreService {
 
     HashMap<String, X509Certificate> getAllCertificates() throws KeyStoreException, NoSuchProviderException, IOException, CertificateException, NoSuchAlgorithmException;
 
-    void saveCertificate(Certificate certificate, String email);
+    void saveCertificate(Certificate certificate, String email, HttpServletRequest request);
 }

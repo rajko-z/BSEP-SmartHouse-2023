@@ -11,7 +11,9 @@ import team14.back.model.IssuerData;
 import team14.back.service.csr.CSRRequestService;
 import team14.back.service.log.LogService;
 import team14.back.utils.Constants;
+import team14.back.utils.HttpUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -107,10 +109,10 @@ public class KeyStoreServiceImpl implements KeyStoreService {
     }
 
     @Override
-    public void saveCertificate(Certificate certificate, String email) {
+    public void saveCertificate(Certificate certificate, String email, HttpServletRequest request) {
         if (!csrRequestService.csrRequestForEmailExist(email)) {
             String errorMessage = "Can't save certificate because csr request is not present for email: " + email;
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_STORING_CERTIFICATE, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_STORING_CERTIFICATE, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new BadRequestException(errorMessage);
         }
 
@@ -121,7 +123,7 @@ public class KeyStoreServiceImpl implements KeyStoreService {
             e.printStackTrace();
         } catch (CertificateException | IOException | NoSuchAlgorithmException e) {
             String errorMessage = "Error happened while saving certificate for user: " + email;
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_STORING_CERTIFICATE, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_STORING_CERTIFICATE, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new InternalServerException(errorMessage);
         }
     }

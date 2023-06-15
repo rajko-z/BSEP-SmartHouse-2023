@@ -12,6 +12,7 @@ import team14.back.dto.TextResponse;
 import team14.back.service.crt.CertificateCreationService;
 import team14.back.service.crt.CertificateService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -33,20 +34,21 @@ public class CertificateController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("get-revoked-certificates")
-    public List<String> getRevokedCertificatesSerialNumbers() {
-        return certificateService.getRevokedCertificatesSerialNumbers();
+    public List<String> getRevokedCertificatesSerialNumbers(HttpServletRequest request) {
+        return certificateService.getRevokedCertificatesSerialNumbers(request);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("get-all-certificates")
-    public List<CertificateDataDTO> getAllCertificates() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
-        return certificateService.getAllCertificates();
+    public List<CertificateDataDTO> getAllCertificates(HttpServletRequest request) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
+        return certificateService.getAllCertificates(request);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("verify-certificate")
-    public ResponseEntity<?> verifyCertificate(@Param("certificateSerialNumber") String certificateSerialNumber) throws CertificateException, KeyStoreException, NoSuchAlgorithmException, SignatureException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
-        this.certificateService.verifyCertificate(new BigInteger(certificateSerialNumber));
+    public ResponseEntity<?> verifyCertificate(@Param("certificateSerialNumber") String certificateSerialNumber,
+                                               HttpServletRequest request) throws CertificateException, KeyStoreException, NoSuchAlgorithmException, SignatureException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
+        this.certificateService.verifyCertificate(new BigInteger(certificateSerialNumber), request);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Success!");
         return ResponseEntity.ok(response);
@@ -54,8 +56,10 @@ public class CertificateController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PostMapping("revoke-certificate")
-    public ResponseEntity<?> revokeCertificate(@Param("certificateSerialNumber") String certificateSerialNumber, @Param("reasonForRevoking") String reasonForRevoking) throws CertificateException, KeyStoreException, NoSuchAlgorithmException, SignatureException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
-        this.certificateService.revokeCertificate(new BigInteger(certificateSerialNumber), reasonForRevoking);
+    public ResponseEntity<?> revokeCertificate(@Param("certificateSerialNumber") String certificateSerialNumber,
+                                               @Param("reasonForRevoking") String reasonForRevoking,
+                                               HttpServletRequest request) throws CertificateException, KeyStoreException, NoSuchAlgorithmException, SignatureException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
+        this.certificateService.revokeCertificate(new BigInteger(certificateSerialNumber), reasonForRevoking, request);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Success!");
         return ResponseEntity.ok(response);
@@ -63,8 +67,9 @@ public class CertificateController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("issue-certificate")
-    public ResponseEntity<TextResponse> issueCertificate(@RequestBody @Valid NewCertificateDTO certificateDTO) {
-        this.certificateCreationService.issueNewCertificate(certificateDTO);
+    public ResponseEntity<TextResponse> issueCertificate(@RequestBody @Valid NewCertificateDTO certificateDTO,
+                                                         HttpServletRequest request) {
+        this.certificateCreationService.issueNewCertificate(certificateDTO, request);
         return new ResponseEntity<>(new TextResponse("Success"), HttpStatus.OK);
     }
 }

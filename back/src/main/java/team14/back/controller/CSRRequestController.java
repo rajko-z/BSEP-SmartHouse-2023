@@ -11,6 +11,7 @@ import team14.back.dto.csr.SimpleCSRRequestDTO;
 import team14.back.dto.TextResponse;
 import team14.back.service.csr.CSRRequestService;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -29,15 +30,16 @@ public class CSRRequestController {
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @GetMapping("/{email}")
-    public ResponseEntity<CSRRequestData> getCSRRequestDataForEmail(@PathVariable String email) {
-        CSRRequestData request = csrRequestService.getCSRRequestDataForEmail(email);
+    public ResponseEntity<CSRRequestData> getCSRRequestDataForEmail(@PathVariable String email, HttpServletRequest httpServletRequest) {
+        CSRRequestData request = csrRequestService.getCSRRequestDataForEmail(email, httpServletRequest);
         return new ResponseEntity<>(request, HttpStatus.OK);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/reject")
-    public ResponseEntity<TextResponse> rejectCSRRequest(@RequestBody @Valid RejectCSRRequestDTO rejectRequest) {
-        csrRequestService.rejectCSRRequest(rejectRequest);
+    public ResponseEntity<TextResponse> rejectCSRRequest(@RequestBody @Valid RejectCSRRequestDTO rejectRequest,
+                                                         HttpServletRequest request) {
+        csrRequestService.rejectCSRRequest(rejectRequest, request);
         return new ResponseEntity<>(new TextResponse("Success"), HttpStatus.OK);
     }
 
