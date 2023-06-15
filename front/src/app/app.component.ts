@@ -45,8 +45,8 @@ export class AppComponent {
 
   ownerNavbarItems = [
     {
-      label:'Proba za ownera',
-      icon: 'verified_user',
+      label:'Owner dashboard',
+      icon: 'dashboard',
       route: 'owner'
     },
   ];

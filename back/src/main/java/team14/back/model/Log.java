@@ -19,7 +19,7 @@ public class Log {
 
     private LogStatus status;
 
-    private LogAction action;
+    private LogAction logAction;
 
     private LocalDateTime timestamp;
 
