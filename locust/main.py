@@ -5,7 +5,7 @@ import time
 
 device_ids = []
 lock = Semaphore()
-normal_mode = True
+normal_mode = False
 
 
 class QuickstartUser(HttpUser):
@@ -87,6 +87,7 @@ class QuickstartUser(HttpUser):
         device_state = {
             "id": self.device["id"],
             "state": random_state,
+            "deviceType": self.device["deviceType"],
             "message": possible_message+random_state,
             "messageType": "INFO"
         }
@@ -102,10 +103,10 @@ class QuickstartUser(HttpUser):
             possible_states = ["STUCK", "BLOCKED", "OUT OF POWER"]
             possible_message = "Gate is "
         elif self.device["deviceType"] == "COOKER":
-            possible_states = ["250℃", "300℃", "HIGH VOLTAGE", "LOW VOLTAGE"]
+            possible_states = ["250℃", "300℃"]
             possible_message = "Cooker at "
         elif self.device["deviceType"] == "WATER_HEATER":
-            possible_states = ["100℃", "110℃", "120℃", "LOW WATER", "HIGH VOLTAGE", "LOW VOLTAGE"]
+            possible_states = ["100℃", "110℃", "120℃"]
             possible_message = "Water heater at "
         elif self.device["deviceType"] == "DOOR":
             possible_states = ["STUCK", "BROKEN"]
@@ -130,6 +131,7 @@ class QuickstartUser(HttpUser):
         device_state = {
             "id": self.device["id"],
             "state": random_state,
+            "deviceType": self.device["deviceType"],
             "message": possible_message+random_state,
             "messageType": "WARNING"
         }

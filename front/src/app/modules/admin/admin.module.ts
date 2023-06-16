@@ -26,6 +26,9 @@ import {
 import {
   AddAlarmTriggerDialogComponent
 } from "../../components/admin/add-alarm-trigger-dialog/add-alarm-trigger-dialog.component";
+import {
+  AdminActivatedDeviceAlarmsPageComponent
+} from "../../pages/admin/admin-activated-device-alarms-page/admin-activated-device-alarms-page.component";
 
 const declaredModules = [
   AdminCSRRequestsPageComponent,
@@ -39,7 +42,8 @@ const declaredModules = [
   ChangeRoleDialogComponent,
   AdminLogPageComponent,
   AdminDeviceAlarmTriggersPageComponent,
-  AddAlarmTriggerDialogComponent
+  AddAlarmTriggerDialogComponent,
+  AdminActivatedDeviceAlarmsPageComponent
 ];
 
 @NgModule({

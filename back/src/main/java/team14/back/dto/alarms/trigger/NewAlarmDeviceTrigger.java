@@ -1,4 +1,4 @@
-package team14.back.dto;
+package team14.back.dto.alarms.trigger;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

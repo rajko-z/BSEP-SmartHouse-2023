@@ -1,15 +1,13 @@
-package team14.back.dto;
+package team14.back.dto.alarms.trigger;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import team14.back.enumerations.DeviceType;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class DeviceAlarmTriggerDTO {
     private String alarmName;
     private DeviceType deviceType;

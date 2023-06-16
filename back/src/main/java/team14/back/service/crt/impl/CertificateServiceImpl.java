@@ -17,8 +17,10 @@ import team14.back.service.keystore.KeyStoreService;
 import team14.back.service.keystore.KeyStoreServiceImpl;
 import team14.back.service.log.LogService;
 import team14.back.utils.Constants;
+import team14.back.utils.HttpUtils;
 
 import javax.security.auth.x500.X500Principal;
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.security.*;
@@ -44,50 +46,50 @@ public class CertificateServiceImpl implements CertificateService {
     private final LogService logService;
 
     @Override
-    public List<String> getRevokedCertificatesSerialNumbers() {
+    public List<String> getRevokedCertificatesSerialNumbers(HttpServletRequest request) {
         List<RevokedCertificate> revokedCertificates = this.revokedCertificateRepository.findAll();
         List<String> revokedCertificateSerialNumbers = new ArrayList<>();
         for (RevokedCertificate revokedCertificate : revokedCertificates)
         {
             revokedCertificateSerialNumbers.add(String.valueOf(revokedCertificate.getSerialNumber()));
         }
-        logService.addInfo(new LogDTO(LogAction.GET_ALL_REVOKED_CERTIFICATES, CLS_NAME, "Getting all revoked certificate serial numbers"));
+        logService.addInfo(new LogDTO(LogAction.GET_ALL_REVOKED_CERTIFICATES, CLS_NAME, "Getting all revoked certificate serial numbers", HttpUtils.getRequestIP(request)));
         return revokedCertificateSerialNumbers;
     }
 
     @Override
-    public List<CertificateDataDTO> getAllCertificates() throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
+    public List<CertificateDataDTO> getAllCertificates(HttpServletRequest request) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
         HashMap<String, X509Certificate> allCertificates = this.keyStoreService.getAllCertificates();
         List<CertificateDataDTO> certificateDataDTOS = new ArrayList<>();
         for(Map.Entry<String, X509Certificate> entry: allCertificates.entrySet()) {
             X509Certificate certificate = entry.getValue();
             certificateDataDTOS.add(new CertificateDataDTO(entry.getKey(), certificate, isCertificateValid(certificate)));
         }
-        logService.addInfo(new LogDTO(LogAction.GET_ALL_CERTIFICATES, CLS_NAME, "Getting all certificates"));
+        logService.addInfo(new LogDTO(LogAction.GET_ALL_CERTIFICATES, CLS_NAME, "Getting all certificates", HttpUtils.getRequestIP(request)));
         return certificateDataDTOS;
     }
 
     @Override
-    public void verifyCertificate(BigInteger certificateSerialNumber) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, SignatureException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
+    public void verifyCertificate(BigInteger certificateSerialNumber, HttpServletRequest request) throws KeyStoreException, CertificateException, NoSuchAlgorithmException, SignatureException, IOException, InvalidKeyException, NoSuchProviderException, CRLException {
         X509Certificate certificateToCheck = findCertificateBySerialNumber(certificateSerialNumber);
 
         if (isCertificateValid(certificateToCheck))
         {
-            logService.addInfo(new LogDTO(LogAction.VERIFY_CERTIFICATE, CLS_NAME, "Certificate verified."));
+            logService.addInfo(new LogDTO(LogAction.VERIFY_CERTIFICATE, CLS_NAME, "Certificate verified.", HttpUtils.getRequestIP(request)));
             simpMessagingTemplate.convertAndSend("/verify-certificate-response", new VerifyCertificateResponseDTO("success", "Certificate is valid"));
         }
 
         else
         {
-            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, "Certificate invalid."));
+            logService.addErr(new LogDTO(LogAction.INVALID_CERTIFICATE, CLS_NAME, "Certificate invalid.", HttpUtils.getRequestIP(request)));
             simpMessagingTemplate.convertAndSend("/verify-certificate-response", new VerifyCertificateResponseDTO("error", "Certificate is not valid"));
         }
     }
 
     @Override
-    public void revokeCertificate(BigInteger certificateSerialNumber, String reasonForRevoking) throws KeyStoreException, CertificateException, IOException, CRLException {
+    public void revokeCertificate(BigInteger certificateSerialNumber, String reasonForRevoking, HttpServletRequest request) throws KeyStoreException, CertificateException, IOException, CRLException {
         RevokedCertificate revokedCertificate = new RevokedCertificate(certificateSerialNumber, reasonForRevoking);
-        logService.addInfo(new LogDTO(LogAction.REVOKE_CERTIFICATE, CLS_NAME, "Revoking certificate"));
+        logService.addInfo(new LogDTO(LogAction.REVOKE_CERTIFICATE, CLS_NAME, "Revoking certificate", HttpUtils.getRequestIP(request)));
         revokedCertificateRepository.save(revokedCertificate);
     }
 

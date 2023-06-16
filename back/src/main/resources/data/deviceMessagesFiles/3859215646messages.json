@@ -8,4 +8,409 @@
   "messageType" : "INFO",
   "timestamp" : "10.06.2023. 15:14:19",
   "deviceStatus" : "200℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 14:14:44",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:53:31",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:19",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:56",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:10",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:26",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:41",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:41",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:49",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:57",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:21:31",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:31",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:39",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:47",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:55",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:03",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:12",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:20",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:28",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:36",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:44",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:52",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:00",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:08",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:16",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:24",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:49",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:27:26",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:27:49",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:31:49",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:31:57",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:05",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:13",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:21",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:29",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:37",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:45",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:53",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:33:01",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:33:44",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:10",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:42",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:51",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:59",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:07",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:15",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:23",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:31",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:39",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:47",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:12:41",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:12:49",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:41",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:49",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:57",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:05",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:13",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:21",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:29",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:37",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:45",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:53",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:04",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:12",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:20",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:28",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:36",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:44",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:52",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:26:00",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:26:08",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:30:53",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:01",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:09",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:17",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:26",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:34",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:42",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:50",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:58",
+  "deviceStatus" : "250℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:32:06",
+  "deviceStatus" : "250℃"
 } ]

@@ -19,7 +19,7 @@ public class Log {
 
     private LogStatus status;
 
-    private LogAction action;
+    private LogAction logAction;
 
     private LocalDateTime timestamp;
 
@@ -27,4 +27,5 @@ public class Log {
 
     private String message;
 
+    private String ipAddress;
 }

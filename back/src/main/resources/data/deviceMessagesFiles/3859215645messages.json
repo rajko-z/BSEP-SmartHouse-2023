@@ -9,8 +9,453 @@
   "timestamp" : "10.06.2023. 15:14:18",
   "deviceStatus" : "CLOSED"
 }, {
-  "message" : "Gate is CLOSED",
-  "messageType" : "INFO",
-  "timestamp" : "10.06.2023. 15:14:25",
-  "deviceStatus" : "CLOSED"
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 14:14:43",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:53:30",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:18",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:55",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:07",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:23",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:37",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:40",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:47",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:54",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:16:01",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:21:30",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:30",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:37",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:45",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:52",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:59",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:06",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:13",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:20",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:27",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:34",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:41",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:48",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:55",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:02",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:09",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:16",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:23",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:58",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:27:16",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:27:49",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:31:48",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:31:56",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:03",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:10",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:17",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:24",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:31",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:38",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:45",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:52",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:59",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:33:06",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:33:44",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:40",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:48",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:55",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:02",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:09",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:16",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:23",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:30",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:37",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:44",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:51",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:12:40",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:12:47",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:40",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:47",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:54",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:01",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:08",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:15",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:22",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:29",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:36",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:43",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:50",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:03",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:10",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:17",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:24",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:31",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:38",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:45",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:52",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:59",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:26:06",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:30:52",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:30:59",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:06",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:13",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:21",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:28",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:35",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:42",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:49",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:56",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:32:03",
+  "deviceStatus" : "OUT OF POWER"
 } ]

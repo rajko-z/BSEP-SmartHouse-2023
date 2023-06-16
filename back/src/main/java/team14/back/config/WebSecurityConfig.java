@@ -14,10 +14,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+import team14.back.service.log.LogService;
 import team14.back.service.security.RestAuthenticationEntryPoint;
 import team14.back.service.security.TokenAuthenticationFilter;
 import team14.back.service.user.UserService;
 import team14.back.utils.TokenUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -31,6 +34,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
 
     private final TokenUtils tokenUtils;
+
+    private final LogService logService;
 
     @Bean
     @Override
@@ -53,7 +58,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/users/**", "/ws/**", "/ws/info", "/device-script/**").permitAll()
             .anyRequest().authenticated().and()
             .cors().and()
-            .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService), BasicAuthenticationFilter.class);
+            .addFilterBefore(new TokenAuthenticationFilter(tokenUtils, userService, logService), BasicAuthenticationFilter.class);
 
         http.csrf().disable();
 

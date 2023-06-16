@@ -9,13 +9,948 @@
   "timestamp" : "10.06.2023. 15:14:20",
   "deviceStatus" : "60℃"
 }, {
-  "message" : "Water heater at 50℃",
-  "messageType" : "INFO",
-  "timestamp" : "10.06.2023. 15:14:23",
-  "deviceStatus" : "50℃"
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 14:14:45",
+  "deviceStatus" : "110℃"
 }, {
-  "message" : "Water heater at 50℃",
-  "messageType" : "INFO",
-  "timestamp" : "10.06.2023. 15:14:26",
-  "deviceStatus" : "50℃"
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:53:32",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:18",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:51",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:59",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:08",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:19",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:27",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:37",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:42",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:45",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:48",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:52",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:55",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:58",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:16:01",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:16:04",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:21:32",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:21:35",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:32",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:36",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:39",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:42",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:45",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:48",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:51",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:54",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:24:57",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:00",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:03",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:06",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:09",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:12",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:15",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:19",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:22",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:25",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:28",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:31",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:34",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:37",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:40",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:43",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:46",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:49",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:52",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:55",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:25:58",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:01",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:04",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:07",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:10",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:13",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:16",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:19",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:22",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:26",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:26:49",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:27:12",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:27:26",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:27:49",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:31:50",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:31:53",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:31:56",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:31:59",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:02",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:06",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:09",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:12",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:15",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:18",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:21",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:24",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:27",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:30",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:33",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:36",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:39",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:42",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:45",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:48",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:51",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:54",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:32:57",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:33:00",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:33:04",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:33:07",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:33:32",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:10",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:40",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:44",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:47",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:50",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:53",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:56",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:37:59",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:02",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:05",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:08",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:11",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:15",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:18",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:21",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:24",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:27",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:30",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:33",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:36",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:39",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:42",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:45",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:48",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:38:51",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:12:42",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:12:45",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:12:48",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:12:51",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:42",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:45",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:48",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:51",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:54",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:17:57",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:00",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:03",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:06",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:09",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:12",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:15",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:18",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:21",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:25",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:28",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:31",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:34",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:37",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:40",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:43",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:46",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:49",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:52",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:18:56",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:05",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:08",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:11",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:14",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:17",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:20",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:23",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:26",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:29",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:32",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:35",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:38",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:41",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:45",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:48",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:51",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:54",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:25:57",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:26:00",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:26:03",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:26:06",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:26:09",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:30:54",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:30:57",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:00",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:04",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:07",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:10",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:13",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:16",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:19",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:22",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:25",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:28",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:31",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:34",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:37",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:40",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:43",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:46",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:49",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:52",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:56",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:31:59",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:32:02",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:32:05",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 20:32:08",
+  "deviceStatus" : "110℃"
 } ]

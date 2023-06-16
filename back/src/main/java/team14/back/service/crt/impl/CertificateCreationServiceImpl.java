@@ -36,7 +36,9 @@ import team14.back.service.keystore.KeyStoreService;
 import team14.back.service.log.LogService;
 import team14.back.service.user.UserService;
 import team14.back.utils.Constants;
+import team14.back.utils.HttpUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -75,25 +77,25 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
     private final LogService logService;
 
     @Override
-    public void issueNewCertificate(NewCertificateDTO certificateDTO) {
+    public void issueNewCertificate(NewCertificateDTO certificateDTO, HttpServletRequest request) {
         String email = certificateDTO.getSubjectData().getEmail();
 
-        certDataValidationService.validateNewCertificateData(certificateDTO);
+        certDataValidationService.validateNewCertificateData(certificateDTO, request);
 
-        X509Certificate certificate = generateCertificate(certificateDTO);
+        X509Certificate certificate = generateCertificate(certificateDTO, request);
 
-        saveCertificateAsCertFile(certificate, email);
+        saveCertificateAsCertFile(certificate, email, request);
 
-        LoginDTO createdCredentials = userService.createNewUser(email);
+        LoginDTO createdCredentials = userService.createNewUser(email, request);
 
-        emailService.sendCreatedCertificateAndPasswordToUser(createdCredentials);
+        emailService.sendCreatedCertificateAndPasswordToUser(createdCredentials, request);
 
-        keyStoreService.saveCertificate(certificate, email);
+        keyStoreService.saveCertificate(certificate, email, request);
 
         csrRequestService.deleteCSRRequest(email);
     }
 
-    private void saveCertificateAsCertFile(X509Certificate certificate, String email) {
+    private void saveCertificateAsCertFile(X509Certificate certificate, String email, HttpServletRequest request) {
         try {
             String encodedCert = "-----BEGIN CERTIFICATE-----\n" +
                     new String(Base64.encodeBase64(certificate.getEncoded())) +
@@ -105,14 +107,14 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
             try (PrintWriter out = new PrintWriter(new FileOutputStream(path))) {
                 out.print(encodedCert);
             }
-            logService.addInfo(new LogDTO(LogAction.STORING_CERTIFICATE, CLS_NAME, "Storing certificate for user: " + email));
+            logService.addInfo(new LogDTO(LogAction.STORING_CERTIFICATE, CLS_NAME, "Storing certificate for user: " + email, HttpUtils.getRequestIP(request)));
         } catch (CertificateEncodingException | IOException e) {
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_STORING_CERTIFICATE, CLS_NAME, "Error on storing certificate for user: " + email));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_STORING_CERTIFICATE, CLS_NAME, "Error on storing certificate for user: " + email, HttpUtils.getRequestIP(request)));
             throw new InternalServerException("Error happened while saving generated certificate");
         }
     }
 
-    private X509Certificate generateCertificate(NewCertificateDTO certificateDTO) {
+    private X509Certificate generateCertificate(NewCertificateDTO certificateDTO, HttpServletRequest request) {
         try {
             JcaContentSignerBuilder builder = new JcaContentSignerBuilder("SHA256WithRSAEncryption");
             builder = builder.setProvider("BC");
@@ -123,7 +125,7 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
             BigInteger serialNumber = generateSerialNumber();
             Date startDate = new Date();
             Date endDate = Date.from(certificateDTO.getValidUntil().toLocalDate().atStartOfDay(ZoneId.systemDefault()).toInstant());
-            PublicKey subjectPublicKey = readPublicKeyForSubject(certificateDTO.getSubjectData().getEmail());
+            PublicKey subjectPublicKey = readPublicKeyForSubject(certificateDTO.getSubjectData().getEmail(), request);
             X500Name subjectX500Name = createX500NameForSubject(certificateDTO);
 
             X509v3CertificateBuilder certGen = new JcaX509v3CertificateBuilder(
@@ -144,7 +146,7 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
             JcaX509CertificateConverter certConverter = new JcaX509CertificateConverter();
             certConverter = certConverter.setProvider("BC");
 
-            logService.addInfo(new LogDTO(LogAction.GENERATE_CERTIFICATE, CLS_NAME, "Generate certificate for user: " + certificateDTO.getSubjectData().getEmail()));
+            logService.addInfo(new LogDTO(LogAction.GENERATE_CERTIFICATE, CLS_NAME, "Generate certificate for user: " + certificateDTO.getSubjectData().getEmail(), HttpUtils.getRequestIP(request)));
             return certConverter.getCertificate(certHolder);
 
         } catch (IllegalArgumentException |
@@ -155,7 +157,7 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
                  InvalidKeySpecException |
                  CertificateException e) {
 
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_GENERATING_CERTIFICATE, CLS_NAME, "Error while generating certificate for user: " + certificateDTO.getSubjectData().getEmail()));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_GENERATING_CERTIFICATE, CLS_NAME, "Error while generating certificate for user: " + certificateDTO.getSubjectData().getEmail(), HttpUtils.getRequestIP(request)));
             throw new InternalServerException("Error happened while generating certificate");
         }
     }
@@ -174,8 +176,8 @@ public class CertificateCreationServiceImpl implements CertificateCreationServic
         return new BigInteger(1, bytes);
     }
 
-    private PublicKey readPublicKeyForSubject(String email) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
-        PKCS10CertificationRequest csr = csrRequestReader.readCSRForEmail(email);
+    private PublicKey readPublicKeyForSubject(String email, HttpServletRequest request) throws IOException, NoSuchAlgorithmException, InvalidKeySpecException {
+        PKCS10CertificationRequest csr = csrRequestReader.readCSRForEmail(email, request);
         X509EncodedKeySpec pubKeySpec = new X509EncodedKeySpec(csr.getSubjectPublicKeyInfo().getEncoded());
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
         return keyFactory.generatePublic(pubKeySpec);

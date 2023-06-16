@@ -13,7 +13,9 @@ import team14.back.repository.DeviceRepository;
 import team14.back.repository.FacilityRepository;
 import team14.back.repository.UserRepository;
 import team14.back.service.log.LogService;
+import team14.back.utils.HttpUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -33,7 +35,7 @@ public class FacilityServiceImpl implements FacilityService {
     private final LogService logService;
 
     @Override
-    public List<Device> getAllDevices() {
+    public List<Device> getAllDevices(HttpServletRequest request) {
         List<Device> allDevices = new ArrayList<>();
         List<User> users = userRepository.findAll().stream().filter(user -> !user.isDeleted() && user.isEnabled()).toList();
         for (User user: users) {
@@ -43,7 +45,7 @@ public class FacilityServiceImpl implements FacilityService {
                 }
             }
         }
-        logService.addInfo(new LogDTO(LogAction.GET_ALL_DEVICES, CLS_NAME, "Fetching all devices..."));
+        logService.addInfo(new LogDTO(LogAction.GET_ALL_DEVICES, CLS_NAME, "Fetching all devices...", HttpUtils.getRequestIP(request)));
         return allDevices;
     }
 

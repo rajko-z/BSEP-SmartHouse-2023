@@ -46,6 +46,9 @@ public class BackApplication implements CommandLineRunner {
 	@Autowired
 	private DeviceAlarmTriggerRepository deviceAlarmTriggerRepository;
 
+	@Autowired
+	private ActivatedDeviceAlarmRepository activatedDeviceAlarmRepository;
+
 	public static void main(String[] args) {
 		SpringApplication.run(BackApplication.class, args);
 	}
@@ -62,12 +65,11 @@ public class BackApplication implements CommandLineRunner {
 	}
 
 	private void createLogs() {
-		logRepository.save(new Log(LogStatus.INFO, LogAction.LOG_IN_SUCCESS, LocalDateTime.now().minusDays(1).minusHours(2), "AuthController", "user smarthouse2023tim14+john@gmail.com successfully logged in"));
-		logRepository.save(new Log(LogStatus.ERROR, LogAction.INVALID_CREDENTIALS, LocalDateTime.now().minusDays(2).minusHours(1), "AuthController", "invalid credentials for smarthouse2023tim14+john@gmail.com"));
-		logRepository.save(new Log(LogStatus.INFO, LogAction.INVALID_2FA, LocalDateTime.now().minusDays(2), "AuthController", "invalid 2FA for smarthouse2023tim14+john@gmail.com"));
-		logRepository.save(new Log(LogStatus.INFO, LogAction.GET_ALL_USERS, LocalDateTime.now().minusDays(3), "UsersService", "Fetching all users"));
-		logRepository.save(new Log(LogStatus.INFO, LogAction.GET_ALL_CSR_REQUESTS, LocalDateTime.now().minusDays(4), "CSRRequestsService", "Fetching all csr requests"));
-		logRepository.save(new Log(LogStatus.INFO, LogAction.REVOKE_CERTIFICATE, LocalDateTime.now().minusDays(2), "CertificateService", "Revoking certificate"));
+		logRepository.save(new Log(LogStatus.INFO, LogAction.LOG_IN_SUCCESS, LocalDateTime.now().minusDays(1).minusHours(2), "AuthController", "user smarthouse2023tim14+john@gmail.com successfully logged in", "192.168.0.18"));
+		logRepository.save(new Log(LogStatus.INFO, LogAction.INVALID_2FA, LocalDateTime.now().minusDays(2), "AuthController", "invalid 2FA for smarthouse2023tim14+john@gmail.com", "192.168.0.19"));
+		logRepository.save(new Log(LogStatus.INFO, LogAction.GET_ALL_USERS, LocalDateTime.now().minusDays(3), "UsersService", "Fetching all users", "192.168.0.14")); //maliciozna ip adresa
+		logRepository.save(new Log(LogStatus.INFO, LogAction.GET_ALL_CSR_REQUESTS, LocalDateTime.now().minusDays(4), "CSRRequestsService", "Fetching all csr requests", "192.168.0.20"));
+		logRepository.save(new Log(LogStatus.INFO, LogAction.REVOKE_CERTIFICATE, LocalDateTime.now().minusDays(2), "CertificateService", "Revoking certificate", "192.168.0.21"));
 	}
 
 	private void createDeviceAlarmTriggers() {
@@ -107,12 +109,20 @@ public class BackApplication implements CommandLineRunner {
 		userRepository.save(new User("smarthouse2023tim14+admin@gmail.com", "Admin", "Admin", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(1L, "ROLE_ADMIN")));
 		User owner = new User("smarthouse2023tim14+john@gmail.com", "John", "John", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(2L, "ROLE_OWNER"));
 		owner.setFacilities(initialFacilities);
+
+		User tenant = new User("smarthouse2023tim14+bob@gmail.com", "Bob", "Bobic", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(3L, "ROLE_TENANT"));
+		List<User> tenants = new ArrayList<>();
+		tenants.add(tenant);
+		tenant.setFacilities(initialFacilities);
+
 		for(Facility facility: initialFacilities){
 			facility.setOwner(owner);
+			facility.setTenants(tenants);
 			facilityRepository.save(facility);
 		}
+
 		userRepository.save(owner);
-		userRepository.save(new User("smarthouse2023tim14+bob@gmail.com", "Bob", "Bobic", "$2a$10$GWugnfZGCvK0X3W4NYXE5OYyfNvSaEvhlpK8zrdF0WVd3nvtLZfuG", false, new Role(3L, "ROLE_TENANT")));
+		userRepository.save(tenant);
 	}
 
 	private void deleteEverything() {
@@ -124,5 +134,6 @@ public class BackApplication implements CommandLineRunner {
 		this.revokedCertificateRepository.deleteAll();
 		this.logRepository.deleteAll();
 		this.deviceAlarmTriggerRepository.deleteAll();
+		this.activatedDeviceAlarmRepository.deleteAll();
 	}
 }

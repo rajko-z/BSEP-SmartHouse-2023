@@ -1,0 +1,23 @@
+package rules;
+import team14.back.model.Log;
+import team14.back.enumerations.LogAction;
+import org.springframework.messaging.simp.SimpMessagingTemplate
+import team14.back.dto.alarms.AlarmDTO;
+
+global LogAction logActionType
+global SimpMessagingTemplate simpMessagingTemplate
+
+declare RedundantCSRRequestEvent
+    message: String
+end
+
+rule "2 redundant registration trials with same email"
+    no-loop
+    when
+        $log1: Log($message: message, $timestamp: timestamp, logAction == logActionType, $logStatus: status)
+        $log2: Log(timestamp != $timestamp, message == $message, logAction == logActionType)
+        not RedundantCSRRequestEvent(message == $message)
+    then
+        simpMessagingTemplate.convertAndSend("/alarm", new AlarmDTO($logStatus, logActionType, $message));
+        insert(new RedundantCSRRequestEvent($message));
+end

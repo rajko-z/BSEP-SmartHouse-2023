@@ -45,13 +45,18 @@ export class AppComponent {
       label: 'Device Alarm Triggers',
       icon: 'alarm',
       route: 'admin/device_alarm_triggers'
+    },
+    {
+      label: 'Activated device alarms',
+      icon: 'warning',
+      route: 'admin/device_activated_alarms'
     }
   ];
 
   ownerNavbarItems = [
     {
-      label:'Proba za ownera',
-      icon: 'verified_user',
+      label:'Owner dashboard',
+      icon: 'dashboard',
       route: 'owner'
     },
   ];

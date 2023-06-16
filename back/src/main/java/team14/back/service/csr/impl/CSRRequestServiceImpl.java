@@ -26,7 +26,9 @@ import team14.back.service.csr.CSRRequestService;
 import team14.back.service.email.EmailService;
 import team14.back.service.log.LogService;
 import team14.back.utils.Constants;
+import team14.back.utils.HttpUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -55,12 +57,12 @@ public class CSRRequestServiceImpl implements CSRRequestService {
     }
 
     @Override
-    public CSRRequestData getCSRRequestDataForEmail(String email) {
+    public CSRRequestData getCSRRequestDataForEmail(String email, HttpServletRequest request) {
         if (!csrRequestForEmailExist(email)) {
             throw new NotFoundException("CSR Request for email:" + email + " does not exist");
         }
 
-        PKCS10CertificationRequest csr = csrRequestReader.readCSRForEmail(email);
+        PKCS10CertificationRequest csr = csrRequestReader.readCSRForEmail(email, request);
 
         X500Name x500Name = csr.getSubject();
 
@@ -90,15 +92,15 @@ public class CSRRequestServiceImpl implements CSRRequestService {
 
         } catch (OperatorCreationException | PKCSException ex) {
             String errorMessage = "Error happened while validating signature for csr request of email: " + email;
-            logService.addErr(new LogDTO(LogAction.ERROR_ON_GENERATING_CERTIFICATE, CLS_NAME, errorMessage));
+            logService.addErr(new LogDTO(LogAction.ERROR_ON_GENERATING_CERTIFICATE, CLS_NAME, errorMessage, HttpUtils.getRequestIP(request)));
             throw new InternalServerException(errorMessage);
         }
     }
 
     @Override
-    public void rejectCSRRequest(RejectCSRRequestDTO data) {
+    public void rejectCSRRequest(RejectCSRRequestDTO data, HttpServletRequest request) {
         deleteCSRRequest(data.getEmail());
-        emailService.sendCSRRejectionEmail(data.getEmail(), data.getReason());
+        emailService.sendCSRRejectionEmail(data.getEmail(), data.getReason(), request);
     }
 
     @Override

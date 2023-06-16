@@ -16,6 +16,9 @@ import {AdminLogPageComponent} from "../../pages/admin/admin-log-page/admin-log-
 import {
   AdminDeviceAlarmTriggersPageComponent
 } from "../../pages/admin/admin-device-alarm-triggers-page/admin-device-alarm-triggers-page.component";
+import {
+  AdminActivatedDeviceAlarmsPageComponent
+} from "../../pages/admin/admin-activated-device-alarms-page/admin-activated-device-alarms-page.component";
 
 const routes: Routes = [
   {
@@ -57,6 +60,10 @@ const routes: Routes = [
   {
     path: 'device_alarm_triggers',
     component: AdminDeviceAlarmTriggersPageComponent
+  },
+  {
+    path: 'device_activated_alarms',
+    component: AdminActivatedDeviceAlarmsPageComponent
   }
 ];
 

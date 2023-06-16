@@ -32,19 +32,23 @@ public class LogDTO {
 
     private String message;
 
-    public LogDTO(LogStatus logStatus, LogAction action, String trace, String message) {
+    private String ipAddress;
+
+    public LogDTO(LogStatus logStatus, LogAction action, String trace, String message, String ipAddress) {
         this.status = logStatus;
         this.action = action;
         this.timestamp = LocalDateTime.now();
         this.trace = trace;
         this.message = message;
+        this.ipAddress = ipAddress;
     }
 
-    public LogDTO(LogAction action, String trace, String message) {
+    public LogDTO(LogAction action, String trace, String message, String ipAddress) {
         this.action = action;
         this.timestamp = LocalDateTime.now();
         this.trace = trace;
         this.message = message;
+        this.ipAddress = ipAddress;
     }
 
 }

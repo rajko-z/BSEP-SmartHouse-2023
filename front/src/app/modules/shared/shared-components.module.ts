@@ -12,7 +12,7 @@ const declaredModules = [
   HomePageComponent,
   ChangePasswordComponent,
   ViewUserProfilePageComponent,
-  FacilityDetailsPageComponent
+  FacilityDetailsPageComponent,
 ];
 
 @NgModule({

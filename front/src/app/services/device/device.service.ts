@@ -1,9 +1,10 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { DeviceMessage } from 'src/app/model/deviceMessage';
-import { environment } from 'src/environments/environment';
-import {DeviceAlarmTrigger} from "../../model/DeviceAlarmTrigger";
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {DeviceMessage} from 'src/app/model/deviceMessage';
+import {InputForReportDTO} from 'src/app/model/inputForReportDTO';
+import {ReportDataDTO} from 'src/app/model/reportDataDTO';
+import {environment} from 'src/environments/environment';
 import {DeviceInfo} from "../../model/deviceDTO";
 
 @Injectable({
@@ -25,4 +26,18 @@ export class DeviceService {
     return this.http.get<DeviceInfo[]>(environment.backUrl + '/devices/infos');
   }
 
+  getReportData(inputForReportDTO: InputForReportDTO): Observable<ReportDataDTO>{
+    let startDateStr = inputForReportDTO.dateInterval.startDate.toString();
+    let endDateStr = inputForReportDTO.dateInterval.endDate.toString();
+
+    let httpParams = new HttpParams()
+      .append('startDate', startDateStr)
+      .append('endDate', endDateStr);
+
+      inputForReportDTO.deviceMessagePaths.forEach((path) => {
+      httpParams = httpParams.append('deviceMessagesPaths', path);
+    });
+
+    return this.http.get<ReportDataDTO>(environment.backUrl + '/devices/get-report-data', { params: httpParams });
+  }
 }

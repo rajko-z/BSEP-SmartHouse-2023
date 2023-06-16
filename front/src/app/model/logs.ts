@@ -21,4 +21,5 @@ export interface Log {
   timestamp: string;
   trace: string;
   message: string;
+  ipAddress: string;
 }

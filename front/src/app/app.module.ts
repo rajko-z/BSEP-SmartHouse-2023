@@ -11,10 +11,13 @@ import {AngularMaterialModule} from "./modules/shared/angular-material.module";
 import {RouterModule} from '@angular/router';
 import {MatTableModule} from '@angular/material/table';
 import {TokenInterceptor} from "./services/interceptor/TokenInterceptor";
+import {ReportDialogComponent} from './components/admin/report-dialog/report-dialog.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
+    ReportDialogComponent,
   ],
   imports: [
     AngularMaterialModule,

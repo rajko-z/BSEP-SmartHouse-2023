@@ -18,7 +18,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
         registry.enableSimpleBroker(
                 "/verify-certificate-response",
                 "/device-messages",
-                "/new-log");
+                "/new-log",
+                "/alarm",
+                "/activated-device-alarm");
         registry.setUserDestinationPrefix("/user");
     }
 
