@@ -11,13 +11,27 @@ lock-on-active true
     when
         $signal: DeviceSignal(
             deviceType == DeviceType.THERMOMETER,
-            temperature != 0.0,
             temperature > 25
         )
     then
         $signal.getActivatedAlarms().add("HIGH_TEMP_THERMOMETER");
         update($signal);
 end
+
+rule "LOW_TEMP_THERMOMETER"
+no-loop
+lock-on-active true
+    when
+        $signal: DeviceSignal(
+            deviceType == DeviceType.THERMOMETER,
+            temperature <= 15,
+            temperature != 0.0
+        )
+    then
+        $signal.getActivatedAlarms().add("LOW_TEMP_THERMOMETER");
+        update($signal);
+end
+
 
 rule "GATE_BLOCKED"
 no-loop
@@ -29,6 +43,19 @@ lock-on-active true
         )
     then
         $signal.getActivatedAlarms().add("GATE_BLOCKED");
+        update($signal);
+end
+
+rule "GATE_STUCKED"
+no-loop
+lock-on-active true
+    when
+        $signal: DeviceSignal(
+            deviceType == DeviceType.GATE,
+            state == "STUCK"
+        )
+    then
+        $signal.getActivatedAlarms().add("GATE_STUCKED");
         update($signal);
 end
 

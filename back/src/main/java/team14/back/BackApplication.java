@@ -74,8 +74,10 @@ public class BackApplication implements CommandLineRunner {
 
 	private void createDeviceAlarmTriggers() {
 		deviceAlarmTriggerRepository.save(new DeviceAlarmTrigger("HIGH_TEMP_THERMOMETER", DeviceType.THERMOMETER, 0.0, 30.0, "", "Thermometar temperature higher than 30"));
-		deviceAlarmTriggerRepository.save(new DeviceAlarmTrigger("GATE_BLOCKED", DeviceType.GATE, 0.0, 0.0, "BLOCKED", "Door blocked"));
+		deviceAlarmTriggerRepository.save(new DeviceAlarmTrigger("GATE_BLOCKED", DeviceType.GATE, 0.0, 0.0, "BLOCKED", "Gate blocked"));
 		deviceAlarmTriggerRepository.save(new DeviceAlarmTrigger("AIR_CONDITIONING_HIGH_VOLTAGE", DeviceType.AIR_CONDITIONING, 0.0, 0.0, "HIGH VOLTAGE", "Air conditioning is at high voltage"));
+		deviceAlarmTriggerRepository.save(new DeviceAlarmTrigger("LOW_TEMP_THERMOMETER", DeviceType.THERMOMETER, 15, 0.0, "", "Thermometer temperature lower than 15"));
+		deviceAlarmTriggerRepository.save(new DeviceAlarmTrigger("GATE_STUCKED", DeviceType.GATE, 0.0, 0.0, "STUCK", "Gate stucked"));
 	}
 
 	private List<Facility> createFacilities() {
