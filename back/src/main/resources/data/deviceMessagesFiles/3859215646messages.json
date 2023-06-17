@@ -8,4 +8,24 @@
   "messageType" : "INFO",
   "timestamp" : "10.06.2023. 15:14:19",
   "deviceStatus" : "200℃"
-} ]
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 14:14:44",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:53:31",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 300℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:19",
+  "deviceStatus" : "300℃"
+}, {
+  "message" : "Cooker at 250℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:56",
+  "deviceStatus" : "250℃"
+}]

@@ -3,7 +3,7 @@ package team14.back.service.log;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
-import team14.back.dto.AlarmDTO;
+import team14.back.dto.alarms.AlarmDTO;
 import team14.back.dto.LogDTO;
 import team14.back.enumerations.LogAction;
 import team14.back.enumerations.LogStatus;

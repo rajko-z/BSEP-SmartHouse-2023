@@ -20,6 +20,15 @@ import {AdminAddUserPageComponent} from "../../pages/admin/admin-add-user-page/a
 import { ChangeRoleDialogComponent } from "src/app/components/admin/change-role-dialog/change-role-dialog.component";
 import { AdminUserListPageComponent } from "src/app/pages/admin/admin-user-list-page/admin-user-list-page.component";
 import {AdminLogPageComponent} from "../../pages/admin/admin-log-page/admin-log-page.component";
+import {
+  AdminDeviceAlarmTriggersPageComponent
+} from "../../pages/admin/admin-device-alarm-triggers-page/admin-device-alarm-triggers-page.component";
+import {
+  AddAlarmTriggerDialogComponent
+} from "../../components/admin/add-alarm-trigger-dialog/add-alarm-trigger-dialog.component";
+import {
+  AdminActivatedDeviceAlarmsPageComponent
+} from "../../pages/admin/admin-activated-device-alarms-page/admin-activated-device-alarms-page.component";
 
 const declaredModules = [
   AdminCSRRequestsPageComponent,
@@ -31,7 +40,10 @@ const declaredModules = [
   AdminAddUserPageComponent,
   AdminUserListPageComponent,
   ChangeRoleDialogComponent,
-  AdminLogPageComponent
+  AdminLogPageComponent,
+  AdminDeviceAlarmTriggersPageComponent,
+  AddAlarmTriggerDialogComponent,
+  AdminActivatedDeviceAlarmsPageComponent
 ];
 
 @NgModule({

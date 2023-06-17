@@ -1,10 +1,11 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { DeviceMessage } from 'src/app/model/deviceMessage';
-import { InputForReportDTO } from 'src/app/model/inputForReportDTO';
-import { ReportDataDTO } from 'src/app/model/reportDataDTO';
-import { environment } from 'src/environments/environment';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {DeviceMessage} from 'src/app/model/deviceMessage';
+import {InputForReportDTO} from 'src/app/model/inputForReportDTO';
+import {ReportDataDTO} from 'src/app/model/reportDataDTO';
+import {environment} from 'src/environments/environment';
+import {DeviceInfo} from "../../model/deviceDTO";
 
 @Injectable({
   providedIn: 'root'
@@ -19,6 +20,10 @@ export class DeviceService {
       httpParams = httpParams.append('deviceMessagesPaths', path);
     });
     return this.http.get<DeviceMessage[]>(environment.backUrl + '/devices/', { params: httpParams });
+  }
+
+  getAllDevicesInfo() {
+    return this.http.get<DeviceInfo[]>(environment.backUrl + '/devices/infos');
   }
 
   getReportData(inputForReportDTO: InputForReportDTO): Observable<ReportDataDTO>{

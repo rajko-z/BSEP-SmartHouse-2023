@@ -13,6 +13,12 @@ import { AdminUserListPageComponent } from "src/app/pages/admin/admin-user-list-
 import { ViewUserProfilePageComponent } from "src/app/pages/shared/view-user-profile-page/view-user-profile-page.component";
 import { FacilityDetailsPageComponent } from "src/app/pages/shared/facility-details-page/facility-details-page.component";
 import {AdminLogPageComponent} from "../../pages/admin/admin-log-page/admin-log-page.component";
+import {
+  AdminDeviceAlarmTriggersPageComponent
+} from "../../pages/admin/admin-device-alarm-triggers-page/admin-device-alarm-triggers-page.component";
+import {
+  AdminActivatedDeviceAlarmsPageComponent
+} from "../../pages/admin/admin-activated-device-alarms-page/admin-activated-device-alarms-page.component";
 
 const routes: Routes = [
   {
@@ -50,6 +56,14 @@ const routes: Routes = [
   {
     path: 'logs',
     component: AdminLogPageComponent
+  },
+  {
+    path: 'device_alarm_triggers',
+    component: AdminDeviceAlarmTriggersPageComponent
+  },
+  {
+    path: 'device_activated_alarms',
+    component: AdminActivatedDeviceAlarmsPageComponent
   }
 ];
 

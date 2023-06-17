@@ -1,0 +1,46 @@
+package rules.deviceAlarmTriggers;
+dialect  "mvel"
+
+import team14.back.dto.rules.DeviceSignal;
+import team14.back.enumerations.DeviceType;
+import java.util.List;
+
+rule "HIGH_TEMP_THERMOMETER"
+no-loop
+lock-on-active true
+    when
+        $signal: DeviceSignal(
+            deviceType == DeviceType.THERMOMETER,
+            temperature != 0.0,
+            temperature > 25
+        )
+    then
+        $signal.getActivatedAlarms().add("HIGH_TEMP_THERMOMETER");
+        update($signal);
+end
+
+rule "GATE_BLOCKED"
+no-loop
+lock-on-active true
+    when
+        $signal: DeviceSignal(
+            deviceType == DeviceType.GATE,
+            state == "BLOCKED"
+        )
+    then
+        $signal.getActivatedAlarms().add("GATE_BLOCKED");
+        update($signal);
+end
+
+rule "AIR_CONDITIONING_HIGH_VOLTAGE"
+no-loop
+lock-on-active true
+    when
+        $signal: DeviceSignal(
+            deviceType == DeviceType.AIR_CONDITIONING,
+            state == "HIGH VOLTAGE"
+        )
+    then
+        $signal.getActivatedAlarms().add("AIR_CONDITIONING_HIGH_VOLTAGE");
+        update($signal);
+end

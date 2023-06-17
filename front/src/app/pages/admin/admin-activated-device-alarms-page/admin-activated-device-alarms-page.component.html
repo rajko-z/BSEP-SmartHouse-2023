@@ -1,0 +1,33 @@
+<div class="containerDiv">
+  <h1><strong>Activated device alarms</strong></h1>
+
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="alarmName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>AlarmName</th>
+      <td mat-cell *matCellDef="let element"> {{element.deviceAlarmTrigger.alarmName}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="timestamp">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Timestamp </th>
+      <td mat-cell *matCellDef="let element"> {{element.timestamp}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="deviceType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>DeviceType</th>
+      <td mat-cell *matCellDef="let element"> {{element.deviceAlarmTrigger.deviceType}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="message">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Message </th>
+      <td mat-cell *matCellDef="let element"> {{element.message}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="facility">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Facility </th>
+      <td mat-cell *matCellDef="let element"> {{element.facilityName}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>

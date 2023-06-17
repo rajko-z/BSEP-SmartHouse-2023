@@ -8,4 +8,74 @@
   "messageType" : "INFO",
   "timestamp" : "10.06.2023. 15:14:20",
   "deviceStatus" : "60℃"
-} ]
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 14:14:45",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:53:32",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:18",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:51",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:59",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:08",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:19",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:27",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:37",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:42",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 120℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:45",
+  "deviceStatus" : "120℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "17.06.2023. 00:14:49",
+  "deviceStatus" : "110℃"
+}, {
+  "message" : "Water heater at 100℃",
+  "messageType" : "WARNING",
+  "timestamp" : "17.06.2023. 00:14:52",
+  "deviceStatus" : "100℃"
+}, {
+  "message" : "Water heater at 110℃",
+  "messageType" : "WARNING",
+  "timestamp" : "17.06.2023. 00:14:55",
+  "deviceStatus" : "110℃"
+}]

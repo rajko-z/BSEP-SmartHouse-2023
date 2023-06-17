@@ -3,24 +3,27 @@ package team14.back.service.device;
 import lombok.AllArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
+import team14.back.dto.DeviceInfoDTO;
+import team14.back.dto.DeviceMessageDTO;
 import team14.back.dto.ReportDataDTO;
 import team14.back.dto.UpdateDeviceStateDTO;
+import team14.back.enumerations.DeviceType;
+import team14.back.enumerations.MessageType;
 import team14.back.exception.BadRequestException;
 import team14.back.model.Device;
-import team14.back.enumerations.MessageType;
 import team14.back.model.DeviceMessage;
 import team14.back.model.Facility;
 import team14.back.repository.DeviceRepository;
+import team14.back.repository.FacilityRepository;
+import team14.back.service.alarm.AlarmService;
+import team14.back.service.facility.FacilityService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import team14.back.dto.DeviceMessageDTO;
-import team14.back.repository.FacilityRepository;
-import team14.back.service.facility.FacilityService;
-
 import java.util.Optional;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
@@ -33,16 +36,17 @@ public class DeviceServiceImpl implements DeviceService{
     private final FacilityService facilityService;
     private final FacilityRepository facilityRepository;
     private final SimpMessagingTemplate simpMessagingTemplate;
+    private final AlarmService alarmService;
 
     @Override
-    public void updateDeviceState(UpdateDeviceStateDTO newDeviceState) {
+    public void updateDeviceState(UpdateDeviceStateDTO newDeviceState, HttpServletRequest request) {
         String filename = newDeviceState.getId().toString().concat("messages.json");
         List<DeviceMessage> deviceMessages = deviceRepository.getDeviceMessages(filename);
         DeviceMessage deviceMessage = new DeviceMessage(newDeviceState);
         deviceMessages.add(deviceMessage);
         deviceRepository.saveDeviceMessages(filename, deviceMessages);
         sendIfValidRegex(newDeviceState, deviceMessage);
-
+        alarmService.checkForDeviceAlarms(newDeviceState, request);
     }
 
     @Override
@@ -146,5 +150,21 @@ public class DeviceServiceImpl implements DeviceService{
             deviceMessageDTOS.addAll(filteredDeviceMessages.stream().map(DeviceMessageDTO::new).toList());
         }
         return deviceMessageDTOS;
+    }
+
+    @Override
+    public List<DeviceInfoDTO> getAllDeviceInfos() {
+        return deviceRepository.getDevicesInfo();
+    }
+
+    @Override
+    public DeviceInfoDTO getDeviceInfoByType(DeviceType type) {
+        List<DeviceInfoDTO> devices = deviceRepository.getDevicesInfo();
+        for (DeviceInfoDTO device : devices) {
+            if (device.getDeviceType().equals(type)) {
+                return device;
+            }
+        }
+        return null;
     }
 }

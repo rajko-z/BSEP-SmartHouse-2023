@@ -5,6 +5,7 @@ export class FacilityDetailsData{
     address: string
     facilityType: string
     owner: string
+    ownerEmail: string
     tenantsEmails: string[]
     deviceDTOs: DeviceDTO[]
 }

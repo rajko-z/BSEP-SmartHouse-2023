@@ -2,7 +2,7 @@ package rules;
 import team14.back.model.Log;
 import team14.back.enumerations.LogAction;
 import org.springframework.messaging.simp.SimpMessagingTemplate
-import team14.back.dto.AlarmDTO;
+import team14.back.dto.alarms.AlarmDTO;
 
 global LogAction logActionType
 global SimpMessagingTemplate simpMessagingTemplate

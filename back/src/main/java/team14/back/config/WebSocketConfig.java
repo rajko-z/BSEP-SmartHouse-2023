@@ -19,7 +19,9 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 "/verify-certificate-response",
                 "/device-messages",
                 "/new-log",
-                "/alarm");
+                "/alarm",
+                "/activated-device-alarm",
+                "activated-device-alarm-for-user");
         registry.setUserDestinationPrefix("/user");
     }
 

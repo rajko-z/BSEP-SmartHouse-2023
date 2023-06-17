@@ -9,14 +9,16 @@ import {DeviceService} from 'src/app/services/device/device.service';
 import {environment} from 'src/environments/environment';
 import * as SockJS from 'sockjs-client';
 import * as Stomp from 'stompjs';
-import { Client, over, Message as StompMessage } from 'stompjs';
-import { MatTableDataSource } from '@angular/material/table';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { DateInterval } from 'src/app/model/dateInterval';
-import { InputForReportDTO } from 'src/app/model/inputForReportDTO';
-import { MatDialog } from '@angular/material/dialog';
-import { ReportDialogComponent } from 'src/app/components/admin/report-dialog/report-dialog.component';
-import { ReportDataDTO } from 'src/app/model/reportDataDTO';
+import {MatTableDataSource} from '@angular/material/table';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {DateInterval} from 'src/app/model/dateInterval';
+import {InputForReportDTO} from 'src/app/model/inputForReportDTO';
+import {MatDialog} from '@angular/material/dialog';
+import {ReportDialogComponent} from 'src/app/components/admin/report-dialog/report-dialog.component';
+import {ReportDataDTO} from 'src/app/model/reportDataDTO';
+import {
+  FacilityAlarmsDialogComponent
+} from "../../../components/owner/facility-alarms-dialog/facility-alarms-dialog.component";
 
 @Component({
   selector: 'app-facility-details-page',
@@ -36,7 +38,15 @@ export class FacilityDetailsPageComponent {
   maxDate: Date = new Date();
   regExpr:any;
 
-  constructor(private route: ActivatedRoute, private location: Location, private facilityService: FacilityService, private toastrService: ToastrService, private deviceService: DeviceService, private formBuilder: FormBuilder, private reportDialog: MatDialog) {
+  constructor(
+    private route: ActivatedRoute,
+    private location: Location,
+    private facilityService: FacilityService,
+    private toastrService: ToastrService,
+    private deviceService: DeviceService,
+    private formBuilder: FormBuilder,
+    private matDialog: MatDialog)
+  {
     this.form = this.formBuilder.group({
       startDate: ['', Validators.required],
       endDate: ['', Validators.required],
@@ -90,7 +100,7 @@ export class FacilityDetailsPageComponent {
           this.openReportDialog(res);
         },
         error:(err)=>{
-          this.toastrService.warning("Something went wrong, please try again!");  
+          this.toastrService.warning("Something went wrong, please try again!");
         }
       }
     )
@@ -191,9 +201,9 @@ export class FacilityDetailsPageComponent {
       return deviceMessage;
   }
 
-  
+
   openReportDialog(deviceMessages: ReportDataDTO) {
-    const dialogRef = this.reportDialog.open(ReportDialogComponent, {
+    const dialogRef = this.matDialog.open(ReportDialogComponent, {
       data: deviceMessages,
     });
   }
@@ -213,5 +223,11 @@ export class FacilityDetailsPageComponent {
     }catch(error){
       return;
     }
+  }
+
+  openAlarmsDialog() {
+    const dialogRef = this.matDialog.open(FacilityAlarmsDialogComponent, {
+      data: this.facilityData.name
+    });
   }
 }

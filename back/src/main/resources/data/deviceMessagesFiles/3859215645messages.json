@@ -8,4 +8,39 @@
   "messageType" : "INFO",
   "timestamp" : "10.06.2023. 15:14:18",
   "deviceStatus" : "CLOSED"
-}]
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 14:14:43",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:53:30",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is OUT OF POWER",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:18",
+  "deviceStatus" : "OUT OF POWER"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:55",
+  "deviceStatus" : "BLOCKED"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:07",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is STUCK",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:23",
+  "deviceStatus" : "STUCK"
+}, {
+  "message" : "Gate is BLOCKED",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:57:37",
+  "deviceStatus" : "BLOCKED"
+} ]

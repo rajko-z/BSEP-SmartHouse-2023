@@ -8,4 +8,34 @@
   "messageType" : "INFO",
   "timestamp" : "10.06.2023. 15:14:17",
   "deviceStatus" : "21℃"
-}]
+}, {
+  "message" : "Thermometer at 15℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 14:14:42",
+  "deviceStatus" : "15℃"
+}, {
+  "message" : "Thermometer at 32℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:53:30",
+  "deviceStatus" : "32℃"
+}, {
+  "message" : "Thermometer at 16℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 17:56:11",
+  "deviceStatus" : "16℃"
+}, {
+  "message" : "Thermometer at 31℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:05:56",
+  "deviceStatus" : "31℃"
+}, {
+  "message" : "Thermometer at 30℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:14:07",
+  "deviceStatus" : "30℃"
+}, {
+  "message" : "Thermometer at 30℃",
+  "messageType" : "WARNING",
+  "timestamp" : "16.06.2023. 18:15:39",
+  "deviceStatus" : "30℃"
+} ]

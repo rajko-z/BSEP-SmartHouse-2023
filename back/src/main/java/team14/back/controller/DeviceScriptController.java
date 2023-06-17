@@ -41,9 +41,9 @@ public class DeviceScriptController {
     }
 
     @PutMapping(path = "/update-device-state", consumes = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<?> updateDeviceState(@RequestBody @Valid UpdateDeviceStateDTO deviceStateDTO){
+    public ResponseEntity<?> updateDeviceState(@RequestBody @Valid UpdateDeviceStateDTO deviceStateDTO, HttpServletRequest request){
         try {
-            this.deviceService.updateDeviceState(deviceStateDTO);
+            this.deviceService.updateDeviceState(deviceStateDTO, request);
         }catch (BadRequestException e){
             return ResponseEntity.badRequest().build();
         }
