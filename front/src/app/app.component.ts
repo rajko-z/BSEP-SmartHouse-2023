@@ -3,6 +3,11 @@ import {Component} from '@angular/core';
 import {Router} from '@angular/router';
 import {MatDialog} from "@angular/material/dialog";
 import {ChangePasswordComponent} from "./components/shared/change-password/change-password.component";
+import {Client, Message as StompMessage, over} from "stompjs";
+import * as SockJS from "sockjs-client";
+import {environment} from "../environments/environment";
+import {ActivatedDeviceAlarm, AlarmNotificationForUser} from "./model/activatedAlarms";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-root',
@@ -14,6 +19,9 @@ export class AppComponent {
 
   navbarItems:any = [];
   loggedUser:boolean = false;
+
+  private stompClient : Client;
+
 
   adminNavbarItems = [
     {
@@ -74,7 +82,13 @@ export class AppComponent {
     },
   ]
 
-  constructor(private router: Router, private authService:AuthService, private matDialog: MatDialog){
+  constructor(
+    public snackBar: MatSnackBar,
+    private router: Router,
+    private authService:AuthService,
+    private matDialog: MatDialog,
+
+  ) {
     authService.isloggedUser.subscribe((nextValue)=>{
       this.loggedUser = nextValue;
       this.updateSideMenu();
@@ -98,6 +112,39 @@ export class AppComponent {
 
   ngOnInit(): void {
     this.updateSideMenu();
+    let Sock = new SockJS(environment.backUrl + "/ws");
+    this.stompClient = over(Sock);
+    this.stompClient.connect({}, this.onConnected, () => {});
+  }
+
+  onConnected = () => {
+    this.stompClient.subscribe("/activated-device-alarm", (data:any) => this.showDeviceAlarmForAdmin(data));
+    this.stompClient.subscribe("/activated-device-alarm-for-user", (data:any) => this.showDeviceAlarmForUser(data));
+  }
+
+  showDeviceAlarmForAdmin(payload: StompMessage) {
+    let newActivatedDeviceAlarm = JSON.parse(payload.body) as ActivatedDeviceAlarm;
+    let message = "Alarm: " + newActivatedDeviceAlarm.deviceAlarmTrigger.alarmName + " triggered.\n" + newActivatedDeviceAlarm.message;
+
+    let currentUser = this.authService.getCurrentUser();
+    if (currentUser != null && currentUser.role === "ROLE_ADMIN") {
+      this.snackBar.open(message, "OK", {
+        verticalPosition: 'bottom',
+        horizontalPosition: 'right',
+      });
+    }
+  }
+
+  showDeviceAlarmForUser(payload: StompMessage) {
+    let notification = JSON.parse(payload.body) as AlarmNotificationForUser;
+    let currentUser = this.authService.getCurrentUser();
+    if (currentUser != null && currentUser.email === notification.userEmail) {
+      let message = "Alarm: " + notification.alarm.deviceAlarmTrigger.alarmName + " triggered.\n" + notification.alarm.message;
+      this.snackBar.open(message, "OK", {
+        verticalPosition: 'bottom',
+        horizontalPosition: 'right',
+      });
+    }
   }
 
   LogOut():void{

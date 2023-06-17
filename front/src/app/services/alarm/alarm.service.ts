@@ -22,4 +22,8 @@ export class AlarmService {
   getAllActivatedDeviceAlarms() {
     return this.http.get<ActivatedDeviceAlarm[]>(environment.backUrl + '/activated-alarms');
   }
+
+  getAllActivatedDeviceAlarmsByFacilityName(facility: string) {
+    return this.http.get<ActivatedDeviceAlarm[]>(environment.backUrl + "/activated-alarms/" + facility)
+  }
 }

@@ -8,8 +8,10 @@ import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 import team14.back.config.DRoolsConfig;
 import team14.back.converters.AlarmConverters;
+import team14.back.dto.FacilityDetailsDTO;
 import team14.back.dto.UpdateDeviceStateDTO;
 import team14.back.dto.alarms.ActivatedDeviceAlarmDTO;
+import team14.back.dto.alarms.AlarmNotificationForUser;
 import team14.back.dto.rules.DeviceSignal;
 import team14.back.enumerations.DeviceType;
 import team14.back.enumerations.LogAction;
@@ -22,7 +24,6 @@ import team14.back.service.facility.FacilityService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -93,6 +94,7 @@ public class AlarmServiceImpl implements AlarmService {
     public List<ActivatedDeviceAlarmDTO> getAllActivatedAlarmsForFacility(String facility) {
         return this.activatedDeviceAlarmRepository.findByFacilityName(facility).stream()
                 .map(AlarmConverters::convertActivatedDeviceAlarm)
+                .sorted((a1, a2) -> a2.getTimestamp().compareTo(a1.getTimestamp()))
                 .collect(Collectors.toList());
     }
 
@@ -115,8 +117,23 @@ public class AlarmServiceImpl implements AlarmService {
         alarm.setFacilityName(facilityService.getFacilityNameByDeviceId(deviceSignal.getDeviceId()));
         activatedDeviceAlarmRepository.save(alarm);
 
-        simpMessagingTemplate.convertAndSend("/activated-device-alarm", AlarmConverters.convertActivatedDeviceAlarm(alarm));
-        //TODO: upisi u bazu vrati preko soketa na front
+        notifyAdminAboutAlarm(AlarmConverters.convertActivatedDeviceAlarm(alarm));
+        notifyOwnerAndTenants(AlarmConverters.convertActivatedDeviceAlarm(alarm));
+    }
+
+    private void notifyAdminAboutAlarm(ActivatedDeviceAlarmDTO alarm) {
+        simpMessagingTemplate.convertAndSend("/activated-device-alarm", alarm);
+    }
+
+    private void notifyOwnerAndTenants(ActivatedDeviceAlarmDTO alarm) {
+        FacilityDetailsDTO facility = facilityService.getFacilityByName(alarm.getFacilityName());
+        List<String> usersToSendNotification = new ArrayList<>(facility.getTenantsEmails());
+        usersToSendNotification.add(facility.getOwnerEmail());
+
+        for (String email : usersToSendNotification) {
+            AlarmNotificationForUser alarmNotificationForUser = new AlarmNotificationForUser(alarm, email);
+            simpMessagingTemplate.convertAndSend("/activated-device-alarm-for-user", alarmNotificationForUser);
+        }
     }
 
     private double getTemperatureForDevice(UpdateDeviceStateDTO newDeviceState) {

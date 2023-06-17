@@ -2,6 +2,11 @@
   <button mat-icon-button (click)="goBack()">
     <mat-icon>arrow_back</mat-icon>
   </button>
+  <div class="alarm-btn-container">
+    <button class="alarm-btn" mat-raised-button color="primary" (click)="openAlarmsDialog()">
+      Alarms
+    </button>
+  </div>
 
   <div class="center-row">
     <h1><b>{{facilityData?.name}}</b></h1>
@@ -22,7 +27,7 @@
         </div>
       </mat-expansion-panel>
     </div>
-  
+
     <div class="right-exp">
       <mat-expansion-panel class="expansion-panel">
         <mat-expansion-panel-header>
@@ -49,7 +54,7 @@
         <mat-date-range-picker #picker></mat-date-range-picker>
       </mat-form-field>
 
-      
+
       <button mat-raised-button color="primary" class="report-button" [disabled]="!form.valid" (click)="onGenerateReport()">
         Generate report
       </button>
@@ -71,7 +76,7 @@
           <th mat-header-cell *matHeaderCellDef>Message</th>
           <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.message }}</td>
         </ng-container>
-  
+
         <ng-container matColumnDef="messageType">
           <th mat-header-cell *matHeaderCellDef>Message Type</th>
           <td mat-cell *matCellDef="let deviceMessage">
@@ -83,20 +88,20 @@
                     disabled>{{deviceMessage.messageType}}</button>
           </td>
         </ng-container>
-  
+
         <ng-container matColumnDef="timestamp">
           <th mat-header-cell *matHeaderCellDef>Timestamp</th>
           <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.formattedTimestamp }}</td>
         </ng-container>
-  
+
         <ng-container matColumnDef="deviceStatus">
           <th mat-header-cell *matHeaderCellDef>Device Status</th>
           <td mat-cell *matCellDef="let deviceMessage">{{ deviceMessage.deviceStatus }}</td>
         </ng-container>
-  
+
         <tr mat-header-row *matHeaderRowDef="tableColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: tableColumns;"></tr>
-  
+
         <tr class="mat-row" *matNoDataRow>
           <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
         </tr>

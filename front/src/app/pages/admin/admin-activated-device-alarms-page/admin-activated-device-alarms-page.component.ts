@@ -37,7 +37,6 @@ export class AdminActivatedDeviceAlarmsPageComponent {
   }
 
   addNewActivatedDeviceAlarm(payload: StompMessage) {
-    console.log("dodaje...");
     let newActivatedDeviceAlarm = JSON.parse(payload.body) as ActivatedDeviceAlarm;
     this.activatedDeviceAlarms.unshift(newActivatedDeviceAlarm);
     this.dataSource = new MatTableDataSource(this.activatedDeviceAlarms);

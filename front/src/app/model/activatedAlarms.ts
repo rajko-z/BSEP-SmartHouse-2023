@@ -6,3 +6,7 @@ export interface ActivatedDeviceAlarm {
   message: string;
   facilityName: string;
 }
+export interface AlarmNotificationForUser {
+  alarm: ActivatedDeviceAlarm;
+  userEmail: string;
+}

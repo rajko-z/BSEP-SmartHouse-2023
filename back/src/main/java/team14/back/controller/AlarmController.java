@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import team14.back.dto.alarms.ActivatedDeviceAlarmDTO;
@@ -23,6 +24,13 @@ public class AlarmController {
     @GetMapping()
     public ResponseEntity<List<ActivatedDeviceAlarmDTO>> getAllActivatedAlarms() {
         List<ActivatedDeviceAlarmDTO> retVal = alarmService.getAllActivatedAlarms();
+        return new ResponseEntity<>(retVal, HttpStatus.OK);
+    }
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_OWNER', 'ROLE_TENANT')")
+    @GetMapping("/{facility}")
+    public ResponseEntity<List<ActivatedDeviceAlarmDTO>> getAllActivatedAlarmsForFacility(@PathVariable String facility) {
+        List<ActivatedDeviceAlarmDTO> retVal = alarmService.getAllActivatedAlarmsForFacility(facility);
         return new ResponseEntity<>(retVal, HttpStatus.OK);
     }
 }

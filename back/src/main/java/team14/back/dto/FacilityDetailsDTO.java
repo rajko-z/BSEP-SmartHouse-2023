@@ -40,10 +40,13 @@ public class FacilityDetailsDTO {
 
     private List<DeviceDTO> deviceDTOs;
 
+    private String ownerEmail;
+
     public FacilityDetailsDTO(Facility facility, List<Device> devices){
         this.name = facility.getName();
         this.address = facility.getAddress();
         this.facilityType = facility.getFacilityType().name();
+        this.ownerEmail = facility.getOwner().getEmail();
         this.owner = facility.getOwner().getFirstName() + " " + facility.getOwner().getLastName();
         this.tenantsEmails = new ArrayList<>();
         for (User tenant: facility.getTenants()) {

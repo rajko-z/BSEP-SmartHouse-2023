@@ -20,7 +20,8 @@ public class WebSocketConfig implements WebSocketMessageBrokerConfigurer {
                 "/device-messages",
                 "/new-log",
                 "/alarm",
-                "/activated-device-alarm");
+                "/activated-device-alarm",
+                "activated-device-alarm-for-user");
         registry.setUserDestinationPrefix("/user");
     }
 
