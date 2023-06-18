@@ -46,7 +46,12 @@ public class DeviceRepository {
             File jsonFile = new File(deviceMessagesFilePath+filename);
             deviceMessages = objectMapper.readValue(jsonFile, new TypeReference<>() {});
         } catch (IOException e) {
-            throw new BadRequestException("Problem with reading file: "+filename);
+            File jsonFile = new File(deviceMessagesFilePath+filename);
+            try {
+                jsonFile.createNewFile();
+            }catch (IOException ex){
+                throw new BadRequestException("Problem with reading file: "+filename);
+            }
         }
         return deviceMessages;
     }
